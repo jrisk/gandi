@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Chat w/Sockets</title>
+    <meta charset="utf-8">
+
+    <link href="/css/chat.css" rel="stylesheet" type="text/css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    
+    <link href="http://cdn.staticfile.org/emoji/0.2.2/emoji.css" rel="stylesheet" type="text/css" />
+    <script src="http://cdn.staticfile.org/emoji/0.2.2/emoji.js"></script>
+
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <form action="" id="chatbox">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script>
+    var socket = io();
+
+    //emit chat message to server
+
+    $('form').submit(function() {
+      socket.emit('chat message', $('#m').val());
+      $('#m').val('');
+      return false;
+    });
+
+    socket.on('join', function(info) {
+      socket.emit('join', info);
+      return false;
+    });
+
+    //responde to chat message emit by server
+    socket.on('chat message', function(data) {
+      $('#messages')
+      .append($('<li>')
+          .append($('<h4>').addClass('time').text(data.time))
+          .append($('<b>').text(data.user))
+          .append($(data.emoji))
+          .append($('<p>').text(data.msg))
+        );
+      var msgNode = document.getElementById('messages').lastChild;
+
+      window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight + 150);
+      fade(msgNode);
+    });
+
+    socket.on('join message', function(user) {
+      $('#messages').append($('<li>').addClass('joinClass').text(user + ' has joined'));
+    });
+
+    var msg = document.getElementById('messages');
+    var chatbox = document.getElementById('chatbox');
+
+    msg.style.marginBottom = chatbox.clientHeight;
+
+    var fade = function(node) {
+      var level = 1;
+      var step = function() {
+        var hex = level.toString(16);
+        node.style.backgroundColor = "#FFFF" + hex + hex;
+          if (level < 15) {
+            level++;
+            setTimeout(step, 100);
+            }
+          };
+          step();
+        }
+    </script>
+  </body>
+</html>
