@@ -13,7 +13,7 @@ var Remoji = require('random-emoji');
 var randomNames = require('./names');
 var Femoji = require('emoji');
 
-var port = 8081;
+var port = process.env.PORT;
 
 var clients = {};
 
