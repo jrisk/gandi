@@ -13,7 +13,7 @@ var Remoji = require('random-emoji');
 var randomNames = require('./names');
 var Femoji = require('emoji');
 
-var port = process.env.PORT;
+var port = process.env.PORT || 8080;
 
 var clients = {};
 
@@ -25,7 +25,7 @@ var projects = [
 
 app.set('views', __dirname + '/views');
 
-app.use('/', express.static(__dirname + '/public'));
+app.use('/dist', express.static(path.join(__dirname, './dist')));
 
 app.use('/favicon.ico', function(req,res) {
 	res.sendFile(__dirname + '/img/favicon.ico');
@@ -98,13 +98,40 @@ io.on('connection', function (socket) {
 	})
 });
 
+const bundle = require('./dist/server.bundle.js');
+
+const renderer = require('vue-server-renderer').createRenderer({
+  template: fs.readFileSync('./index.html', 'utf-8')
+});
+
+app.get('*', (req, res) => { 
+    
+  bundle.default({ url: req.url }).then((app) => {
+
+    const context = {
+      title: 'Vue JS Project',
+      meta: `
+      <meta description="vue javascript">
+      <link rel="shortcut icon" type="image/png" href="./dist/favicon.png"/>
+      `
+    };
+
+    renderer.renderToString(app, context, function (err, html) {   
+      if (err) {
+        if (err.code === 404) {
+          res.status(404).end('Page not found');
+        } else {
+          res.status(500).end('Internal Server Error');
+        }
+      } else {
+        res.end(html);
+      }
+    });        
+  }, (err) => {
+    console.log(err);
+  });  
+}); 
+
 httpServer.listen(port, function () {
 	console.log("listening on port: " + port);
 });
-
-function setCustomCacheControl (res, path) {
-  if (serveStatic.mime.lookup(path) === 'text/html') {
-    // Custom Cache-Control for HTML files
-    res.setHeader('Cache-Control', 'public, max-age=0')
-  }
-}
