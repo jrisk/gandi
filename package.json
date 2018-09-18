@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run build && npm run start-server",
     "build": "npm run build-client && npm run build-server",
-    "build-server": "node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=production webpack --config webpack.server.config.js --progress --hide-modules",
-    "build-client": "node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=production webpack --progress --hide-modules",
+    "build-server": "cross-env NODE_ENV=production webpack --config webpack.server.config.js --progress --hide-modules",
+    "build-client": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "start-server": "node app.js"
   },
   "author": "",
