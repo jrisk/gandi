@@ -16,7 +16,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     #secure {
         background-color: #FFFFFF;
         border: 1px solid #CCCCCC;

@@ -13,7 +13,7 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
     #login {
         width: 500px;
         border: 1px solid #CCCCCC;
