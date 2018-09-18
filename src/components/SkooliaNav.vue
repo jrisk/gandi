@@ -39,7 +39,3 @@
   </b-collapse>
 </b-navbar>
 </template>
-
-<style>
-
-</style>
