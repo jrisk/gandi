@@ -134,4 +134,7 @@ app.get('*', (req, res) => {
 
 httpServer.listen(port, function () {
 	console.log("listening on port: " + port);
-});
+}).on('error', function (err) {
+	console.log(err.code);
+	process.exit();
+})
