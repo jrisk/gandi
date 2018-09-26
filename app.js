@@ -7,7 +7,7 @@ var app = express();
 
 var http = require('http');
 var httpServer = http.Server(app);
-var io = require('socket.io')(httpServer, opts);
+var io = require('socket.io')(httpServer);
 
 var Remoji = require('random-emoji');
 var randomNames = require('./names');
@@ -65,15 +65,6 @@ app.use('/weather', function(req,res) {
 
 */
 
-var opts = {
-	hostname: 'boards.4chan.org',
-	path: '/boards.json',
-	type: 'application/json',
-	extraHeaders: {
-		'Access-Control-Allow-Origin': '*'
-	}
-};
-
 io.on('connection', function (socket) {
 	randomNames.getNewName(function(info) {
 		io.emit('join', randomNames.finish(info, socket, clients));
@@ -113,6 +104,8 @@ app.get('*', (req, res) => {
       meta: `
       <meta description="vue javascript">
       <link rel="shortcut icon" type="image/png" href="./dist/favicon.png"/>
+      <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
+      <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
       `
     };
 
