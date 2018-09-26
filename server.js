@@ -7,7 +7,7 @@ var app = express();
 
 var http = require('http');
 var httpServer = http.Server(app);
-var io = require('socket.io')(httpServer);
+//var io = require('socket.io')(httpServer);
 
 var Remoji = require('random-emoji');
 var randomNames = require('./names');
@@ -69,7 +69,7 @@ app.use('/weather', function(req,res) {
 
 */
 
-io.on('connection', function (socket) {
+/*io.on('connection', function (socket) {
 	randomNames.getNewName(function(info) {
 		io.emit('join', randomNames.finish(info, socket, clients));
 	});
@@ -92,6 +92,7 @@ io.on('connection', function (socket) {
 		console.log(err);
 	})
 });
+*/
 
 const bundle = require('./dist/server.bundle.js');
 
