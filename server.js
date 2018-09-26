@@ -31,6 +31,10 @@ app.use('/favicon.ico', function(req,res) {
 	res.sendFile(__dirname + '/img/favicon.ico');
 });
 
+app.use('/test', function(req,res) {
+	res.send('see if this updates');
+});
+
 app.use('/chat', function(req,res) {
 	res.sendFile(__dirname + '/views/chat.html');
 });
