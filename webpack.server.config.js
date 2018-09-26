@@ -13,13 +13,13 @@ var webpackConfig = merge(baseWebpackConfig, {
     filename: 'server.bundle.js',
     libraryTarget: 'commonjs2'
   },
-  optimization: {
-    minimize: true
-  },
   externals: Object.keys(require('./package.json').dependencies),
   plugins: [
     new webpack.DefinePlugin({
       'process.env': 'production'
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true
     })
   ]
 })
