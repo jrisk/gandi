@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run build && node app.js",
     "build": "npm run build-client && npm run build-server",
-    "build-client": "webpack --config webpack.config.js",
+    "build-client": "webpack",
     "build-server": "webpack --config webpack.server.config.js --hide-modules"
   },
   "author": "",
