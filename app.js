@@ -102,10 +102,10 @@ app.get('*', (req, res) => {
     const context = {
       title: 'Vue JS Project',
       meta: `
-      <meta description="vue javascript">
-      <link rel="shortcut icon" type="image/png" href="./dist/favicon.png"/>
-      <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
+      <meta description="vue javascript meta">
+      <link rel="stylesheet" type="text/css" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
       <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
+      <link rel="shortcut icon" type="image/png" href="./dist/favicon.png"/>
       `
     };
 
