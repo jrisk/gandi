@@ -4,11 +4,10 @@
   "description": "jarisk gandi git",
   "main": "app.js",
   "scripts": {
-    "start": "npm run build && npm run start-server",
+    "start": "npm run build && node app.js",
     "build": "npm run build-client && npm run build-server",
-    "build-client": "webpack --hide-modules",
-    "build-server": "webpack --config webpack.server.config.js --hide-modules",
-    "start-server": "node app.js"
+    "build-client": "webpack --config webpack.config.js --hide-modules",
+    "build-server": "webpack --config webpack.server.config.js --hide-modules"
   },
   "author": "",
   "license": "ISC",
