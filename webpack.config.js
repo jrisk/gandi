@@ -4,7 +4,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
   entry: './src/client-entry.js',
-  mode: 'development',
+  mode: 'production',
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
@@ -99,10 +99,7 @@ if (process.env.NODE_ENV === 'production') {
       'process.env': {
         NODE_ENV: '"production"'
       }
-    }),
-    //new VueLoaderPlugin(),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
     })
+    //new VueLoaderPlugin(),
   ])
 }
