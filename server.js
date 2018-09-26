@@ -7,15 +7,14 @@ var app = express();
 
 var http = require('http');
 var httpServer = http.Server(app);
-//var io = require('socket.io')(httpServer);
 
-var Remoji = require('random-emoji');
-var randomNames = require('./names');
-var Femoji = require('emoji');
+var io = require('socket.io')(httpServer);
+
+var chatApp = require('./chat-app');
+
+chatApp(io);
 
 var port = process.env.PORT || 8080;
-
-var clients = {};
 
 var projects = [
 	{ 'name': 'Node With Express and Angular', 'img': '/node.png','link': '#' },
@@ -67,31 +66,6 @@ app.use('/weather', function(req,res) {
 	res.sendFile(__dirname + '/weatherapp/weatherapp.html');
 });
 
-*/
-
-/*io.on('connection', function (socket) {
-	randomNames.getNewName(function(info) {
-		io.emit('join', randomNames.finish(info, socket, clients));
-	});
-
-	socket.on('join', function(person) {
-		io.emit('join message', person);
-	});
-	socket.on('chat message', function (msg) {
-		var randomEmoji = Remoji.random({count: 1});
-		var test = (randomEmoji[0].character, Femoji.unifiedToHTML(randomEmoji[0].character));
-		var personName = clients[socket.request.sessionID];
-		var time = new Date();
-		var timeNow = time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds() + '';
-		io.emit('chat message', {'msg': msg, 'user': personName, 'time': timeNow, 'emoji': test});
-	});
-	socket.on('disconnect', function () {
-		console.log('user disconnected');
-	});
-	socket.on('error', function(err) {
-		console.log(err);
-	})
-});
 */
 
 const bundle = require('./dist/server.bundle.js');
