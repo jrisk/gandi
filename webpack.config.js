@@ -10,9 +10,6 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'build.js'
   },
-  plugins: [
-    new VueLoaderPlugin()
-  ],
   module: {
     rules: [
       {
@@ -99,7 +96,7 @@ if (process.env.NODE_ENV === 'production') {
       'process.env': {
         NODE_ENV: '"production"'
       }
-    })
-    //new VueLoaderPlugin(),
+    }),
+    new VueLoaderPlugin()
   ])
 }
