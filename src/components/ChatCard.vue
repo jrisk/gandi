@@ -9,6 +9,6 @@
     <p class="card-text">
       Chat Program, made with Socket.IO and featuring random usernames and emojis
     </p>
-    <b-button href="#" variant="primary">Chat</b-button>
+    <b-button href="/chat" variant="primary">Chat</b-button>
   </b-card>
 </template>
