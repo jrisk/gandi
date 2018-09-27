@@ -22,16 +22,12 @@ var projects = [
 	{ 'name': 'Linux Installs and Scripting', 'img': '/tux.png','link': '#' }
 ];
 
-app.set('views', __dirname + '/views');
+app.use('/public', express.static(path.join(__dirname, './public')));
 
 app.use('/dist', express.static(path.join(__dirname, './dist')));
 
 app.use('/favicon.ico', function(req,res) {
-	res.sendFile(__dirname + '/img/favicon.ico');
-});
-
-app.use('/test', function(req,res) {
-	res.send('see if this updates');
+	res.sendFile(__dirname + '/public/img/favicon.ico');
 });
 
 app.use('/chat', function(req,res) {
@@ -43,14 +39,6 @@ app.get('/projects', function(req,res) {
 	console.log(proj);
 	res.send(proj);
 });
-
-app.get('/status', function(req,res) {
-	res.sendStatus(200);
-});
-
-app.use('/gallop', function(req,res) {
-	res.send('wip');
-})
 
 /*WEATHER JQUERY SUBMODULE
 

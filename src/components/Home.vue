@@ -1,8 +1,3 @@
 <template>
-	<div>Home</div>
+	<jarisk></jarisk>
 </template>
-
-<script>
-export default {
-}
-</script>
