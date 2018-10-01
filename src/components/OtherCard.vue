@@ -7,7 +7,7 @@
           style="max-width: 20rem;"
           class="mb-2">
     <p class="card-text">
-      See other projects, including a Jquery Weather App, a cryptocurrency API, a video watching lobby with Angular, tutorials, scripts, and more
+      More projects
     </p>
     <b-button href="#" variant="primary">Other</b-button>
   </b-card>
