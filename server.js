@@ -74,7 +74,8 @@ app.get('*', (req, res) => {
     const context = {
       title: 'Vue JS Project',
       meta: `
-      <meta description="vue javascript meta">
+      <meta description="vue javascript bootstrap skoolia">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" type="text/css" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
       <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
       <link rel="shortcut icon" type="image/png" href="./dist/favicon.png"/>
