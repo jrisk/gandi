@@ -3,7 +3,7 @@ import App from './App.vue'
 import { createRouter } from './router/router.js'
 //import { store } from './store.js'
 
-import { Modal, Navbar, Button, Nav, Form, FormInput, Card } from 'bootstrap-vue/es/components'
+import { Modal, Navbar, Button, Nav, Form, FormInput, Card, Tabs } from 'bootstrap-vue/es/components'
 import Menu from './components/Menu'
 import Login from './components/Login'
 import SkooliaNav from './components/SkooliaNav'
@@ -17,6 +17,8 @@ import SkooliaCard from './components/SkooliaCard'
 import ChatCard from './components/ChatCard'
 import OtherCard from './components/OtherCard'
 
+import Profile from './components/Profile'
+
 Vue.use(Modal);
 Vue.use(Navbar);
 Vue.use(Button);
@@ -24,6 +26,7 @@ Vue.use(Nav);
 Vue.use(Form);
 Vue.use(FormInput);
 Vue.use(Card);
+Vue.use(Tabs);
 
 Vue.component('jarisk', Jarisk);
 Vue.component('jarisk-menu', Menu);
@@ -33,6 +36,8 @@ Vue.component('jarisk-card-menu', CardMenu);
 Vue.component('skoolia-nav', SkooliaNav);
 Vue.component('skoolia-modal', SkooliaModal);
 Vue.component('skoolia-login', Login);
+
+Vue.component('skoolia-profile', Profile);
 
 Vue.component('skoolia-card', SkooliaCard);
 Vue.component('chat-card', ChatCard);
