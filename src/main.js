@@ -17,7 +17,11 @@ import SkooliaCard from './components/SkooliaCard'
 import ChatCard from './components/ChatCard'
 import OtherCard from './components/OtherCard'
 
-import Profile from './components/Profile'
+import SkooliaProfile from './components/SkooliaProfile'
+import UserTabs from './components/UserTabs'
+import UserHomeTab from './components/UserHomeTab'
+import UserTimelineTab from './components/UserTimelineTab'
+import UserProfileWork from './components/UserProfileWork'
 
 Vue.use(Modal);
 Vue.use(Navbar);
@@ -37,7 +41,12 @@ Vue.component('skoolia-nav', SkooliaNav);
 Vue.component('skoolia-modal', SkooliaModal);
 Vue.component('skoolia-login', Login);
 
-Vue.component('skoolia-profile', Profile);
+Vue.component('skoolia-profile', SkooliaProfile);
+Vue.component('user-tabs', UserTabs);
+Vue.component('user-home-tab', UserHomeTab);
+Vue.component('user-timeline-tab', UserTimelineTab);
+Vue.component('user-profile-work', UserProfileWork);
+
 
 Vue.component('skoolia-card', SkooliaCard);
 Vue.component('chat-card', ChatCard);

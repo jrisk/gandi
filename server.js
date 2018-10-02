@@ -34,6 +34,11 @@ app.use('/chat', function(req,res) {
 	res.sendFile(__dirname + '/views/chat.html');
 });
 
+app.post('/skoolia', function(req,res) {
+  console.log(req);
+  res.send('edit profile page');
+});
+
 app.get('/projects', function(req,res) {
 	var proj = JSON.stringify(projects);
 	console.log(proj);
