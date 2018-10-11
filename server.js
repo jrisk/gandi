@@ -11,7 +11,7 @@ var fs = require('fs');
 var app = express();
 
 //var db = require('./db') //sqlite or mysql, do models
-var enviro = require('./.enviro');
+//var enviro = require('./.enviro');
 
 //dev
 var connection = mysql.createConnection({
