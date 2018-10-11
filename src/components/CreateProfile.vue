@@ -92,17 +92,19 @@ export default {
 
     if (this.input.username != "" && this.input.password != "") {
 
-    var formdata = this.input;
+      var formdata = this.input;
 
-    axios
-    .post('/profile_create', formdata, {
-      headers: {
-        'Content-type': 'application/json'
+      axios
+      .post('/profile_create', formdata, {
+        headers: {
+          'Content-type': 'application/json'
+        }
+      })
+      .then (resp => (this.info = 'profile saved'))
+      this.$router.replace({ name: "profile" });
+
+      this.info = "Profile Saved";
       }
-    })
-    .then (resp => (this.info = 'profile saved'))
-
-    }
     }
   }
 }

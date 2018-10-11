@@ -18,7 +18,7 @@ export function createRouter() {
 			{ path: '/secure', component: Secure, name: 'secure' },
 			{ path: '/home', component: Home, name: 'home' },
 			{ path: '/skoolia', component: Login },
-			{ path: '/profile', component: SkooliaHome, name: 'skoolia_home'},	
+			{ path: '/profile', component: SkooliaHome, name: 'profile'},	
 			{ path: '/create', component: CreateProfile, name: 'create' }
 		]
 	});
