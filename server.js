@@ -4,7 +4,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 
 //dev db, all dbs?
-var mysql = require('mysql');
+//var mysql = require('mysql');
 
 var fs = require('fs');
 
@@ -13,7 +13,7 @@ var app = express();
 //var db = require('./db') //sqlite or mysql, do models
 //var enviro = require('./.enviro');
 
-//dev
+/*
 var connection = mysql.createConnection({
 
   host     : 'localhost',
@@ -22,6 +22,7 @@ var connection = mysql.createConnection({
   password : 'password' //enviro.password
 
 });
+*/
 
 //connection.connect();
 
