@@ -1,9 +1,29 @@
 var express = require('express');
 var path = require('path');
 
+var bodyParser = require('body-parser');
+
+//dev db, all dbs?
+var mysql = require('mysql');
+
 var fs = require('fs');
 
 var app = express();
+
+//var db = require('./db') //sqlite or mysql, do models
+var enviro = require('./.enviro');
+
+//dev
+var connection = mysql.createConnection({
+
+  host     : 'localhost',
+  port     : 3306,
+  user     : 'root',
+  password : 'password' //enviro.password
+
+});
+
+//connection.connect();
 
 var http = require('http');
 var httpServer = http.Server(app);
@@ -13,6 +33,9 @@ var io = require('socket.io')(httpServer);
 var chatApp = require('./chat-app');
 
 chatApp(io);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 var port = process.env.PORT || 8080;
 
@@ -37,6 +60,13 @@ app.use('/chat', function(req,res) {
 app.post('/skoolia', function(req,res) {
   console.log(req);
   res.send('edit profile page');
+});
+
+app.post('/profile_create', function(req,res) {
+  //database.save(req.body);
+  //session.save(req.body);
+  console.log(req.body.password);
+  res.sendStatus(200);
 });
 
 app.get('/projects', function(req,res) {
