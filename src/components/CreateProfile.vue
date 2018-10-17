@@ -29,19 +29,19 @@
           <legend class="col-form-label col-sm-2 pt-0">I want to</legend>
           <div class="col-sm-10">
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" v-model="input.teach" checked>
+              <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="1" v-model="input.teach" checked>
               <label class="form-check-label" for="gridRadios1">
                 Teach
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2" v-model="input.learn">
+              <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="1" v-model="input.learn">
               <label class="form-check-label" for="gridRadios2">
                 Learn
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" v-model="input.teach_learn">
+              <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="1" v-model="input.teach_learn">
               <label class="form-check-label" for="gridRadios3">
                 Both
               </label>
@@ -79,10 +79,10 @@ export default {
       input: {
         email: "",
         password: "",
-        teach: "",
-        learn: "",
-        teach_learn: "",
-        send_emails: ""
+        teach: 0,
+        learn: 0,
+        teach_learn: 0,
+        send_emails: 0
       },
       info: "Create Skoolia Profile"
     }

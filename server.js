@@ -4,27 +4,21 @@ var path = require('path');
 var bodyParser = require('body-parser');
 
 //dev db, all dbs?
-//var mysql = require('mysql');
+var mysql = require('mysql');
 
 var fs = require('fs');
 
 var app = express();
 
-//var db = require('./db') //sqlite or mysql, do models
-//var enviro = require('./.enviro');
-
-/*
 var connection = mysql.createConnection({
 
   host     : 'localhost',
   port     : 3306,
   user     : 'root',
-  password : 'password' //enviro.password
+  password : 'password',
+  database : 'test_db'
 
 });
-*/
-
-//connection.connect();
 
 var http = require('http');
 var httpServer = http.Server(app);
@@ -64,9 +58,34 @@ app.post('/skoolia', function(req,res) {
 });
 
 app.post('/profile_create', function(req,res) {
-  //database.save(req.body);
-  //session.save(req.body);
-  console.log(req.body.password);
+
+  var email = req.body.email;
+  var pass = req.body.password;
+  var send = req.body.send_emails;
+  var teach = req.body.teach;
+  var learn = req.body.learn;
+  var both = req.body.teach_learn;
+
+  if (both == '1') {
+    teach = 1;
+    learn = 1;
+  }
+
+  if (send == 'true') {
+    console.log(typeof send);
+    send = 1;
+  }
+  
+  connection.connect();
+
+  var query = 'INSERT INTO usr_test (email, password, send_email, teach, learn) VALUES ( "' + email + '", "' + pass + '", ' + send + ', ' + teach + ', ' + learn + ' )';
+  //(type, first_nm,last_nm,eml_addr,pwrd,img_url,img_top,img_left,gender,date_of_birth,location_region,location_city,location_county,location_state,location_country,location_latitude,location_longitude,location_display,native_language,native_country,skype_username,gmail_username,created_on_dt,modified_on_dt, desc, learn, teach, currency, charge, lang_exch, profile_img, sparrow_customer_token, braintree_customer_id, tz_set, tz_last_used, currency_last_used)'
+  connection.query(query, function(error, results, fields) {
+    if (error) throw error;
+  });
+
+  console.log('user saved');
+
   res.sendStatus(200);
 });
 
