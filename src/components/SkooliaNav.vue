@@ -8,7 +8,7 @@
   <b-collapse is-nav id="nav_collapse">
 
     <b-navbar-nav>
-      <b-nav-item href="#">Find Teacher/Student</b-nav-item> 
+      <b-nav-item href="/home">Home</b-nav-item> 
     </b-navbar-nav>
 
     <!-- Right aligned nav items -->

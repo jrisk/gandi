@@ -1,6 +1,5 @@
 <template>
 <div>
-<skoolia-nav></skoolia-nav>
 
 <div class="alert alert-primary create-profile" role="alert">{{info}}
 </div>

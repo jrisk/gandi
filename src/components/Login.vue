@@ -1,13 +1,23 @@
 <template>
-    <div id="login">
-        <h1>Login</h1>
-        <br><br>
-        <input type="text" name="username" v-model="input.username" placeholder="Username" />
-        <input type="password" name="password" v-model="input.password" placeholder="Password" />
-        <button type="button" v-on:click="login()">Login</button>
-        <br><br>
-        <h4 v-on:click="create_profile()">Not on Skoolia? Create a Profile</h4>
+<form>
+    <div id="login" class="container">
+        <div class="row justify-content-center margin-spacer">
+            <h1>Login</h1>
+        </div>
+        <div class="row justify-content-center margin-spacer">
+                <input class="form-control input-large" type="text" name="username" v-model="input.username" placeholder="Username" />
+        </div>
+        <div class="row justify-content-center margin-spacer">
+                <input type="password" name="password" class="form-control input-large" v-model="input.password" placeholder="Password" />
+        </div>
+        <div class="row justify-content-center margin-spacer">
+                <button type="submit" class="btn btn-primary" v-on:click="login()">Login</button>
+        </div>
+        <div class="row justify-content-center margin-spacer create-profile">
+                <button type="button" class="btn btn-light" v-on:click="create_profile()">Not on Skoolia? Create a Profile</button>
+        </div>
     </div>
+</form>
 </template>
 
 <script>
@@ -44,11 +54,15 @@
 
 <style scoped>
     #login {
-        width: 500px;
         border: 1px solid #CCCCCC;
         background-color: #FFFFFF;
-        margin: auto;
-        margin-top: 200px;
+        margin-top: 25px;
         padding: 20px;
+    }
+    .margin-spacer {
+        margin-bottom: 15px;
+    }
+    .create-profile {
+        cursor: pointer;
     }
 </style>
