@@ -20,7 +20,7 @@ export const store = new Vuex.Store({
 	actions: {
 		loadSession(context) {
 			axios
-				.get('http://localhost:8080/api/user-sess', { headers: {
+				.get('/api/user-sess', { headers: {
    				'Accept': 'application/json' }})
    			.then(r => r.data)
    			.then(user_info => {
@@ -34,7 +34,7 @@ export const store = new Vuex.Store({
 		}/*,
 		rankMarket(context) {
 			axios
-				.get('http://localhost:8080/cache/coin')
+				.get('/cache/coin')
 				.then(r => r.data)
 				.then(info => {
 					let ranked = [];

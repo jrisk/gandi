@@ -65,7 +65,7 @@ import axios from 'axios';
 
       const vm = this;
 
-      axios.get('http://localhost:8080/api/user-sess', {
+      axios.get('/api/user-sess', {
         headers: {
           'Content-Type': 'application/json'
         }

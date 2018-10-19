@@ -36,7 +36,7 @@ import axios from 'axios';
         },
         created: function() {
             const vm = this;
-            axios.get('http://localhost:8080/api/user-sess').then( function(resp) {
+            axios.get('/api/user-sess').then( function(resp) {
             console.log('user info');
             console.log(resp.data);
              if (resp.data.email) {
