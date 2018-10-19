@@ -1,6 +1,5 @@
 <template>
   <div class="profile-tab-data">
-  {{$store.state.userSession}}
     <div class="row">
       <div class="col-md-6">
         <label>User Id</label>
