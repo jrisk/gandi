@@ -1,11 +1,12 @@
 <template>
   <div class="profile-tab-data">
+  {{$store.state.userSession}}
     <div class="row">
       <div class="col-md-6">
         <label>User Id</label>
       </div>
       <div class="col-md-6">
-        <p>ArtieLang123</p>
+        <p>{{user.id}}</p>
       </div>
     </div>
     <div class="row">
@@ -13,7 +14,8 @@
         <label>Name</label>
       </div>
       <div class="col-md-6">
-        <p>Art McTeacher</p>
+        <p>{{user.first}}</p>
+        <p>{{user.last}}</p>
       </div>
     </div>
     <div class="row">
@@ -21,7 +23,7 @@
         <label>Email</label>
       </div>
       <div class="col-md-6">
-        <p>artmctec@gmail.com</p>
+        <p>{{user.email}}</p>
       </div>
     </div>
 
@@ -30,7 +32,7 @@
         <label>Phone</label>
       </div>
       <div class="col-md-6">
-        <p>123 456 7890</p>
+        <p>{{user.phone}}</p>
       </div>
     </div>
     <div class="row">
@@ -38,8 +40,48 @@
         <label>Profession</label>
       </div>
       <div class="col-md-6">
-        <p>Web Developer and Designer</p>
+        <p>{{user.profession}}</p>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import axios from 'axios';
+
+  export default {
+    data () {
+      return {
+        user: {
+          id: 4,
+          first: "first",
+          last: "asdf",
+          email: "rrr"
+        }
+      }
+    },
+    created: function() {
+      console.log('will user ever save');
+
+      const vm = this;
+
+      axios.get('http://localhost:8080/api/user-sess', {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then( function(resp) {
+      console.log('created resp');
+      console.log(resp.data);
+       vm.user = resp.data;
+       });
+    },
+    mounted: function() {
+      this.loadSesh();
+    },
+    methods: {
+      loadSesh () {
+        this.$store.dispatch('loadSession');
+      }
+    }
+  }
+</script>

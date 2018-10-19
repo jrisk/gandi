@@ -6,30 +6,26 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
 	state: {
-		coinResults: 'coin pls',
-		counter: 0,
-		coinRank: 'sorted and ranked coins'
+		userSession: 'user sesh pls',
+		counter: 0
 	},
 	mutations: {
-		updateMarket(state, coinResults) {
-			state.coinResults = coinResults
-		},
-		updateCoinRank(state, coinRank) {
-			state.coinRank = coinRank
+		updateSession(state, userSession) {
+			state.userSession = userSession;
 		},
 		increment(state) {
-			state.counter++
+			state.counter++;
 		}
 	},
 	actions: {
-		loadMarket(context) {
+		loadSession(context) {
 			axios
-				.get('http://localhost:8080/api', { headers: {
+				.get('http://localhost:8080/api/user-sess', { headers: {
    				'Accept': 'application/json' }})
    			.then(r => r.data)
-   			.then(coins => {
-   				let results = coins.data;
-   				context.commit('updateMarket', results)
+   			.then(user_info => {
+   				let results = user_info;
+   				context.commit('updateSession', results);
    			})
  		},
 		incrementAction(context) {
@@ -52,7 +48,7 @@ export const store = new Vuex.Store({
 					});
 
 					context.commit('updateCoinRank', ranked);
-				})*/
-		}
+				})
+		}*/
 	}
 })

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import { createRouter } from './router/router.js'
-//import { store } from './store.js'
+import { store } from './store.js'
 
 import { Modal, Navbar, Button, Nav, Form, FormInput, Card, Tabs } from 'bootstrap-vue/es/components'
 import Menu from './components/Menu'
@@ -58,6 +58,7 @@ export function createApp() {
 
 	const app = new Vue({
 		router,
+		store,
   		el: '#app',
   		render: h => h(App)
 	});

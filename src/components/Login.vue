@@ -1,17 +1,17 @@
 <template>
 <form>
-    <div id="login" class="container">
+    <div id="login" class="container form-group">
         <div class="row justify-content-center margin-spacer">
             <h1>Login</h1>
         </div>
-        <div class="row justify-content-center margin-spacer">
+        <div class="form-group row justify-content-center margin-spacer">
                 <input class="form-control input-large" type="text" name="username" v-model="input.username" placeholder="Username" />
         </div>
-        <div class="row justify-content-center margin-spacer">
+        <div class="row form-group justify-content-center margin-spacer">
                 <input type="password" name="password" class="form-control input-large" v-model="input.password" placeholder="Password" />
         </div>
         <div class="row justify-content-center margin-spacer">
-                <button type="submit" class="btn btn-primary" v-on:click="login()">Login</button>
+                <button type="button" class="btn btn-primary" v-on:click="login()">Login</button>
         </div>
         <div class="row justify-content-center margin-spacer create-profile">
                 <button type="button" class="btn btn-light" v-on:click="create_profile()">Not on Skoolia? Create a Profile</button>
@@ -21,26 +21,52 @@
 </template>
 
 <script>
+import axios from 'axios';
+
     export default {
         name: 'Login',
         data() {
             return {
                 input: {
                     username: "",
-                    password: ""
+                    password: "",
+                    id: 0
                 }
             }
         },
+        created: function() {
+            const vm = this;
+            axios.get('http://localhost:8080/api/user-sess').then( function(resp) {
+            console.log('user info');
+            console.log(resp.data);
+             if (resp.data.email) {
+                vm.$router.replace({ name: "profile" });
+             }
+             }).catch( err => console.log(err.code));
+        },
         methods: {
             login() {
+                const vm = this;
 
                 if (this.input.username != "" && this.input.password != "") {
-                    if(this.input.username == this.$parent.mockAccount.username && this.input.password == this.$parent.mockAccount.password) {
-                        this.$emit("authenticated", true);
-                        this.$router.replace({ name: "secure" });
-                    } else {
-                        console.log("The username and / or password is incorrect");
-                    }
+
+                var bodyForm = {};
+
+                bodyForm.username = this.input.username;
+                bodyForm.password = this.input.password;
+                    
+                    axios.post('/profile-login', bodyForm, {
+                        port: 8080,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then( function(resp) { }
+                    ).catch(err => 
+                        (console.log(err))
+                    ).then( function(res) {
+                        vm.$router.replace({ name: "secure" });
+                        }
+                    );
                 } else {
                     console.log("A username and password must be present");
                 }

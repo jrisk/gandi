@@ -88,6 +88,7 @@ export default {
   },
   methods: {
     sign_up() {
+    const vm = this;
 
     if (this.input.username != "" && this.input.password != "") {
 
@@ -100,7 +101,7 @@ export default {
         }
       })
       .then (resp => (this.info = 'profile saved'))
-      this.$router.replace({ name: "profile" });
+      vm.$router.replace({ name: "profile" });
 
       this.info = "Profile Saved";
       }

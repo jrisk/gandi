@@ -19,7 +19,7 @@
 
       <div class="col-md-6">
         <div class="profile-head">
-          <h5>
+          <h5 type="button" v-on:click="testUser()">
           Arthur McTeacher
           </h5>
           <h6>
@@ -50,6 +50,21 @@
   </form>           
 </div>
 </template>
+
+<script>
+export default {
+  data: {
+    user: {
+      id: 777
+    }
+  },
+  methods: {
+      testUser() {
+        console.log(this.user);
+    }
+  }
+}
+</script>
 
 <style>
 
