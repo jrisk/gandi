@@ -11,9 +11,7 @@ var fs = require('fs');
 var app = express();
 
 var connection = mysql.createConnection({
-
-  host     : 'localhost',
-  port     : 3306,
+  
   user     : 'root',
   socketPath: '/srv/run/mysqld/mysqld.sock',
   password : '',
