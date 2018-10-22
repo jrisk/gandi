@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Weather App and Testing 1.1</title>
+<link rel="stylesheet" href="/weatherapp/weatherapp.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+<div class="well">
+<div class="row">
+<div class="col-sm-6">
+
+<h1 id="city">Weather App City</h1>
+<h1><a id="temp" href="#" onClick="switchUnits();
+return false;" title="Click to switch between Fahrenheit and Celcius"></a></h1>
+</div>
+<div class="col-sm-6" id="parentnode">
+<h1 id="local">Find Weather in Any ZipCode</h1>
+<h1 id="weather">Local City</h1>
+<h1><a id="localtemp" href="#" onClick="switchUnitsLocal(); return false" title="Click to switch between Fahrenheit and Celcius"></a></h1>
+<h2 id="childnode"><input type="text" id="zipweather" name="zip" onkeypress="zipWeatherKey(event)" placeholder="Enter Zipcode"></h2>
+<h2><input id="zipsubmit" type="submit"  onClick="zipWeather()"></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="well">
+<div class="row">
+<div class="col-xs-12">
+<p>Powered using <a href="http://openweathermap.org">OpenWeatherMap API</a></p>
+<p>Made by <a href="http://riskvb.com">Jarisk</a></p>
+<script src="/weatherapp/weatherjquery.js"></script>
+</div>
+</div>
+</div>
+</body>
+</html>
