@@ -56,6 +56,10 @@ var projects = [
   { 'name': 'Linux Installs and Scripting', 'img': '/tux.png','link': '#' }
 ];
 
+app.use('/public', express.static(path.join(__dirname, './public')));
+
+app.use('/dist', express.static(path.join(__dirname, './dist')));
+
 app.use('/favicon.ico', function(req,res) {
   res.sendFile(__dirname + '/public/img/favicon.ico');
 });
