@@ -70,6 +70,10 @@ app.use('/chat', function(req,res) {
   res.sendFile(__dirname + '/views/chat.html');
 });
 
+app.use('/weather', function(req,res) {
+  res.sendFile(__dirname + './weatherapp/weatherapp.html');
+});
+
 app.post('/skoolia', function(req,res) {
   console.log(req);
   res.send('edit profile page');
@@ -175,18 +179,6 @@ app.get('/projects', function(req,res) {
   var proj = JSON.stringify(projects);
   console.log(proj);
   res.send(proj);
-});
-
-app.use('/weatherapp/weatherapp.css', function(req,res) {
-  res.sendFile(__dirname + './weatherapp/weatherapp.css');
-});
-
-app.use('/weatherapp/weatherjquery.js', function(req,res) {
-  res.sendFile(__dirname + './weatherapp/weatherjquery.js');
-});
-
-app.use('/weather', function(req,res) {
-  res.sendFile(__dirname + './weatherapp/weatherapp.html');
 });
 
 const bundle = require('./dist/server.bundle.js');
