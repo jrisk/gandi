@@ -1,0 +1,3 @@
+[submodule "weatherapp"]
+	path = weatherapp
+	url = https://github.com/jrisk/weatherapp
