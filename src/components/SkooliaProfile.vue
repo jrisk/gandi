@@ -19,11 +19,11 @@
 
       <div class="col-md-6">
         <div class="profile-head">
-          <h5 type="button" v-on:click="testUser()">
-          Arthur McTeacher
+          <h5 type="button" v-if="user">
+          <p> {{user.first_name }} {{ user.last_name }}</p>
           </h5>
           <h6>
-          Web Developer and Designer
+          {{user.profession}}
           </h6>
           <p class="profile-rating">RANKINGS : <span>8/10</span>
           </p>
@@ -59,9 +59,15 @@ export default {
     }
   },
   methods: {
-      testUser() {
-        console.log(this.user);
+    loadSesh () {
+      this.$store.dispatch('loadSession');
+    },
+    testUser() {
+      console.log(this.user);
     }
+  },
+  mounted: function() {
+    this.loadSesh();
   }
 }
 </script>
