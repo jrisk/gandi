@@ -42,7 +42,8 @@ app.set('trust proxy', 1) // trust first proxy
 app.use(session({
   secret: 'le shiggy diggy',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  maxAge: 3600000
   //,
   //cookie: { secure: true }
 }));
