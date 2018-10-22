@@ -22,9 +22,6 @@
           <h5 type="button" v-if="user">
           <p> {{user.first_name }} {{ user.last_name }}</p>
           </h5>
-          <h6>
-          {{user.profession}}
-          </h6>
           <p class="profile-rating">RANKINGS : <span>8/10</span>
           </p>
         </div>
@@ -63,11 +60,13 @@ export default {
       this.$store.dispatch('loadSession');
     },
     testUser() {
+    console.log('test');
       console.log(this.user);
     }
   },
   mounted: function() {
     this.loadSesh();
+    console.log('done loading sesh');
   }
 }
 </script>

@@ -174,8 +174,6 @@ app.get('/projects', function(req,res) {
   res.send(proj);
 });
 
-/*WEATHER JQUERY SUBMODULE
-
 app.use('/weatherapp/weatherapp.css', function(req,res) {
   res.sendFile(__dirname + '/weatherapp/weatherapp.css');
 });
@@ -187,8 +185,6 @@ app.use('/weatherapp/weatherjquery.js', function(req,res) {
 app.use('/weather', function(req,res) {
   res.sendFile(__dirname + '/weatherapp/weatherapp.html');
 });
-
-*/
 
 const bundle = require('./dist/server.bundle.js');
 

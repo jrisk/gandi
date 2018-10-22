@@ -1,5 +1,5 @@
 <template>
-    <b-card title="Other Stuff"
+    <b-card title="Weather App"
           img-src="https://picsum.photos/600/300/?image=25"
           img-alt="Other Picture"
           img-top
@@ -9,6 +9,6 @@
     <p class="card-text">
       More projects
     </p>
-    <b-button href="#" variant="primary">Other</b-button>
+    <b-button href="/weather" variant="primary">Other</b-button>
   </b-card>
 </template>
