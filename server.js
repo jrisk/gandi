@@ -69,7 +69,7 @@ app.use('/chat', function(req,res) {
 });
 
 app.use('/weather', function(req,res) {
-  res.sendFile(__dirname + './weatherapp/weatherapp.html');
+  res.sendFile(__dirname + '/views/weatherapp.html');
 });
 
 app.post('/skoolia', function(req,res) {
