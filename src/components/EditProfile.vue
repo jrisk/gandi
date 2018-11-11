@@ -1,131 +1,91 @@
 <template>
-<div class="container emp-profile">
-  <form method="post">
+<div>
 
-  <b-modal id="changePicModal" title="Skoolia">
-    <p class="my-4">Change your Picture</p>
-  </b-modal>
+<div class="alert alert-primary create-profile" role="alert">info here</div>
 
-    <div class="row">
-      <div class="col-md-4">
-        <div class="profile-img" href="#" v-b-modal.changePicModal>
-          <img src="/public/img/happy.png" alt=""/>
-          <div class="file btn btn-lg btn-primary">
-            Change Photo
-            <input type="file" name="file"/>
-          </div>
+  <div class="container emp-profile" v-if="input">
+
+    <form v-on:submit="editProfile()">
+      <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+
+          <input type="email" class="form-control" id="inputEmail3" v-model="input.email" placeholder="Email">
+
+        </div>
+      </div>
+      <div class="form-group row">
+
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-10">
+
+          <input type="password" class="form-control" id="inputPassword3" v-model="input.password" placeholder="Password">
+
         </div>
       </div>
 
-      <div class="col-md-6">
-        <div class="profile-head">
-          <h5>
-          Arthur McTeacher
-          </h5>
-          <h6>
-          Web Developer and Designer
-          </h6>
-          <p class="profile-rating">RANKINGS : <span>8/10</span>
-          </p>
+      <div class="form-group row">
+
+        <label for="firstname" class="col-sm-2 col-form-label">First Name</label>
+        <div class="col-sm-10">
+
+          <input type="string" class="form-control" id="inputfirstname" v-model="input.first_name" placeholder="First">
+
         </div>
       </div>
 
-      <div class="col-md-2">
-        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+      <div class="form-group row">
+
+        <label for="lastname" class="col-sm-2 col-form-label">Last Name</label>
+        <div class="col-sm-10">
+
+          <input type="string" class="form-control" id="inputlastname" v-model="input.last_name" placeholder="Last">
+
+        </div>
       </div>
 
-    </div>
+      <div class="form-group row">
+          <div class="col-sm-12">
 
-  <div class="row">
+            <input class="form-check-input" type="checkbox" id="gridCheck1" v-model="input.send_emails">
+            <label class="form-check-label" for="gridCheck1">
+              Email me Skoolia updates
+            </label>
+        </div>
+      </div>
 
-    <div class="col-md-4">
-      <user-profile-work></user-profile-work>
-    </div>
+      <div class="form-group row">
+        <div class="col-sm-12">
+          <button type="submit" class="btn btn-primary" v-on:click="loadEditSesh()">Sign Up</button>
+        </div>
+      </div>
 
-    <div class="col-md-8 user-tabs">
-      <user-tabs></user-tabs>
-    </div>
-
+    </form>
   </div>
-  </form>           
 </div>
 </template>
 
-<style>
+<script>
+export default {
+  data () {
+    return {
+      input: {
 
-body{
-  background: -webkit-linear-gradient(left, #3931af, #00c6ff);
-}
-.emp-profile{
-    padding: 3%;
-    margin-top: 3%;
-    margin-bottom: 3%;
-    border-radius: 0.5rem;
-    background: #fff;
-    text-align: center;
-}
-
-@media (min-width: 768px) {
-  .user-tabs {
-    margin-top: -8%;
+      }
+    }
+  },
+  mounted: function() {
+    this.loadEditSesh();
+    console.log('mounted load edit');
+  },
+  created: function() {
+    this.loadEditSesh();
+  },
+  methods: {
+    loadEditSesh() {
+      this.$store.dispatch('loadTestSession');
+      this.input = this.$store.state.testSession;
+    }
   }
 }
-
-.profile-img{
-    text-align: center;
-}
-.profile-img img{
-    width: 70%;
-    height: 100%;
-}
-.profile-img .file {
-    position: relative;
-    overflow: hidden;
-    margin-top: -20%;
-    width: 70%;
-    border: none;
-    border-radius: 0;
-    font-size: 15px;
-    background: #212529b8;
-}
-.profile-img .file input {
-    position: absolute;
-    opacity: 0;
-    right: 0;
-    top: 0;
-}
-.profile-head h5{
-    color: #333;
-}
-.profile-head h6{
-    color: #0062cc;
-}
-.profile-edit-btn{
-    border: none;
-    border-radius: 1.5rem;
-    width: 70%;
-    padding: 2%;
-    font-weight: 600;
-    color: #6c757d;
-    cursor: pointer;
-    white-space: normal;
-}
-.profile-rating{
-    font-size: 12px;
-    color: #818182;
-    margin-top: 5%;
-}
-.profile-rating span{
-    color: #495057;
-    font-size: 15px;
-    font-weight: 600;
-}
-.profile-head .nav-tabs .nav-link{
-    font-weight:600;
-    border: none;
-}
-.profile-head .nav-tabs .nav-link.active{
-    border: none;
-    border-bottom:2px solid #0062cc;
-}
-</style>
+</script>

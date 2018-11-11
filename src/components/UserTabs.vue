@@ -1,12 +1,5 @@
 <template>
-	<b-tabs class="user-b-tabs">
-		<b-tab title="Home" active>
-			<user-home-tab></user-home-tab>
-		</b-tab>
-		<b-tab title="Timeline">
-			<user-timeline-tab></user-timeline-tab>
-		</b-tab>
-	</b-tabs>
+	<user-home-tab></user-home-tab>
 </template>
 
 <style>

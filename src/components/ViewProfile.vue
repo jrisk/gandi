@@ -1,6 +1,6 @@
 <template>
 <div class="container emp-profile">
-  <form v-on:submit="editProfile()">
+  <form method="post">
 
   <b-modal id="changePicModal" title="Skoolia">
     <p class="my-4">Change your Picture</p>
@@ -19,8 +19,8 @@
 
       <div class="col-md-6">
         <div class="profile-head">
-          <h5 type="button" v-if="user">
-          <p> {{user.first_name }} {{ user.last_name }}</p>
+          <h5>
+          Arthur McTeacher
           </h5>
           <p class="profile-rating">RANKINGS : <span>8/10</span>
           </p>
@@ -28,7 +28,7 @@
       </div>
 
       <div class="col-md-2">
-        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+        <input type="submit" v-on:click="edit_profile()" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
       </div>
 
     </div>
@@ -50,22 +50,10 @@
 
 <script>
 export default {
-  data: {
-    user: {
-      id: 777
-    }
-  },
   methods: {
-    loadSesh () {
-      this.$store.dispatch('loadSession');
-    },
-    editProfile() {
-      this.$router.replace({ name: "edit_profile" });
+    edit_profile () {
+      vm.$router.replace({ name: "edit_profile" });
     }
-  },
-  mounted: function() {
-    this.loadSesh();
-    console.log('done loading sesh');
   }
 }
 </script>

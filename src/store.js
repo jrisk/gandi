@@ -7,11 +7,24 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state: {
 		userSession: 'user sesh pls',
-		counter: 0
+		testSession: {
+			email: "store email",
+	        password: "",
+	        teach: 0,
+	        learn: 0,
+	        first_name: "stoer firest",
+	        last_name: "store last",
+	        teach_learn: 0,
+	        send_emails: 0,
+			counter: 0
+		}
 	},
 	mutations: {
 		updateSession(state, userSession) {
 			state.userSession = userSession;
+		},
+		updateTestSession(state, testSession) {
+			state.testSession = testSession;
 		},
 		increment(state) {
 			state.counter++;
@@ -26,6 +39,16 @@ export const store = new Vuex.Store({
    			.then(user_info => {
    				let results = user_info;
    				context.commit('updateSession', results);
+   			})
+ 		},
+ 		loadTestSession(context) {
+			axios
+				.get('/api/test-sess', { headers: {
+   				'Accept': 'application/json' }})
+   			.then(r => r.data)
+   			.then(user_info => {
+   				let results = user_info;
+   				context.commit('updateTestSession', results);
    			})
  		},
 		incrementAction(context) {

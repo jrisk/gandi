@@ -1,16 +1,12 @@
 <template>
-  <div class="profile-work">
-    <p>WORK LINK</p>
-    <a href="">Website Link</a><br>
-    <a href="">Bootsnipp Profile</a><br>
-    <a href="">StackOverflow Profile</a><br>
-    <br>
-    <p>SKILLS</p>
-    <a href="">Web Designer</a><br>
-    <a href="">Web Developer</a><br>
-    <a href="">WordPress</a><br>
-    <a href="">WooCommerce</a><br>
-    <a href="">PHP, Javascript</a><br>
+  <div>
+    <textarea id="textarea1"
+                     v-model="text"
+                     placeholder="Enter something"
+                     :rows="3"
+                     :max-rows="6">
+    </textarea>
+    <pre class="mt-3">text stuff</pre>
   </div>
 </template>
 

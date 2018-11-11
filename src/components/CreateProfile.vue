@@ -23,40 +23,33 @@
 
         </div>
       </div>
-      <fieldset class="form-group">
-        <div class="row">
-          <legend class="col-form-label col-sm-2 pt-0">I want to</legend>
-          <div class="col-sm-10">
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="1" v-model="input.teach" checked>
-              <label class="form-check-label" for="gridRadios1">
-                Teach
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="1" v-model="input.learn">
-              <label class="form-check-label" for="gridRadios2">
-                Learn
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="1" v-model="input.teach_learn">
-              <label class="form-check-label" for="gridRadios3">
-                Both
-              </label>
-            </div>
-          </div>
-        </div>
-      </fieldset>
+
       <div class="form-group row">
-        <div class="col-sm-2">Checkbox</div>
+
+        <label for="firstname" class="col-sm-2 col-form-label">First Name</label>
         <div class="col-sm-10">
-          <div class="form-check">
+
+          <input type="string" class="form-control" id="inputfirstname" v-model="input.first_name" placeholder="First">
+
+        </div>
+      </div>
+
+      <div class="form-group row">
+
+        <label for="lastname" class="col-sm-2 col-form-label">Last Name</label>
+        <div class="col-sm-10">
+
+          <input type="string" class="form-control" id="inputlastname" v-model="input.last_name" placeholder="Last">
+
+        </div>
+      </div>
+
+      <div class="form-group row">
+          <div class="col-sm-12">
             <input class="form-check-input" type="checkbox" id="gridCheck1" v-model="input.send_emails">
             <label class="form-check-label" for="gridCheck1">
-              Email me Skoolia updates sometimes
+              Email me Skoolia updates
             </label>
-          </div>
         </div>
       </div>
       <div class="form-group row">

@@ -20,7 +20,7 @@ import OtherCard from './components/OtherCard'
 import SkooliaProfile from './components/SkooliaProfile'
 import UserTabs from './components/UserTabs'
 import UserHomeTab from './components/UserHomeTab'
-import UserTimelineTab from './components/UserTimelineTab'
+
 import UserProfileWork from './components/UserProfileWork'
 
 Vue.use(Modal);
@@ -44,7 +44,7 @@ Vue.component('skoolia-login', Login);
 Vue.component('skoolia-profile', SkooliaProfile);
 Vue.component('user-tabs', UserTabs);
 Vue.component('user-home-tab', UserHomeTab);
-Vue.component('user-timeline-tab', UserTimelineTab);
+
 Vue.component('user-profile-work', UserProfileWork);
 
 
