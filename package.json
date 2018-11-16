@@ -8,7 +8,7 @@
     "dev-start": "npm run build && npm run dev-server",
     "dev-server": "node dev-server.js",
     "build": "npm run build-client && npm run build-server",
-    "build-client": "cross-env NODE_ENV=production webpack --hide-modules",
+    "build-client": "cross-env NODE_ENV=production webpack",
     "build-server": "cross-env NODE_ENV=production webpack --config webpack.server.config.js --hide-modules"
   },
   "author": "",

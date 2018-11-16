@@ -64,7 +64,9 @@ import axios from 'axios';
 
       const vm = this;
 
-      axios.get('/api/user-sess', {
+      console.log(`${process.env.NODE_ENV}`);
+
+      axios.get(`${process.env.NODE_HOST}:${process.env.NODE_PORT}/api/test-sess`, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -72,7 +74,7 @@ import axios from 'axios';
       console.log('created resp');
       console.log(resp.data);
        vm.user = resp.data;
-       });
+       }).catch( (err) => console.log(err) );
     },
     mounted: function() {
       this.loadSesh();

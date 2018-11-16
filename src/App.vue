@@ -2,15 +2,18 @@
   <div id="app">
   	<Navigation></Navigation>
     <router-view></router-view>
+    <Chat></Chat>
   </div>
 </template>
 
 <script>
 import Navigation from './components/SkooliaNav.vue'
+import ChatButton from './components/ChatButton.vue'
 
 export default {
 	components: {
-		'Navigation': Navigation
+		'Navigation': Navigation,
+    'Chat': ChatButton
 	}
 }
 </script>

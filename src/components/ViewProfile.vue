@@ -20,10 +20,8 @@
       <div class="col-md-6">
         <div class="profile-head">
           <h5>
-          Arthur McTeacher
+          First Name last naem
           </h5>
-          <p class="profile-rating">RANKINGS : <span>8/10</span>
-          </p>
         </div>
       </div>
 
@@ -116,16 +114,6 @@ body{
     color: #6c757d;
     cursor: pointer;
     white-space: normal;
-}
-.profile-rating{
-    font-size: 12px;
-    color: #818182;
-    margin-top: 5%;
-}
-.profile-rating span{
-    color: #495057;
-    font-size: 15px;
-    font-weight: 600;
 }
 .profile-head .nav-tabs .nav-link{
     font-weight:600;
