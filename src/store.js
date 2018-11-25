@@ -8,15 +8,18 @@ export const store = new Vuex.Store({
 	state: {
 		userSession: 'user sesh pls',
 		testSession: {
-			email: "store email",
-	        password: "",
-	        teach: 0,
-	        learn: 0,
-	        first_name: "stoer firest",
-	        last_name: "store last",
-	        teach_learn: 0,
-	        send_emails: 0,
-			counter: 0
+      id: 1,
+      email: 'server email',
+      password: 'pass',
+      username: 'username',
+      first_name: 'server first',
+      last_name: 'server last',
+      phone: '',
+      profession: '',
+      send_email: 0,
+      teach: 0,
+      learn: 0,
+      about_me: 'hello this is about text'
 		}
 	},
 	mutations: {

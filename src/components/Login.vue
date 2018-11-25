@@ -8,7 +8,10 @@
                 <input class="form-control input-large" type="text" name="username" v-model="input.username" placeholder="Username" />
         </div>
         <div class="row form-group justify-content-center margin-spacer">
-                <input type="password" name="password" class="form-control input-large" v-model="input.password" placeholder="Password" />
+                <input type="password"
+                name="password" 
+                autocomplete=""
+                class="form-control input-large" v-model="input.password" placeholder="Password" />
         </div>
         <div class="row justify-content-center margin-spacer">
                 <button type="button" class="btn btn-primary" v-on:click="login()">Login</button>
@@ -36,8 +39,14 @@ import axios from 'axios';
         },
         created: function() {
             const vm = this;
-            axios.get('/api/user-sess').then( function(resp) {
-            console.log('user info');
+            var port = process.env.NODE_PORT;
+            var host = process.env.NODE_HOST;
+            var url = '/api/user-sess';
+
+            var test_url = host + ':' + port + url;
+
+            axios.get(test_url).then( function(resp) {
+
             console.log(resp.data);
              if (resp.data.email) {
                 vm.$router.replace({ name: "profile" });

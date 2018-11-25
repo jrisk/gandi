@@ -6,3 +6,13 @@ change cross-env to --env flag
 neither is the previous workaround cross-env NODE_ENV=production webpack. Recent releases of Webpack, with almost no fanfare and uncharacteristically little documentation, solved the problem of injecting enviroment variables into the Webpack config, and the solution is far simpler than the vast majority of tutorials will suggest.
 
 The command line option --env allows you to control as many variables as you like, such as --env.production or --env.platform=web, that will be accessible by the webpack config. You put in a simple check like:
+
+// Set config defaults when creating the instance
+const instance = axios.create({
+  baseURL: 'https://api.example.com'
+});
+
+global VUE bus for propagating user object across vue templates:
+
+https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats
+https://stackoverflow.com/questions/41813616/vue-js-not-propagating-changes-from-parent-to-component

@@ -89,28 +89,6 @@ app.get('/api/user-sess', function(req,res) {
   }
 });
 
-app.get('/api/test-sess', function(req,res) {
-  console.log('test-sess done');
-  if (req.session.user) {
-    res.send(req.session.user);
-  }
-  else {
-    test_user = {
-      email: "server email",
-      password: "",
-      teach: 0,
-      learn: 0,
-      first_name: "server firest",
-      last_name: "server last",
-      teach_learn: 0,
-      send_emails: 0,
-      counter: 0
-    };
-    req.session.user = test_user;
-    res.send(req.session.user);
-  }
-});
-
 app.get('/profile-login', function(req,res) {
   if (req.session.user) {
     console.log('user already in sesh');

@@ -20,7 +20,7 @@
       <div class="col-md-6">
         <div class="profile-head">
           <h5>
-          First Name last naem
+          First Name last name
           </h5>
         </div>
       </div>

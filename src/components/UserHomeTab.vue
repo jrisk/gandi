@@ -13,35 +13,21 @@
         <label>Name</label>
       </div>
       <div class="col-md-6">
-        <p>{{user.first}}</p>
-        <p>{{user.last}}</p>
+        <p>{{user.first_name}}</p>
+        <p>{{user.last_name}}</p>
       </div>
     </div>
     <div class="row">
       <div class="col-md-6">
         <label>Email</label>
       </div>
+
       <div class="col-md-6">
         <p>{{user.email}}</p>
       </div>
+
     </div>
 
-    <div class="row">
-      <div class="col-md-6">
-        <label>Phone</label>
-      </div>
-      <div class="col-md-6">
-        <p>{{user.phone}}</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <label>Profession</label>
-      </div>
-      <div class="col-md-6">
-        <p>{{user.profession}}</p>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -60,13 +46,16 @@ import axios from 'axios';
       }
     },
     created: function() {
-      console.log('will user ever save');
 
       const vm = this;
 
-      console.log(`${process.env.NODE_ENV}`);
+      var port = process.env.NODE_PORT;
+      var host = process.env.NODE_HOST;
+      var url = '/api/user-sess';
 
-      axios.get(`${process.env.NODE_HOST}:${process.env.NODE_PORT}/api/test-sess`, {
+      var test_url = host + ':' + port + url;
+
+      axios.get(test_url, {
         headers: {
           'Content-Type': 'application/json'
         }

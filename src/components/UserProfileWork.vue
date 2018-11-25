@@ -1,14 +1,20 @@
 <template>
   <div>
-    <textarea id="textarea1"
-                     v-model="text"
-                     placeholder="Enter something"
-                     :rows="3"
-                     :max-rows="6">
-    </textarea>
-    <pre class="mt-3">text stuff</pre>
+    <div class="container">{{user.about_me}}</div>
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+  return {
+    user: {
+      about_me: "about me non-global"
+      }
+    }
+  }
+}
+</script>
 
 <style>
 .profile-work{

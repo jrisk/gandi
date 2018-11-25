@@ -50,7 +50,8 @@
 export default {
   data: {
     user: {
-      id: 777
+      id: 777,
+      about_me: "skoolia profile about me stuff"
     }
   },
   methods: {
