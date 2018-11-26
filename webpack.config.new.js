@@ -79,6 +79,6 @@ module.exports = (env = {}) => {
       }),
       new VueLoaderPlugin()
     ],
-    devtool: '#eval-source-map'
+    //devtool: '#eval-source-map' //this bloats it
   }
 }
