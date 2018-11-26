@@ -5,8 +5,8 @@
           alt="Chat Picture"
           height="60px"
           width="60px" />
-  </div>
   </a>
+  </div>
 </template>
 
 <style>

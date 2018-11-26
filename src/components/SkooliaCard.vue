@@ -1,6 +1,6 @@
 <template> 
   <b-card title="Skoolia"
-          img-src="/public/img/online-learning.jpg"
+          img-src="/public/img/computer_job.png"
           img-alt="Skoolia Picture"
           img-top
           tag="article"

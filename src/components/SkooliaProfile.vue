@@ -2,17 +2,13 @@
 <div class="container emp-profile">
   <form v-on:submit="editProfile()">
 
-  <b-modal id="changePicModal" title="Skoolia">
-    <p class="my-4">Change your Picture</p>
-  </b-modal>
-
     <div class="row">
       <div class="col-md-4">
-        <div class="profile-img" href="#" v-b-modal.changePicModal>
+        <div class="profile-img" href="#">
           <img src="/public/img/happy.png" alt=""/>
           <div class="file btn btn-lg btn-primary">
             Change Photo
-            <input type="file" name="file"/>
+            <input type="file" name="file" accept=".jpg, .jpeg, .png" />
           </div>
         </div>
       </div>
@@ -26,7 +22,7 @@
       </div>
 
       <div class="col-md-2">
-        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+        <input type="submit" class="profile-edit-btn" value="Edit Profile"/>
       </div>
 
     </div>

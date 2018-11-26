@@ -13,8 +13,7 @@
         <label>Name</label>
       </div>
       <div class="col-md-6">
-        <p>{{user.first_name}}</p>
-        <p>{{user.last_name}}</p>
+        <p>{{user.first_name}} {{user.last_name}}</p>
       </div>
     </div>
     <div class="row">
@@ -48,6 +47,8 @@ import axios from 'axios';
     created: function() {
 
       const vm = this;
+
+      console.log(process.env.HOSTNAME);
 
       var port = process.env.NODE_PORT;
       var host = process.env.NODE_HOST;
