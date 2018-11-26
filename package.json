@@ -5,11 +5,14 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev-start": "npm run build && npm run dev-server",
+    "dev-start": "npm run dev-build && npm run dev-server",
+    "dev-build": "npm run dev-build-client && npm run dev-build-server",
+    "dev-build-client": "webpack --config webpack.config.new.js --env.NODE_ENV=production --env.NODE_PORT=8080 --env.NODE_HOST=http://localhost --env.production",
+    "dev-build-server": "webpack --config webpack.server.config.js --env.NODE_ENV=production",
     "dev-server": "node dev-server.js",
     "build": "npm run build-client && npm run build-server",
-    "build-client": "cross-env NODE_ENV=development webpack --hide-modules",
-    "build-server": "cross-env NODE_ENV=development webpack --config webpack.server.config.js --hide-modules"
+    "build-client": "cross-env NODE_ENV=production webpack --config webpack.config.old.js --hide-modules",
+    "build-server": "cross-env NODE_ENV=production webpack --config webpack.server.config.js --hide-modules"
   },
   "author": "",
   "license": "ISC",

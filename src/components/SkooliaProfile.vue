@@ -44,10 +44,12 @@
 
 <script>
 export default {
-  data: {
-    user: {
-      id: 777,
-      about_me: "skoolia profile about me stuff"
+  data () {
+    return {
+      user: {
+        id: 777,
+        about_me: "skoolia profile about me stuff"
+      }
     }
   },
   methods: {

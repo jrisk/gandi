@@ -39,6 +39,10 @@ import axios from 'axios';
         },
         created: function() {
             const vm = this;
+
+            console.log('login process');
+            console.log(process.env);
+
             var port = process.env.NODE_PORT;
             var host = process.env.NODE_HOST;
             var url = '/api/user-sess';

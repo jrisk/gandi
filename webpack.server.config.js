@@ -1,7 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var merge = require('webpack-merge')
-var baseWebpackConfig = require('./webpack.config')
+var baseWebpackConfig = require('./webpack.config.old')
 var webpackConfig = merge(baseWebpackConfig, {
   target: 'node',
   entry: {

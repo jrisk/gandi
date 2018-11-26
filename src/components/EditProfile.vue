@@ -76,7 +76,6 @@ export default {
   },
   mounted: function() {
     this.loadEditSesh();
-    console.log('mounted load edit');
   },
   created: function() {
     this.loadEditSesh();
