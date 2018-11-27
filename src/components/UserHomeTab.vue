@@ -49,7 +49,6 @@ import axios from 'axios';
       const vm = this;
 
       console.log('userhome process');
-      console.log(process.env);
 
       var port = process.env.NODE_PORT;
       var host = process.env.NODE_HOST;

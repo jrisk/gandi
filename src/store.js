@@ -8,18 +8,18 @@ export const store = new Vuex.Store({
 	state: {
 		userSession: 'user sesh pls',
 		testSession: {
-      id: 1,
-      email: 'server email',
-      password: 'pass',
-      username: 'username',
-      first_name: 'server first',
-      last_name: 'server last',
-      phone: '',
-      profession: '',
-      send_email: 0,
-      teach: 0,
-      learn: 0,
-      about_me: 'hello this is about text'
+	      id: 1,
+	      email: 'store email',
+	      password: '',
+	      username: 'store user',
+	      first_name: 'store first',
+	      last_name: 'store last',
+	      phone: '',
+	      profession: '',
+	      send_email: 0,
+	      teach: 0,
+	      learn: 0,
+	      about_me: 'hello this is about text'
 		}
 	},
 	mutations: {
@@ -37,16 +37,6 @@ export const store = new Vuex.Store({
 		loadSession(context) {
 			axios
 				.get('/api/user-sess', { headers: {
-   				'Accept': 'application/json' }})
-   			.then(r => r.data)
-   			.then(user_info => {
-   				let results = user_info;
-   				context.commit('updateSession', results);
-   			})
- 		},
- 		loadTestSession(context) {
-			axios
-				.get('/api/test-sess', { headers: {
    				'Accept': 'application/json' }})
    			.then(r => r.data)
    			.then(user_info => {

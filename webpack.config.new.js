@@ -5,8 +5,17 @@ const { VueLoaderPlugin } = require('vue-loader')
 module.exports = (env = {}) => {
   // Variables set by npm scripts in package.json
   const isProduction = env.production === true
-  const HOST = env.NODE_HOST
-  const PORT = env.NODE_PORT // 'default' by default
+
+    var HOST = 'http://localhost'
+    var PORT = 8080
+    var ENV = 'prod';
+
+    if (!isProduction) {
+      HOST = 'jarisk.com'
+      PORT = 80
+      ENV = 'local';
+    }
+
 
   return {
     entry: './src/client-entry.js',
@@ -72,7 +81,7 @@ module.exports = (env = {}) => {
     plugins: [
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: JSON.stringify(HOST), //env
+          NODE_ENV: JSON.stringify(ENV),
           NODE_HOST: JSON.stringify(HOST),
           NODE_PORT: JSON.stringify(PORT)
         }

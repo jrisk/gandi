@@ -19,7 +19,8 @@
         <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
         <div class="col-sm-10">
 
-          <input type="password" class="form-control" id="inputPassword3" v-model="input.password" placeholder="Password">
+          <input type="password" class="form-control" id="inputPassword3" v-model="input.password" placeholder="Password"
+          autocomplete="">
 
         </div>
       </div>
@@ -29,7 +30,7 @@
         <label for="firstname" class="col-sm-2 col-form-label">First Name</label>
         <div class="col-sm-10">
 
-          <input type="string" class="form-control" id="inputfirstname" v-model="input.first_name" placeholder="First">
+          <input type="string" class="form-control" id="input-first-name" v-model="input.first_name" placeholder="First">
 
         </div>
       </div>
@@ -75,14 +76,13 @@ export default {
     }
   },
   mounted: function() {
-    this.loadEditSesh();
+     this.loadEditSesh();
   },
   created: function() {
-    this.loadEditSesh();
   },
   methods: {
     loadEditSesh() {
-      this.$store.dispatch('loadTestSession');
+      this.$store.dispatch('loadSession');
       this.input = this.$store.state.testSession;
     }
   }

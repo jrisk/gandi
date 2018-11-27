@@ -7,8 +7,8 @@
     "start": "node server.js",
     "dev-start": "npm run dev-build && npm run dev-server",
     "dev-build": "npm run dev-build-client && npm run dev-build-server",
-    "dev-build-client": "webpack --config webpack.config.new.js --env.NODE_ENV=production --env.NODE_PORT=8080 --env.NODE_HOST=http://localhost --env.production",
-    "dev-build-server": "webpack --config webpack.server.config.js --env.NODE_ENV=production",
+    "dev-build-client": "webpack --config webpack.config.new.js --env.production",
+    "dev-build-server": "webpack --config webpack.server.config.js --env.production",
     "dev-server": "node dev-server.js",
     "build": "npm run build-client && npm run build-server",
     "build-client": "cross-env NODE_ENV=production webpack --config webpack.config.old.js --hide-modules",
@@ -20,6 +20,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
+    "connect-redis": "^3.4.0",
     "emoji": "^0.3.2",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
