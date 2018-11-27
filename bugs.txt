@@ -2,6 +2,7 @@ vue login econnrefused server route register
 chat app
 webpack dev prod server workflow
 change cross-env to --env flag
+fix dev-server.js/server.js so not copy-pasting
 
 neither is the previous workaround cross-env NODE_ENV=production webpack. Recent releases of Webpack, with almost no fanfare and uncharacteristically little documentation, solved the problem of injecting enviroment variables into the Webpack config, and the solution is far simpler than the vast majority of tutorials will suggest.
 
