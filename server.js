@@ -1,7 +1,17 @@
 var express = require('express');
 var path = require('path');
 var session = require('express-session');
-var server_user_session;
+var server_user_session = {};
+
+/*var user_global = {
+  email: user_res.email,
+  username: user_res.email,
+  first: user_res.first_name, 
+  last: user_res.last_name,
+  id: user_res.id,
+  phone: user_res.phone,
+  profession: user_res.profession
+};*/
 
 var bodyParser = require('body-parser');
 
@@ -12,18 +22,52 @@ var fs = require('fs');
 
 var app = express();
 
-//insert as module
+//MEMORY STORE
 
-var connection = mysql.createConnection({
+//npm install memorystore, express-session extension
+//or use express-mysql-session
+//Gandi may not allow in memory store
+//req.session.key=req.body.email;
+//client.set('c_key', req.session.key);
 
-  host     : 'localhost',
-  port     : 3306,
-  user     : 'root',
-  password : '',
-  database : 'test_db',
-  socketPath: '/srv/run/mysqld/mysqld.sock'
+//var redis = require('redis');
 
+//may need to require redis-server, test this
+
+//var redisClient = redis.createClient({host : 'localhost', port : 6379});
+
+/*var RedisStore = require('connect-redis')(session);
+
+var client = redis.createClient();
+
+client.on('connect', function() {
+    console.log('Redis client connected');
 });
+
+client.on('ready',function() {
+ console.log("Redis is ready");
+});
+
+client.on('error',function(err) {
+ console.log("Error in Redis");
+ console.log(err);
+})
+
+let redis_opts = { 
+  host: 'localhost', 
+  port: 6379,
+  client: client,
+  ttl :  260
+};
+ 
+app.use(session({
+    store: new RedisStore(redis_opts),
+    secret: 'keyboard cat',
+    saveUninitialized: false,
+    resave: false
+}));
+
+*/
 
 var http = require('http');
 var httpServer = http.Server(app);
@@ -42,13 +86,32 @@ app.set('trust proxy', 1) // trust first proxy
 app.use(session({
   secret: 'le shiggy diggy',
   resave: false,
-  saveUninitialized: true,
-  maxAge: 3600000
+  saveUninitialized: true
   //,
   //cookie: { secure: true }
 }));
 
 var port = process.env.PORT || 8080;
+
+console.log(port);
+
+var pdub = 'password';
+if (port != 8080) {
+  var pdub = '';
+}
+
+//DATABASE MYSQL
+
+var connection = mysql.createConnection({
+
+  host     : 'localhost',
+  port     : 3306,
+  user     : 'root',
+  password : pdub,
+  database : 'test_db',
+  socketPath: ''
+
+});
 
 var projects = [
   { 'name': 'Node With Express and Angular', 'img': '/node.png','link': '#' },
@@ -60,6 +123,7 @@ app.use('/public', express.static(path.join(__dirname, './public')));
 
 app.use('/dist', express.static(path.join(__dirname, './dist')));
 
+
 app.use('/favicon.ico', function(req,res) {
   res.sendFile(__dirname + '/public/img/favicon.ico');
 });
@@ -68,8 +132,8 @@ app.use('/chat', function(req,res) {
   res.sendFile(__dirname + '/views/chat.html');
 });
 
-app.use('/weather', function(req,res) {
-  res.sendFile(__dirname + '/views/weatherapp.html');
+app.use('/secure', function(req,res) {
+  res.sendStatus(200);
 });
 
 app.post('/skoolia', function(req,res) {
@@ -78,21 +142,36 @@ app.post('/skoolia', function(req,res) {
 });
 
 app.get('/api/user-sess', function(req,res) {
-  console.log(req.session.user);
+
   if (req.session.user) {
     res.send(req.session.user);
   }
   else {
-    user = {};
-    req.session.user = user;
-    res.sendStatus(200);
+    /*
+    test_user = {
+      id: 1,
+      email: 'serveremail@example.com',
+      password: 'pass',
+      username: 'username',
+      first_name: 'server first',
+      last_name: 'server last',
+      phone: '',
+      profession: '',
+      send_email: 0,
+      teach: 0,
+      learn: 0,
+      about_me: 'hello this is about text'
+    };
+    */
+    req.session.user = server_user_session;
+
+    res.send(req.session.user);
   }
 });
 
 app.get('/profile-login', function(req,res) {
   if (req.session.user) {
     console.log('user already in sesh');
-    console.log(req.session.user);
     res.redirect('/profile')
   }
   else {
@@ -144,28 +223,33 @@ app.post('/profile_create', function(req,res) {
 
   var email = req.body.email;
   var pass = req.body.password;
-  //var first
-  var send = req.body.send_emails;
-  var teach = req.body.teach;
-  var learn = req.body.learn;
-  var both = req.body.teach_learn;
+  var username = req.body.email;
+  var first_name = req.body.first_name;
+  var last_name = req.body.last_name;
+  var phone = '';//req.body.phone;
+  var profession = '';//req.body.profession;
+  var send = 0;//req.body.send_emails;
+  var teach = 0;//req.body.teach;
+  var learn = 0;//req.body.learn;
+  //var both = req.body.teach_learn;
+  var about_me = '';//req.body.about_me;
 
-  if (both == '1') {
+  /*if (both == '1') {
     teach = 1;
     learn = 1;
   }
 
   if (send == 'true') {
-    console.log(typeof send);
     send = 1;
-  }
+  }*/
   
   connection.connect();
 
-  var query = 'INSERT INTO usr_test (email, password, send_email, teach, learn) VALUES ( "' + email + '", "' + pass + '", ' + send + ', ' + teach + ', ' + learn + ' )';
+  var query = 'INSERT INTO usr_test (email, password, username, first_name, last_name, phone, profession, send_email, teach, learn, about_me) VALUES ( "' + email + '", "' + pass + '", "' + username + '", "' + first_name + '", "' + last_name + '", "' + phone + '", "' + profession + '", ' + send + ', ' + teach + ', ' + learn + ', "' + about_me + '" )';
   //(type, first_nm,last_nm,eml_addr,pwrd,img_url,img_top,img_left,gender,date_of_birth,location_region,location_city,location_county,location_state,location_country,location_latitude,location_longitude,location_display,native_language,native_country,skype_username,gmail_username,created_on_dt,modified_on_dt, desc, learn, teach, currency, charge, lang_exch, profile_img, sparrow_customer_token, braintree_customer_id, tz_set, tz_last_used, currency_last_used)'
   connection.query(query, function(error, results, fields) {
     if (error) throw error;
+    console.log(results);
   });
 
   console.log('user saved');
@@ -177,6 +261,10 @@ app.get('/projects', function(req,res) {
   var proj = JSON.stringify(projects);
   console.log(proj);
   res.send(proj);
+});
+
+app.use('/weather', function(req,res) {
+  res.sendFile(__dirname + '/views/weatherapp.html');
 });
 
 const bundle = require('./dist/server.bundle.js');

@@ -26,7 +26,7 @@
       </div>
 
       <div class="col-md-2">
-        <input type="submit" v-on:click="edit_profile()" class="profile-edit-btn" />
+        <input type="submit" v-on:click="edit_profile()" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
       </div>
 
     </div>

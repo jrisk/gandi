@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '../components/Home.vue';
+import Home from '../components/jarisk/Home.vue'; //jarisk home
 import Secure from '../components/Secure.vue';
 import Login from '../components/Login.vue';
 import SkooliaHome from '../components/SkooliaHome.vue';

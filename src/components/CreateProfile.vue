@@ -46,6 +46,7 @@
 
       <div class="form-group row">
           <div class="col-sm-12">
+
             <input class="form-check-input" type="checkbox" id="gridCheck1" v-model="input.send_emails">
             <label class="form-check-label" for="gridCheck1">
               Email me Skoolia updates

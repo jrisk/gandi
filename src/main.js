@@ -4,19 +4,20 @@ import { createRouter } from './router/router.js'
 import { store } from './store.js'
 
 import { Modal, Navbar, Button, Nav, Form, FormInput, Card, Tabs } from 'bootstrap-vue/es/components'
-import Menu from './components/Menu'
+//Jarisk
+import Menu from './components/jarisk/Menu'
+import JariskNav from './components/jarisk/JariskNav'
+import Jarisk from './components/jarisk/Jarisk'
+import CardMenu from './components/jarisk/CardMenu'
+
+import SkooliaCard from './components/jarisk/SkooliaCard'
+import ChatCard from './components/jarisk/ChatCard'
+import OtherCard from './components/jarisk/OtherCard'
+
+//Skoolia
 import Login from './components/Login'
 import SkooliaNav from './components/SkooliaNav'
 import SkooliaModal from './components/SkooliaModal'
-import JariskNav from './components/JariskNav'
-import Jarisk from './components/Jarisk'
-
-import CardMenu from './components/CardMenu'
-
-import SkooliaCard from './components/SkooliaCard'
-import ChatCard from './components/ChatCard'
-import OtherCard from './components/OtherCard'
-
 import SkooliaProfile from './components/SkooliaProfile'
 import UserTabs from './components/UserTabs'
 import UserHomeTab from './components/UserHomeTab'
@@ -37,6 +38,10 @@ Vue.component('jarisk-menu', Menu);
 Vue.component('jarisk-nav', JariskNav);
 Vue.component('jarisk-card-menu', CardMenu);
 
+Vue.component('skoolia-card', SkooliaCard);
+Vue.component('chat-card', ChatCard);
+Vue.component('other-card', OtherCard);
+
 Vue.component('skoolia-nav', SkooliaNav);
 Vue.component('skoolia-modal', SkooliaModal);
 Vue.component('skoolia-login', Login);
@@ -47,10 +52,6 @@ Vue.component('user-home-tab', UserHomeTab);
 
 Vue.component('user-profile-work', UserProfileWork);
 
-
-Vue.component('skoolia-card', SkooliaCard);
-Vue.component('chat-card', ChatCard);
-Vue.component('other-card', OtherCard);
 
 
 export function createApp() {
