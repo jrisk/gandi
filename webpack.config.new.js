@@ -5,6 +5,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 module.exports = (env = {}) => {
   // Variables set by npm scripts in package.json
   const isProduction = env.production === true
+  console.log(env.production);
 
     var HOST = 'http://localhost'
     var PORT = 8080
