@@ -96,8 +96,10 @@ var port = process.env.PORT || 8080;
 console.log(port);
 
 var pdub = 'password';
+var socketPath = '';
 if (port != 8080) {
-  var pdub = '';
+  pdub = '';
+  socketPath = '/srv/run/mysqld/mysqld.sock';
 }
 
 //DATABASE MYSQL
@@ -109,7 +111,7 @@ var connection = mysql.createConnection({
   user     : 'root',
   password : pdub,
   database : 'test_db',
-  socketPath: ''
+  socketPath: socketPath
 
 });
 
