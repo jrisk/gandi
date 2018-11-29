@@ -54,7 +54,13 @@ import axios from 'axios';
       var host = process.env.NODE_HOST;
       var url = '/api/user-sess';
 
-      var test_url = host + ':' + port + url;
+      var url_env = host;
+
+      if (port == 8080) {
+        url_env = host + ':' + port;
+      }
+
+      var test_url = url_env + url;
 
       axios.get(test_url, {
         headers: {

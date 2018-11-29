@@ -9,12 +9,12 @@ module.exports = (env = {}) => {
 
     var HOST = 'http://localhost'
     var PORT = 8080
-    var ENV = 'prod';
+    var ENV = 'prod'
 
     if (!isProduction) {
       HOST = 'jarisk.com'
-      PORT = 80
-      ENV = 'local';
+      PORT = 80;
+      ENV = 'local'
     }
 
 
