@@ -116,7 +116,7 @@ var connection = mysql.createConnection({
 });
 
 //USE CONNECTION POOLING INSTEAD
-connection.connect();
+//connection.connect();
 
 var projects = [
   { 'name': 'Node With Express and Angular', 'img': '/node.png','link': '#' },
