@@ -97,9 +97,11 @@ console.log(port);
 
 var pdub = 'password';
 var socketPath = '';
+var db_port = 3306;
 if (port != 8080) {
   pdub = '';
   socketPath = '/srv/run/mysqld/mysqld.sock';
+  db_port = '';
 }
 
 //DATABASE MYSQL
@@ -107,7 +109,7 @@ if (port != 8080) {
 var connection = mysql.createConnection({
 
   host     : 'localhost',
-  port     : 3306,
+  port     : db_port,
   user     : 'root',
   password : pdub,
   database : 'test_db',
@@ -116,7 +118,7 @@ var connection = mysql.createConnection({
 });
 
 //USE CONNECTION POOLING INSTEAD
-//connection.connect();
+connection.connect();
 
 var projects = [
   { 'name': 'Node With Express and Angular', 'img': '/node.png','link': '#' },
