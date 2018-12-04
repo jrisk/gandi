@@ -115,6 +115,9 @@ var connection = mysql.createConnection({
 
 });
 
+//USE CONNECTION POOLING INSTEAD
+connection.connect();
+
 var projects = [
   { 'name': 'Node With Express and Angular', 'img': '/node.png','link': '#' },
   { 'name': 'Chat in Real-Time with Socket.io', 'img': '/socket.png','link': '/chat' },
@@ -180,10 +183,16 @@ app.get('/profile-login', function(req,res) {
     req.session.reset();
     res.send('howdy there reset');
   }
-})
+});
+
+app.get('/logout', function(req,res) {
+  req.session.user = {};
+  res.sendStatus(200);
+});
 
 app.post('/profile-login', function(req,res) {
   if (req.body) {
+    //console.log(req.body);
     var query = 'SELECT * FROM usr_test WHERE email = "' + req.body.username + '" AND password = "' + req.body.password + '" LIMIT 1';
       
     connection.query(query, function(error, results, fields) {
@@ -192,7 +201,9 @@ app.post('/profile-login', function(req,res) {
         throw error;
       }
 
-      if (results.length == 0) {   
+      if (results.length == 0) {
+
+        res.send({ email: 0 });
       }
       else {
           console.log(results);
@@ -214,9 +225,10 @@ app.post('/profile-login', function(req,res) {
 
           req.session.user = user_global;
           server_user_session = user_global;
+
+          res.send(server_user_session);
       }
 
-      res.send(server_user_session);
       }); //end connect query
     }
 });
@@ -244,19 +256,49 @@ app.post('/profile_create', function(req,res) {
   if (send == 'true') {
     send = 1;
   }*/
-  
-  connection.connect();
 
-  var query = 'INSERT INTO usr_test (email, password, username, first_name, last_name, phone, profession, send_email, teach, learn, about_me) VALUES ( "' + email + '", "' + pass + '", "' + username + '", "' + first_name + '", "' + last_name + '", "' + phone + '", "' + profession + '", ' + send + ', ' + teach + ', ' + learn + ', "' + about_me + '" )';
-  //(type, first_nm,last_nm,eml_addr,pwrd,img_url,img_top,img_left,gender,date_of_birth,location_region,location_city,location_county,location_state,location_country,location_latitude,location_longitude,location_display,native_language,native_country,skype_username,gmail_username,created_on_dt,modified_on_dt, desc, learn, teach, currency, charge, lang_exch, profile_img, sparrow_customer_token, braintree_customer_id, tz_set, tz_last_used, currency_last_used)'
+  //ER_DUP_ENTRY: Duplicate entry 'test@testy.com' for key 'email'
+  var query = 'SELECT * FROM usr_test WHERE email = "' + email + '" ';
   connection.query(query, function(error, results, fields) {
-    if (error) throw error;
-    console.log(results);
+    if (error) {
+      throw error;
+    }
+
+    if (results.length != 0) {
+      console.log(results);
+      res.send('no');
+      //stop, make them pick a unique email
+    }
+
+    else {
+      var query = 'INSERT INTO usr_test (email, password, username, first_name, last_name, phone, profession, send_email, teach, learn, about_me) VALUES ( "' + email + '", "' + pass + '", "' + username + '", "' + first_name + '", "' + last_name + '", "' + phone + '", "' + profession + '", ' + send + ', ' + teach + ', ' + learn + ', "' + about_me + '" )';
+      //(type, first_nm,last_nm,eml_addr,pwrd,img_url,img_top,img_left,gender,date_of_birth,location_region,location_city,location_county,location_state,location_country,location_latitude,location_longitude,location_display,native_language,native_country,skype_username,gmail_username,created_on_dt,modified_on_dt, desc, learn, teach, currency, charge, lang_exch, profile_img, sparrow_customer_token, braintree_customer_id, tz_set, tz_last_used, currency_last_used)'
+      connection.query(query, function(error, results, fields) {
+      if (error) {
+        throw error;
+      }
+      console.log(results.insertId);
+      //make this a method
+          var user_global = {
+            email: email,
+            username: email,
+            first: first_name, 
+            last: last_name,
+            id: results.insertId,
+            phone: phone,
+            profession: profession
+          };
+
+          req.session.user = user_global;
+          server_user_session = user_global;
+
+      res.send('Ok');
+      });
+    }
+
   });
 
   console.log('user saved');
-
-  res.sendStatus(200);
 });
 
 app.get('/projects', function(req,res) {
