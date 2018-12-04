@@ -15,8 +15,8 @@
 
       <div class="col-md-6">
         <div class="profile-head">
-          <h5 type="button" v-if="user">
-          <p> {{user.first_name }} {{ user.last_name }}</p>
+          <h5 v-if="user">
+          <p>{{user.first_name }} {{ user.last_name}}</p>
           </h5>
         </div>
       </div>

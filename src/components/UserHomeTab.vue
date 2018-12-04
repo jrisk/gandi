@@ -48,7 +48,7 @@ import axios from 'axios';
 
       const vm = this;
 
-      console.log('userhometab process');
+      console.log('userhometab created');
 
       var port = process.env.NODE_PORT;
       var host = process.env.NODE_HOST;
@@ -67,8 +67,7 @@ import axios from 'axios';
           'Content-Type': 'application/json'
         }
       }).then( function(resp) {
-      console.log('created resp');
-      console.log(resp.data);
+      console.log(resp.data[1]);
        vm.user = resp.data;
        }).catch( (err) => console.log(err) );
     },

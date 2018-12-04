@@ -4,6 +4,7 @@
         <div class="row justify-content-center margin-spacer">
             <h1>Login</h1>
         </div>
+        <span class="text-danger">{{this.info}}</span>
         <div class="form-group row justify-content-center margin-spacer">
                 <input class="form-control input-large" type="text" name="username" v-model="input.username" placeholder="Username" />
         </div>
@@ -34,7 +35,8 @@ import axios from 'axios';
                     username: "",
                     password: "",
                     id: 0
-                }
+                },
+                info: ''
             }
         },
         created: function() {
@@ -54,7 +56,7 @@ import axios from 'axios';
 
             axios.get(test_url).then( function(resp) {
 
-                console.log(resp.data);
+                console.log('user-sess call login');
                  if (resp.data.email) {
                     vm.$router.replace({ name: "profile" });
                  }
@@ -76,12 +78,18 @@ import axios from 'axios';
                         headers: {
                             'Content-Type': 'application/json'
                         }
-                    }).then( function(resp) { }
-                    ).catch(err => 
-                        (console.log(err))
-                    ).then( function(res) {
-                        vm.$router.replace({ name: "secure" });
+                    }).then( function(resp) {
+                        console.log('first login then');
+                        var usr = resp.data;
+                        console.log(usr);
+                        if (usr.email == 0) {
+                          vm.info = "Password or Username not found"
                         }
+                        else {
+                        vm.$router.replace({ name: "profile" });
+                        }
+                    }).catch(err => 
+                        (console.log(err))
                     );
                 } else {
                     console.log("A username and password must be present");

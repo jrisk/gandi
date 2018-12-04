@@ -32,13 +32,51 @@
           <em>User</em>
         </template>
         <b-dropdown-item href="/profile">Profile</b-dropdown-item>
-        <b-dropdown-item href="/logout">Signout</b-dropdown-item>
+        <b-dropdown-item v-on:click="logout()">Signout</b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
 
   </b-collapse>
 </b-navbar>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+    logout() {
+      const vm = this;
+
+      var port = process.env.NODE_PORT;
+      var host = process.env.NODE_HOST;
+      var url = '/logout';
+
+      var url_env = host;
+
+      if (port == 8080) {
+        url_env = host + ':' + port;
+      }
+
+      var test_url = url_env + url;
+
+      axios.get(test_url).then( function(resp) {
+
+      vm.user = {};
+
+      vm.$router.replace({ name: "login" });
+      }).catch( function(err) { console.log(err.code); })
+
+    }
+  }
+
+}
+</script>
 
 <style>
 

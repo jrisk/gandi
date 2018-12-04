@@ -1,11 +1,8 @@
 <template>
 <div>
 
-<div class="alert alert-primary create-profile" role="alert">{{info}}
-</div>
-
   <div class="container emp-profile">
-    <form v-on:submit="sign_up()">
+    <form v-on:submit.prevent="sign_up()">
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
         <div class="col-sm-10">
@@ -59,6 +56,10 @@
         </div>
       </div>
     </form>
+
+    <div class="alert alert-primary create-profile" role="alert">{{info}}
+    </div>
+
   </div>
 </div>
 </template>
@@ -77,7 +78,7 @@ export default {
         teach_learn: 0,
         send_emails: 0
       },
-      info: "Create Skoolia Profile"
+      info: "Password must be more than 6 characters long"
     }
   },
   methods: {
@@ -94,12 +95,23 @@ export default {
           'Content-type': 'application/json'
         }
       })
-      .then (resp => (this.info = 'profile saved'))
-      vm.$router.replace({ name: "profile" });
+      .then( function(resp) {
 
-      this.info = "Profile Saved";
+      console.log(resp);
+
+      if (resp.data == 'Ok') {
+        vm.info = 'Profile saved';
+        vm.$router.replace({ name: "profile" });
       }
-    }
+
+      else {
+        vm.info = 'Email is already being used';
+      }
+
+      });
+
+      }
+    } //end method signup
   }
 }
 </script>
