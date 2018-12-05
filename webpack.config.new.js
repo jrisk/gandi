@@ -7,14 +7,16 @@ module.exports = (env = {}) => {
   const isProduction = env.production === true
   console.log(env.production);
 
-    var HOST = 'http://localhost'
-    var PORT = 8080
-    var ENV = 'prod'
+    HOST = 'jarisk.com'
+    PORT = 80;
+    ENV = 'prod'
+
+    console.log(isProduction);
 
     if (!isProduction) {
-      HOST = 'jarisk.com'
-      PORT = 80;
-      ENV = 'local'
+      var HOST = 'http://localhost'
+      var PORT = 8080
+      var ENV = 'local'
     }
 
 

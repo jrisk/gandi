@@ -93,13 +93,11 @@ app.use(session({
 
 var port = process.env.PORT || 8080;
 
-console.log(port);
-
 var pdub = 'password';
 var socketPath = '';
 var db_port = 3306;
 //change this on prod somehow
-if (port == 8080) {
+if (port != 8080) {
   pdub = '';
   socketPath = '/srv/run/mysqld/mysqld.sock';
   db_port = '';
