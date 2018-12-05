@@ -97,7 +97,8 @@ var pdub = 'password';
 var socketPath = '';
 var db_port = 3306;
 //change this on prod somehow
-if (port != 8080) {
+
+if (process.env.TERM_PROGRAM != 'iTerm.app') {
   pdub = '';
   socketPath = '/srv/run/mysqld/mysqld.sock';
   db_port = '';
@@ -143,7 +144,6 @@ app.use('/secure', function(req,res) {
 });
 
 app.post('/skoolia', function(req,res) {
-  console.log(req);
   res.send('edit profile page');
 });
 
@@ -207,10 +207,7 @@ app.post('/profile-login', function(req,res) {
         res.send({ email: 0 });
       }
       else {
-          console.log(results);
           var user_res = results[0];
-
-          console.log(user_res);
 
           //if (user_res === NULL)
 
@@ -234,7 +231,7 @@ app.post('/profile-login', function(req,res) {
     }
 });
 
-app.post('/profile_create', function(req,res) {
+app.post('/profile-create', function(req,res) {
 
   var email = req.body.email;
   var pass = req.body.password;
@@ -266,7 +263,6 @@ app.post('/profile_create', function(req,res) {
     }
 
     if (results.length != 0) {
-      console.log(results);
       res.send('no');
       //stop, make them pick a unique email
     }

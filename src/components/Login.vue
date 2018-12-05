@@ -48,19 +48,21 @@ import axios from 'axios';
 
             var url_env = host;
 
-            if (port == 8080) {
+            if (process.env.NODE_ENV != 'prod') {
               url_env = host + ':' + port;
             }
 
             var test_url = url_env + url;
 
-            axios.get(test_url).then( function(resp) {
+            const instance = axios.create({baseURL: url_env })
+
+            instance.get(url).then( function(resp) {
 
                 console.log('user-sess call login');
                  if (resp.data.email) {
                     vm.$router.replace({ name: "profile" });
                  }
-                 }).catch( err => console.log(err.code));
+                 }).catch( err => console.log(err));
         },
         methods: {
             login() {
@@ -81,9 +83,8 @@ import axios from 'axios';
                     }).then( function(resp) {
                         console.log('first login then');
                         var usr = resp.data;
-                        console.log(usr);
                         if (usr.email == 0) {
-                          vm.info = "Password or Username not found"
+                          vm.info = "Username or Password not found"
                         }
                         else {
                         vm.$router.replace({ name: "profile" });
@@ -92,7 +93,7 @@ import axios from 'axios';
                         (console.log(err))
                     );
                 } else {
-                    console.log("A username and password must be present");
+                    vm.info = 'No Username and Password present';
                 }
             },
             create_profile() {

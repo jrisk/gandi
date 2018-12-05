@@ -78,7 +78,7 @@ export default {
         teach_learn: 0,
         send_emails: 0
       },
-      info: "Password must be more than 6 characters long"
+      info: "Choose a good password"
     }
   },
   methods: {
@@ -89,8 +89,22 @@ export default {
 
       var formdata = this.input;
 
-      axios
-      .post('/profile_create', formdata, {
+      var port = process.env.NODE_PORT;
+      var host = process.env.NODE_HOST;
+      var url = '/profile-create';
+
+      var url_env = host;
+
+      if (process.env.NODE_ENV != 'prod') {
+        url_env = host + ':' + port;
+      }
+
+      const instance = axios.create({baseURL: url_env })
+
+      var test_url = url_env + url;
+
+      instance
+      .post(url, formdata, {
         headers: {
           'Content-type': 'application/json'
         }

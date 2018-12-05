@@ -35,6 +35,19 @@ export const store = new Vuex.Store({
 	},
 	actions: {
 		loadSession(context) {
+
+			var ep = '/api/user-sess';
+			var url = '';
+
+			if (process.env.NODE_ENV != 'prod') {
+				url = 'http://localhost:8080';
+			}
+			else {
+				url = 'http://jarisk.com';
+			}
+
+			var t_url = url + ep;
+
 			axios
 				.get('/api/user-sess', { headers: {
    				'Accept': 'application/json' }})

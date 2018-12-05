@@ -13,7 +13,7 @@
         <label>Name</label>
       </div>
       <div class="col-md-6">
-        <p>{{user.first_name}} {{user.last_name}}</p>
+        <p>{{user.first}} {{user.last}}</p>
       </div>
     </div>
     <div class="row">
@@ -56,18 +56,19 @@ import axios from 'axios';
 
       var url_env = host;
 
-      if (port == 8080) {
+      if (process.env.NODE_ENV != 'prod') {
         url_env = host + ':' + port;
       }
 
+      const instance = axios.create({baseURL: url_env })
+
       var test_url = url_env + url;
 
-      axios.get(test_url, {
+      instance.get(url, {
         headers: {
           'Content-Type': 'application/json'
         }
       }).then( function(resp) {
-      console.log(resp.data[1]);
        vm.user = resp.data;
        }).catch( (err) => console.log(err) );
     },

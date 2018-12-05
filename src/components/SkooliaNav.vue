@@ -59,18 +59,18 @@ export default {
 
       var url_env = host;
 
-      if (port == 8080) {
+      if (process.env.NODE_ENV != 'prod') {
         url_env = host + ':' + port;
       }
 
       var test_url = url_env + url;
 
-      axios.get(test_url).then( function(resp) {
+      axios.get(url).then( function(resp) {
 
-      vm.user = {};
+        vm.user = {};
 
-      vm.$router.replace({ name: "login" });
-      }).catch( function(err) { console.log(err.code); })
+        vm.$router.replace({ name: "login" });
+        }).catch( function(err) { console.log(err.code); })
 
     }
   }
