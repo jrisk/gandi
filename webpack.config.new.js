@@ -6,7 +6,7 @@ module.exports = (env = {}) => {
   // Variables set by npm scripts in package.json
   const isProduction = env.production === true
 
-    var HOST = 'jarisk.com'
+    var HOST = 'http://jarisk.com'
     var PORT = 80;
     var ENV = 'prod'
 
