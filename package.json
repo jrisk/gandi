@@ -19,6 +19,7 @@
   "repository": {},
   "dependencies": {
     "axios": "^0.18.0",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "connect-redis": "^3.4.0",
     "emoji": "^0.3.2",

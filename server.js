@@ -23,6 +23,8 @@ var fs = require('fs');
 //const bcrypt = require('bcrypt');
 //const saltRounds = 7;
 
+const bcrypt = require('bcrypt-nodejs');
+
 var app = express();
 
 //MEMORY STORE
@@ -252,7 +254,7 @@ app.get('/logout', function(req,res) {
 
 app.post('/profile-login', function(req,res) {
   if (req.body) {
-    var query = 'SELECT * FROM usr_test WHERE email = "' + req.body.username + '" AND password = "' + req.body.password + '" LIMIT 1';
+    var query = 'SELECT * FROM usr_test WHERE email = "' + req.body.username + '"'; //AND password = "' + req.body.password + '" LIMIT 1';
       
     connection.query(query, function(error, results, fields) {
       if (error) {
@@ -265,9 +267,10 @@ app.post('/profile-login', function(req,res) {
       }
       else {
           var user_res = results[0];
-          //var check = bcrypt.compareSync(req.body.password, user_res.password);
+          var check = bcrypt.compareSync(req.body.password, user_res.password);
           
-          if (false) {
+          console.log(check);
+          if (!check) {
             res.send({ email: 0});
           }
           else {
@@ -331,9 +334,9 @@ app.post('/profile-create', function(req,res) {
 
     else {
 
-      //var hash = bcrypt.hashSync(pass, saltRounds);
+      var hash = bcrypt.hashSync(pass);
 
-      var query = 'INSERT INTO usr_test (email, password, username, first_name, last_name, phone, profession, send_email, teach, learn, about_me) VALUES ( "' + email + '", "' + pass + '", "' + username + '", "' + first_name + '", "' + last_name + '", "' + phone + '", "' + profession + '", ' + send + ', ' + teach + ', ' + learn + ', "' + about_me + '" )';
+      var query = 'INSERT INTO usr_test (email, password, username, first_name, last_name, phone, profession, send_email, teach, learn, about_me) VALUES ( "' + email + '", "' + hash + '", "' + username + '", "' + first_name + '", "' + last_name + '", "' + phone + '", "' + profession + '", ' + send + ', ' + teach + ', ' + learn + ', "' + about_me + '" )';
       //(type, first_nm,last_nm,eml_addr,pwrd,img_url,img_top,img_left,gender,date_of_birth,location_region,location_city,location_county,location_state,location_country,location_latitude,location_longitude,location_display,native_language,native_country,skype_username,gmail_username,created_on_dt,modified_on_dt, desc, learn, teach, currency, charge, lang_exch, profile_img, sparrow_customer_token, braintree_customer_id, tz_set, tz_last_used, currency_last_used)'
       connection.query(query, function(error, results, fields) {
       if (error) {
