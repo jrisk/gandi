@@ -150,7 +150,7 @@ m_html += 'The Skoolia Team';//$this->get_dict(114, '', '', $lang);
 
 var m_data = {
   from: 'Skoolia <admin@jarisk.com>',
-  to: 'joeyrsk@gmail.com',
+  to: 'joeyrsk@gmail.com, lourzk@hotmail.com',
   subject: 'Password Reset',
   text: 'Testing out Mailgun',
   html: m_html
@@ -385,8 +385,8 @@ app.get('*', (req, res) => {
       meta: `
       <meta description="vue javascript bootstrap skoolia">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" type="text/css" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
-      <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"/>
+      <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-vue@2.0.0-rc.11/dist/bootstrap-vue.min.css"/>
       <link rel="shortcut icon" type="image/png" href="./dist/favicon.png"/>
       `
     };

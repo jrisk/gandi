@@ -6,7 +6,7 @@
         </div>
         <span class="text-danger">{{this.info}}</span>
         <div class="form-group row justify-content-center margin-spacer">
-                <input class="form-control input-large" type="text" name="username" v-model="input.username" placeholder="Username" />
+                <input class="form-control input-large" type="text" name="username" v-model="input.username" placeholder="Email" />
         </div>
         <div class="row form-group justify-content-center margin-spacer">
                 <input type="password"
@@ -17,6 +17,9 @@
         <div class="row justify-content-center margin-spacer">
                 <button type="button" class="btn btn-primary" v-on:click="login()">Login</button>
         </div>
+                <div class="row justify-content-center margin-spacer forgot-password">
+                <button type="button" class="btn btn-light" v-on:click="forgot_password()">Forgot Password? Click here</button>
+        </div>
         <div class="row justify-content-center margin-spacer create-profile">
                 <button type="button" class="btn btn-light" v-on:click="create_profile()">Not on Skoolia? Create a Profile</button>
         </div>
@@ -26,6 +29,7 @@
 
 <script>
 import axios from 'axios';
+import url_sesh from '../../url_method.js'
 
     export default {
         name: 'Login',
@@ -42,17 +46,10 @@ import axios from 'axios';
         created: function() {
             const vm = this;
 
-            var port = process.env.NODE_PORT;
-            var host = process.env.NODE_HOST;
-            var url = '/api/user-sess';
+            var urlArr = url_sesh();
 
-            var url_env = host;
-
-            if (process.env.NODE_ENV != 'prod') {
-              url_env = host + ':' + port;
-            }
-
-            var test_url = url_env + url;
+            var url_env = urlArr['url_env'];
+            var url = urlArr['url'];
 
             const instance = axios.create({baseURL: url_env })
 
@@ -98,6 +95,9 @@ import axios from 'axios';
             },
             create_profile() {
                 this.$router.replace({ name: "create" });
+            },
+            forgot_password() {
+              this.$router.replace({ name: "forgot_password" });
             }
         }
     }
