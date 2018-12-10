@@ -46,7 +46,9 @@ import url_sesh from '../../url_method.js'
         created: function() {
             const vm = this;
 
-            var urlArr = url_sesh();
+            var endpoint = '/api/user-sess';
+
+            var urlArr = url_sesh(endpoint);
 
             var url_env = urlArr['url_env'];
             var url = urlArr['url'];

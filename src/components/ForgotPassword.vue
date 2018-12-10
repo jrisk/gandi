@@ -15,6 +15,9 @@
 </template>
 
 <script>
+import axios from 'axios';
+import url_sesh from '../../url_method.js';
+
 export default {
 	data() {
 		return {
@@ -25,10 +28,25 @@ export default {
 	},
 	methods: {
 		send_reset() {
-			if (this.input.email == '') {
-				//db_check
-				//mailgun
-			}
+			const vm = this;
+
+			var endpoint = '/reset-link-test';
+
+			var urlArr = url_sesh(endpoint);
+
+			var url_env = urlArr['url_env'];
+			var url = urlArr['url'];
+
+			const instance = axios.create({baseURL: url_env })
+
+			instance.get(url).then( function(resp) {
+				console.log('send reset called');
+				if (vm.input.email != '') {
+					console.log(vm.input.email);
+					//db_check
+					//mailgun
+				}
+			}).catch( err => console.log(err));
 		}
 	}
 }

@@ -1,9 +1,9 @@
 module.exports = url_sesh;
 
-function url_sesh() { 
+function url_sesh(endpoint) { 
 	var port = process.env.NODE_PORT;
 	var host = process.env.NODE_HOST;
-	var url = '/api/user-sess';
+	var url = endpoint;
 
 	var url_env = host;
 

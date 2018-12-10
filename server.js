@@ -160,6 +160,10 @@ var MailComposer = require('nodemailer/lib/mail-composer');
 
 var mail = new MailComposer(m_data);
 
+app.get('/send-reset', function(req,res) {
+    var sql = 'UPDATE `usr` INNER JOIN `reset_link` ON `usr`.`id` = `reset_link`.`usr_id` SET `usr`.`pwrd` = PASSWORD(:pwrd) WHERE `reset_link`.`key` = :key AND `usr`.`eml_addr` = :eml_addr'; //also restrict by `reset_link`.`created_on_dt` ???
+});
+
 app.get('/testmailreset', function(req,res) {
 
   mail.compile().build( function(err, msg) {
