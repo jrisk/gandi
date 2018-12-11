@@ -24,6 +24,7 @@ var fs = require('fs');
 //const saltRounds = 7;
 
 const bcrypt = require('bcrypt-nodejs');
+const uuid = require('uuid/v4');
 
 var app = express();
 
@@ -160,8 +161,15 @@ var MailComposer = require('nodemailer/lib/mail-composer');
 
 var mail = new MailComposer(m_data);
 
-app.get('/send-reset', function(req,res) {
-    var sql = 'UPDATE `usr` INNER JOIN `reset_link` ON `usr`.`id` = `reset_link`.`usr_id` SET `usr`.`pwrd` = PASSWORD(:pwrd) WHERE `reset_link`.`key` = :key AND `usr`.`eml_addr` = :eml_addr'; //also restrict by `reset_link`.`created_on_dt` ???
+app.post('/send-reset', function(req,res) {
+  console.log(req.body.email);
+  res.sendStatus(200);
+  //var u_email = req.body.email;
+  //var sql = 'SELECT `id` WHERE `email` = "' + u_email + '"';
+  //var rand_id = uuid4();
+  //var sql = 'INSERT INTO `reset_link` (key, usr_id) values ' + rand_id + '';
+    //var hash = bcrypt.hashSync(pass);
+    //var sql = 'UPDATE `usr` INNER JOIN `reset_link` ON `usr`.`id` = `reset_link`.`usr_id` SET `usr`.`pwrd` = PASSWORD(:pwrd) WHERE `reset_link`.`key` = :key AND `usr`.`eml_addr` = :eml_addr'; //also restrict by `reset_link`.`created_on_dt` ???
 });
 
 app.get('/testmailreset', function(req,res) {

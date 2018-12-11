@@ -1,3 +1,9 @@
+vue syntax package control needs fixing
+https://packagecontrol.io/docs/troubleshooting
+https://github.com/20Tauri/DoxyDoxygen/issues/103#issuecomment-375951725
+
+FIXED
+
 vue login econnrefused server route register
 chat app
 webpack dev prod server workflow
