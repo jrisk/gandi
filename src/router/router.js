@@ -8,6 +8,7 @@ import CreateProfile from '../components/CreateProfile.vue';
 import ViewProfile from '../components/ViewProfile.vue';
 import EditProfile from '../components/EditProfile.vue';
 import ForgotPassword from '../components/ForgotPassword.vue';
+import ErrorPage from '../components/ErrorPage.vue';
 
 Vue.use(Router);
 
@@ -17,6 +18,7 @@ export function createRouter() {
 		routes: [
 			/*{ path: '/', redirect: { name: 'home' } },*/
 			{ path: '*', component: Home },
+			{ path: '/404', component: ErrorPage, name: 'error' },
 			{ path: '/login', component: Login, name: 'login' },
 			{ path: '/secure', component: Secure, name: 'secure' },
 			{ path: '/home', component: Home, name: 'home' },

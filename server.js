@@ -24,7 +24,7 @@ var fs = require('fs');
 //const saltRounds = 7;
 
 const bcrypt = require('bcrypt-nodejs');
-const uuid = require('uuid/v4');
+const uuid4 = require('uuid/v4');
 
 var app = express();
 
@@ -163,10 +163,53 @@ var mail = new MailComposer(m_data);
 
 app.post('/send-reset', function(req,res) {
   console.log(req.body.email);
-  res.sendStatus(200);
-  //var u_email = req.body.email;
-  //var sql = 'SELECT `id` WHERE `email` = "' + u_email + '"';
-  //var rand_id = uuid4();
+  var u_email = req.body.email;
+  var safe_params = [];
+  safe_params.push(u_email);
+  
+  var query = 'SELECT `id` FROM `usr_test` WHERE `email` = ?';
+
+  connection.query(query, safe_params, function(error, results, fields) {
+    if (error) {
+      console.log('mysql error in server.js');
+      throw error;
+    }
+
+    if (results.length == 0) {
+      console.log('empty results');
+      res.send('e');
+    }
+    else {
+      var usr_id = results[0].id;
+      var rand_id = uuid4();
+      var safe = [];
+      var date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+      safe.push(rand_id, usr_id, date);
+      var sql = 'INSERT INTO `reset_link` (`key`, `usr_id`, `created_on_dt`) values (?,?,?)';
+
+      connection.query(sql, safe, function(error, results, fields) { 
+        if (error) {
+          console.log('mysql error in server.js');
+          throw error;
+        }
+
+        if (results.length == 0) {
+          console.log('miss');
+        }
+
+        else {
+          console.log(results);
+        }
+
+      });
+
+      res.send('Ok');
+
+    }
+
+  });
+
+
   //var sql = 'INSERT INTO `reset_link` (key, usr_id) values ' + rand_id + '';
     //var hash = bcrypt.hashSync(pass);
     //var sql = 'UPDATE `usr` INNER JOIN `reset_link` ON `usr`.`id` = `reset_link`.`usr_id` SET `usr`.`pwrd` = PASSWORD(:pwrd) WHERE `reset_link`.`key` = :key AND `usr`.`eml_addr` = :eml_addr'; //also restrict by `reset_link`.`created_on_dt` ???

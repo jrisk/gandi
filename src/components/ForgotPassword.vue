@@ -1,18 +1,22 @@
 <template>
-<div>
  <div class="container emp-profile">
- 	<span>
- 	<!-- dictionary phrases -->
-	Enter the email address used with your account, and we’ll email you a link to reset your password.
-	</span>
+ 	<div class="row justify-content-center">
+	 	<span>
+	 	{{this.pass_info}}
+		</span>
+	</div>
+	<div class="row justify-content-center">
+    <span v-bind:class="{'text-danger': txtActive}">
+    	{{this.info}}
+    </span>
+  </div>
 	<div class="form-group row justify-content-center margin-spacer">
-        <input class="form-control input-large" type="text" name="email" v-model="input.email" placeholder="Email Address" />
+        <input class="form-control input-large" type="text" name="email" v-model="input.email" placeholder="Email Address" @keyup.enter="send_reset()" />
 	</div>
   <div class="row justify-content-center margin-spacer">
         <button type="button" class="btn btn-primary" v-on:click="send_reset()">Send Reset Link</button>
 	</div>
  </div>
-</div>
 </template>
 
 <script>
@@ -22,9 +26,12 @@ import url_sesh from '../../url_method.js';
 export default {
 	data() {
 		return {
+			txtActive: true,
 			input: {
 				email: 'test@test.com'
-			}
+			},
+			info: '',
+			pass_info: 'Enter the email address used with your account, and we’ll email you a link to reset your password'
 		}
 	},
 	methods: {
@@ -42,24 +49,23 @@ export default {
 
 			const formdata = this.input;
 
-			console.log(formdata);
-
 			if (vm.input.email != '') {
-				console.log(vm.input.email);
 				instance.post(url, formdata, { headers: { 'Content-Type': 'application/json' }
 				}).then( function(resp) {
-					//db_check
-					//mailgun
-					console.log(resp);
-					console.log('send reset called');
-				}).catch( err => console.log(err));
-				
-
+					if (resp.data == 'e') {
+						vm.info = 'That email wasn\'t found';
+					}
+					else {
+						vm.info = 'Email sent with new password';
+						vm.txtActive = false;
+					}
+				}).catch( function(err) { 
+					vm.$router.replace({name: 'error'});
+				});
 			}
 
 			else {
-				console.log('nope');
-				//this.info = 'please input your email';
+				vm.info = 'Please input your email';
 			}
 		}
 	}
