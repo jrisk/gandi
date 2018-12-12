@@ -3,19 +3,8 @@ var path = require('path');
 var session = require('express-session');
 var server_user_session = {};
 
-/*var user_global = {
-  email: user_res.email,
-  username: user_res.email,
-  first: user_res.first_name, 
-  last: user_res.last_name,
-  id: user_res.id,
-  phone: user_res.phone,
-  profession: user_res.profession
-};*/
-
 var bodyParser = require('body-parser');
 
-//dev db, all dbs?
 var mysql = require('mysql');
 
 var fs = require('fs');
@@ -99,16 +88,24 @@ app.use(session({
 
 var port = process.env.PORT || 8080;
 
-var pdub = 'password';
-var socketPath = '';
-var db_port = 3306;
-//change this on prod somehow
+var enviro = require('dotenv').config();
 
-if (process.env.TERM_PROGRAM != 'iTerm.app') {
-  pdub = '';
+var pdub,socketPath,db_port,mailgun_key = '';
+
+if (enviro.error) {
+  console.log(enviro.error.path);
   socketPath = '/srv/run/mysqld/mysqld.sock';
-  db_port = '';
 }
+
+else {
+  //console.log(enviro.parsed);
+  pdub = process.env.DB_PASS;
+  socketPath = '';
+  db_port = process.env.DB_PORT;
+  mailgun_key = process.env.MAILGUN_KEY;
+}
+
+//process.env.TERM_PROGRAM != 'iTerm.app'
 
 //DATABASE MYSQL
 
@@ -125,6 +122,17 @@ var connection = mysql.createConnection({
 
 //USE CONNECTION POOLING INSTEAD
 connection.connect();
+
+//MAILGUN STUFF
+
+var mailgun = require('mailgun-js');
+var DOMAIN = 'jarisk.com';
+
+var mailgun = require('mailgun-js')({apiKey: mailgun_key, domain: DOMAIN});
+
+var mailsend = require('./MailSender');
+
+var pass_reset = require('./forgot_password_template');
 
 app.post('/send-reset', function(req,res) {
   console.log(req.body.email);
@@ -164,38 +172,34 @@ app.post('/send-reset', function(req,res) {
 
         else {
           console.log(results);
+          var html = pass_reset(rand_id);
+          mailsend(mailgun, html, u_email);
         }
 
       });
 
       res.send('Ok');
-
     }
-
   });
-
-
-  //var sql = 'INSERT INTO `reset_link` (key, usr_id) values ' + rand_id + '';
-    //var hash = bcrypt.hashSync(pass);
-    //var sql = 'UPDATE `usr` INNER JOIN `reset_link` ON `usr`.`id` = `reset_link`.`usr_id` SET `usr`.`pwrd` = PASSWORD(:pwrd) WHERE `reset_link`.`key` = :key AND `usr`.`eml_addr` = :eml_addr'; //also restrict by `reset_link`.`created_on_dt` ???
 });
 
-//MAILGUN STUFF
-
-var mailgun = require('mailgun-js');
-var api_key = 'd462f4b5a10584cdddd1e6cfb9b486dd-52cbfb43-ee1e972c';
-var DOMAIN = 'jarisk.com';
-var mailgun = require('mailgun-js')({apiKey: api_key, domain: DOMAIN});
-
-//END MAILGUN CREDS
-
-var mailsend = require('./MailSender');
+app.get('/reset/:reskey', function(req,res) {
+  var reset_key = req.params.reskey;
+  console.log(reset_key);
+  res.sendStatus(200);
+  //send to new password screen
+  //check if expired
+  //check if last entry in DB
+  //var sql = `UPDATE usr INNER JOIN reset_link ON usr.id = reset_link.usr_id SET usr.pwrd = PASSWORD(:pwrd) WHERE reset_link.key = :key AND usr.eml_addr = :eml_addr`;
+});
 
 app.get('/testmailreset', function(req,res) {
 
+  var html = pass_reset('longstring');
+
   var addr = 'joeyrsk@gmail.com';//req.body.email;
 
-  mailsend(mailgun, addr);
+  mailsend(mailgun, html, addr);
 
   res.sendStatus(200);
 });

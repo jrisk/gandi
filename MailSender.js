@@ -1,7 +1,6 @@
 var MailComposer = require('nodemailer/lib/mail-composer');
-var html = require('./forgot_password_template');
 
-function MailSender(mailgun, addr) {
+function MailSender(mailgun, html, addr) {
 
   var subj = 'Password Reset Request';
 
