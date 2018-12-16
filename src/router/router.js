@@ -8,6 +8,7 @@ import CreateProfile from '../components/CreateProfile.vue';
 import ViewProfile from '../components/ViewProfile.vue';
 import EditProfile from '../components/EditProfile.vue';
 import ForgotPassword from '../components/ForgotPassword.vue';
+import ResetPassword from '../components/ResetPassword.vue';
 import ErrorPage from '../components/ErrorPage.vue';
 
 Vue.use(Router);
@@ -26,7 +27,8 @@ export function createRouter() {
 			{ path: '/profile', component: SkooliaHome, name: 'profile'},	
 			{ path: '/create', component: CreateProfile, name: 'create' },
 			{ path: '/edit-profile', component: EditProfile, name: 'edit_profile' },
-			{ path: '/forgot-password', component: ForgotPassword, name: 'forgot_password' }
+			{ path: '/forgot-password', component: ForgotPassword, name: 'forgot_password' },
+			{ path: '/reset-password/:id', component: ResetPassword, name: 'reset_password' }
 		]
 	});
 }

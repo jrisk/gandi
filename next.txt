@@ -1,0 +1,17 @@
+Next:
+
+DONE
+
+MAIL-add random signature so google doesnt fold it in email (took about 30 tries to get the coloring/spacing)
+
+TODO
+
+MAIL:
+
+-Db reset password on link click
+-Test on users
+
+PHOTO:
+-Save photos to public folder
+-get enctype on post forms
+-encoding/photo resize

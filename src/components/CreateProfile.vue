@@ -16,7 +16,17 @@
         <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
         <div class="col-sm-10">
 
-          <input type="password" class="form-control" id="inputPassword3" v-model="input.password" placeholder="Password">
+          <input type="password" minlength="4" class="form-control" id="inputPassword3" v-model="input.password" placeholder="Password">
+
+        </div>
+      </div>
+
+      <div class="form-group row">
+
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Confirm Password</label>
+        <div class="col-sm-10">
+
+          <input type="password" minlength="4" class="form-control" id="inputPasswordConfirm" v-model="input.password_confirm" placeholder="Password">
 
         </div>
       </div>
@@ -85,7 +95,7 @@ export default {
     sign_up() {
     const vm = this;
 
-    if (this.input.username != "" && this.input.password != "") {
+    if (this.input.username != "" && this.input.password != "" && this.input.password == this.input.password_confirm) {
 
       var formdata = this.input;
 
@@ -111,19 +121,25 @@ export default {
       })
       .then( function(resp) {
 
-      console.log(resp);
+        console.log(resp);
 
-      if (resp.data == 'Ok') {
-        vm.info = 'Profile saved';
-        vm.$router.replace({ name: "profile" });
-      }
+        if (resp.data == 'Ok') {
+          vm.info = 'Profile saved';
+          vm.$router.replace({ name: "profile" });
+        }
 
-      else {
-        vm.info = 'Email is already being used';
-      }
+        else {
+          vm.info = 'Email is already being used';
+        }
 
       });
 
+      } //end if all good
+      else {
+
+        if (this.input.password != this.input.password_confirm) {
+          this.info = 'Password does not match';
+        }
       }
     } //end method signup
   }

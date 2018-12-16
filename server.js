@@ -183,14 +183,19 @@ app.post('/send-reset', function(req,res) {
   });
 });
 
-app.get('/reset/:reskey', function(req,res) {
+app.get('/confirm-password/:reskey', function(req,res) {
   var reset_key = req.params.reskey;
+
   console.log(reset_key);
-  res.sendStatus(200);
+  res.send(req.params.reskey);
   //send to new password screen
   //check if expired
   //check if last entry in DB
   //var sql = `UPDATE usr INNER JOIN reset_link ON usr.id = reset_link.usr_id SET usr.pwrd = PASSWORD(:pwrd) WHERE reset_link.key = :key AND usr.eml_addr = :eml_addr`;
+});
+
+app.post('/pass-reset', function(req,res) {
+  res.sendStatus(200);
 });
 
 app.get('/testmailreset', function(req,res) {
