@@ -92,10 +92,10 @@ var enviro = require('dotenv').config();
 
 var pdub,socketPath,db_port,mailgun_key = '';
 
-if (!enviro.error) {
-  console.log(enviro);
+if (enviro.error) {
+  console.log(enviro.parsed);
   socketPath = '/srv/run/mysqld/mysqld.sock';
-  mailgun_key = process.env.MAILGUN_KEY;
+  mailgun_key = 'd462f4b5a10584cdddd1e6cfb9b486dd-52cbfb43-ee1e972c';
 }
 
 else {
