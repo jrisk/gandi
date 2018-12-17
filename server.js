@@ -95,6 +95,7 @@ var pdub,socketPath,db_port,mailgun_key = '';
 if (!enviro.error) {
   console.log(enviro);
   socketPath = '/srv/run/mysqld/mysqld.sock';
+  mailgun_key = process.env.MAILGUN_KEY;
 }
 
 else {
