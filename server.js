@@ -92,8 +92,8 @@ var enviro = require('dotenv').config();
 
 var pdub,socketPath,db_port,mailgun_key = '';
 
-if (enviro.error) {
-  console.log(enviro.error.path);
+if (!enviro.error) {
+  console.log(enviro);
   socketPath = '/srv/run/mysqld/mysqld.sock';
 }
 
