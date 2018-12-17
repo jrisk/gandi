@@ -21,8 +21,15 @@
 
         </div>
       </div>
+
+      <div class="form-group row">
+        <div class="col-sm-12">
+          <button type="submit" class="btn btn-primary">Reset Password</button>
+        </div>
+      </div>
+
     </form>
-      <div v-on:click="test()">{{this.input.id}}</div>
+    <div>{{this.info}}</div>
   </div>
 </template>
 
@@ -36,21 +43,18 @@ import url_sesh from '../../url_method.js';
         input: {
           password: "",
           password_confirm: "",
-          id: this.$route.params
-        }
+          id: this.$route.params.id
+        },
+        info: 'pass change info'
       }
     },
+    created() {
+    },
     methods: {
-      test() {
-        var reset_id = this.$route.params;
-        console.log(reset_id);
-      },
       confirm_pass_change() {
         const vm = this;
 
-        var reset_id = this.$route.query;
-
-        console.log(reset_id);
+        var reset_id = this.input.id;
 
         var endpoint = '/pass-reset';
 
@@ -69,6 +73,7 @@ import url_sesh from '../../url_method.js';
           }).then( function(resp) {
               console.log(resp.data);
               vm.info = 'Password changed';
+              vm.$router.go({ name: "logout", params: { new_pass: 1 } });
           }).catch( function(err) { 
             vm.$router.replace({name: 'error'});
           });

@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Home from '../components/jarisk/Home.vue'; //jarisk home
 import Secure from '../components/Secure.vue';
 import Login from '../components/Login.vue';
+import Logout from '../components/Logout.vue';
 import SkooliaHome from '../components/SkooliaHome.vue';
 import CreateProfile from '../components/CreateProfile.vue';
 import ViewProfile from '../components/ViewProfile.vue';
@@ -21,6 +22,7 @@ export function createRouter() {
 			{ path: '*', component: Home },
 			{ path: '/404', component: ErrorPage, name: 'error' },
 			{ path: '/login', component: Login, name: 'login' },
+			{ path: '/signout', component: Logout, name: 'logout' },
 			{ path: '/secure', component: Secure, name: 'secure' },
 			{ path: '/home', component: Home, name: 'home' },
 			{ path: '/skoolia', component: Login },

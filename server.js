@@ -1,4 +1,4 @@
-var express = require('express');
+ var express = require('express');
 var path = require('path');
 var session = require('express-session');
 var server_user_session = {};
@@ -195,6 +195,31 @@ app.get('/confirm-password/:reskey', function(req,res) {
 });
 
 app.post('/pass-reset', function(req,res) {
+  var reset_id = req.body.id;
+  var pass = req.body.password;
+
+  var hash = bcrypt.hashSync(pass);
+
+  console.log('id: ' + reset_id + 'pass:' + pass);
+
+  var sql = `UPDATE usr_test INNER JOIN reset_link ON usr_test.id = reset_link.usr_id SET usr_test.password = '` + hash + `' WHERE reset_link.key = '` + reset_id + `'`;
+
+  connection.query(sql, function(error, results, fields) { 
+  if (error) {
+    console.log('mysql error in server.js');
+    throw error;
+  }
+
+  if (results.length == 0) {
+    console.log('miss');
+  }
+
+  else {
+    console.log(results);
+  }
+
+});
+
   res.sendStatus(200);
 });
 
