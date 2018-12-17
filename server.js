@@ -92,14 +92,12 @@ var enviro = require('dotenv').config();
 
 var pdub,socketPath,db_port,mailgun_key = '';
 
-if (enviro.error) {
-  console.log(enviro.parsed);
+if (process.env.TERM_PROGRAM != 'iTerm.app') {
   socketPath = '/srv/run/mysqld/mysqld.sock';
-  mailgun_key = 'd462f4b5a10584cdddd1e6cfb9b486dd-52cbfb43-ee1e972c';
+  mailgun_key = enviro.parsed.MAILGUN_KEY;
 }
 
 else {
-  //console.log(enviro.parsed);
   pdub = process.env.DB_PASS;
   socketPath = '';
   db_port = process.env.DB_PORT;
