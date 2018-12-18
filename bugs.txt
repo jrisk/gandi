@@ -10,6 +10,9 @@ webpack dev prod server workflow
 change cross-env to --env flag
 fix dev-server.js/server.js so not copy-pasting
 
+git rm cached .env 
+env file fugging up on prod, no error because cached before gitignore
+
 neither is the previous workaround cross-env NODE_ENV=production webpack. Recent releases of Webpack, with almost no fanfare and uncharacteristically little documentation, solved the problem of injecting enviroment variables into the Webpack config, and the solution is far simpler than the vast majority of tutorials will suggest.
 
 The command line option --env allows you to control as many variables as you like, such as --env.production or --env.platform=web, that will be accessible by the webpack config. You put in a simple check like:
