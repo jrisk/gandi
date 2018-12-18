@@ -73,7 +73,7 @@ import url_sesh from '../../url_method.js';
           }).then( function(resp) {
               console.log(resp.data);
               vm.info = 'Password changed';
-              vm.$router.go({ name: "home", params: { new_pass: 1 } });
+              vm.$router.replace({ name: "home", params: { new_pass: 1 } });
           }).catch( function(err) { 
             vm.$router.replace({name: 'error'});
           });

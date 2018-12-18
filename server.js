@@ -199,8 +199,6 @@ app.post('/pass-reset', function(req,res) {
 
   var hash = bcrypt.hashSync(pass);
 
-  console.log('id: ' + reset_id + 'pass:' + pass);
-
   var sql = `UPDATE usr_test INNER JOIN reset_link ON usr_test.id = reset_link.usr_id SET usr_test.password = '` + hash + `' WHERE reset_link.key = '` + reset_id + `'`;
 
   connection.query(sql, function(error, results, fields) { 
