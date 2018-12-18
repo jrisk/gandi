@@ -1,9 +1,10 @@
-module.exports = url_sesh;
+var axios = require('axios');
 
-function url_sesh(endpoint) { 
+module.exports = axios_b;
+
+function axios_b() { 
 	var port = process.env.NODE_PORT;
 	var host = process.env.NODE_HOST;
-	var url = endpoint;
 
 	var url_env = host;
 
@@ -11,10 +12,7 @@ function url_sesh(endpoint) {
 		url_env = host + ':' + port;
 	}
 
-	url_arr = [];
+	var instance = axios.create({baseURL: url_env })
 
-	url_arr['url_env'] = url_env;
-	url_arr['url'] = url;
-
-	return url_arr;
+	return instance;
 }

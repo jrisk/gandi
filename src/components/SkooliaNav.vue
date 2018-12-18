@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios_b from '../../url_method.js';
 
 export default {
   data() {
@@ -53,19 +53,11 @@ export default {
     logout() {
       const vm = this;
 
-      var port = process.env.NODE_PORT;
-      var host = process.env.NODE_HOST;
       var url = '/logout';
 
-      var url_env = host;
+      const instance = axios_b();
 
-      if (process.env.NODE_ENV != 'prod') {
-        url_env = host + ':' + port;
-      }
-
-      var test_url = url_env + url;
-
-      axios.get(url).then( function(resp) {
+      instance.get(url).then( function(resp) {
 
         vm.user = {};
 

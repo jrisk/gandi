@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios_b from '../../url_method.js';
 
   export default {
     data () {
@@ -47,22 +47,9 @@ import axios from 'axios';
     created: function() {
 
       const vm = this;
-
-      console.log('userhometab created');
-
-      var port = process.env.NODE_PORT;
-      var host = process.env.NODE_HOST;
       var url = '/api/user-sess';
 
-      var url_env = host;
-
-      if (process.env.NODE_ENV != 'prod') {
-        url_env = host + ':' + port;
-      }
-
-      const instance = axios.create({baseURL: url_env })
-
-      var test_url = url_env + url;
+      const instance = axios_b();
 
       instance.get(url, {
         headers: {

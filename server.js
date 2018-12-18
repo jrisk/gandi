@@ -15,6 +15,9 @@ var fs = require('fs');
 const bcrypt = require('bcrypt-nodejs');
 const uuid4 = require('uuid/v4');
 
+var multer = require('multer');
+var upload = multer({ dest: 'public/img'});
+
 var app = express();
 
 //MEMORY STORE
@@ -220,7 +223,7 @@ app.post('/pass-reset', function(req,res) {
   res.sendStatus(200);
 });
 
-app.get('/testmailreset', function(req,res) {
+/*app.get('/testmailreset', function(req,res) {
 
   var html = pass_reset('longstring');
 
@@ -229,7 +232,7 @@ app.get('/testmailreset', function(req,res) {
   mailsend(mailgun, html, addr);
 
   res.sendStatus(200);
-});
+});*/
 
 app.use('/public', express.static(path.join(__dirname, './public')));
 
@@ -249,6 +252,13 @@ app.use('/secure', function(req,res) {
 
 app.post('/skoolia', function(req,res) {
   res.send('edit profile page');
+});
+
+app.post('/file-upload', upload.single('myfile'), function(req,res) {
+  //fs.readFile(req.files.image.path);
+  console.log(req.file);
+
+  res.sendStatus(200);
 });
 
 app.get('/api/user-sess', function(req,res) {

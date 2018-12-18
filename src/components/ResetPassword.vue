@@ -34,8 +34,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-import url_sesh from '../../url_method.js';
+import axios_b from '../../url_method.js';
 
   export default {
     data() {
@@ -56,14 +55,9 @@ import url_sesh from '../../url_method.js';
 
         var reset_id = this.input.id;
 
-        var endpoint = '/pass-reset';
+        var url = '/pass-reset';
 
-        var urlArr = url_sesh(endpoint);
-
-        var url_env = urlArr['url_env'];
-        var url = urlArr['url'];
-
-        const instance = axios.create({baseURL: url_env })
+        const instance = axios_b();
 
         const formdata = this.input;
 
@@ -74,7 +68,8 @@ import url_sesh from '../../url_method.js';
               console.log(resp.data);
               vm.info = 'Password changed';
               vm.$router.replace({ name: "home", params: { new_pass: 1 } });
-          }).catch( function(err) { 
+          }).catch( function(err) {
+          //catch err in log somewhere 
             vm.$router.replace({name: 'error'});
           });
         }

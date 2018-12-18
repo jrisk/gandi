@@ -16,6 +16,7 @@
       <div class="col-md-6">
         <div class="profile-head">
           <h5 v-if="user">
+          <p>My Skoolia Profile</p>
           <p>{{user.first_name }} {{ user.last_name}}</p>
           </h5>
         </div>
@@ -43,6 +44,8 @@
 </template>
 
 <script>
+import axios_b from '../../url_method.js'
+
 export default {
   data () {
     return {
@@ -57,6 +60,19 @@ export default {
       this.$store.dispatch('loadSession');
     },
     editProfile() {
+      const vm = this;
+
+      var url = '/file-upload';
+
+      const instance = axios_b();
+
+      instance.get(url).then( function(resp) {
+
+          console.log('user-sess call login');
+           if (resp.data.email) {
+              vm.$router.replace({ name: "profile" });
+           }
+           }).catch( err => console.log(err));
       this.$router.replace({ name: "edit_profile" });
     }
   },

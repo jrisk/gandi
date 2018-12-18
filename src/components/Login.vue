@@ -28,8 +28,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-import url_sesh from '../../url_method.js'
+import axios_b from '../../url_method.js'
 
     export default {
         name: 'Login',
@@ -46,14 +45,9 @@ import url_sesh from '../../url_method.js'
         created: function() {
             const vm = this;
 
-            var endpoint = '/api/user-sess';
+            var url = '/api/user-sess';
 
-            var urlArr = url_sesh(endpoint);
-
-            var url_env = urlArr['url_env'];
-            var url = urlArr['url'];
-
-            const instance = axios.create({baseURL: url_env })
+            const instance = axios_b();
 
             instance.get(url).then( function(resp) {
 
@@ -73,9 +67,10 @@ import url_sesh from '../../url_method.js'
 
                 bodyForm.username = this.input.username;
                 bodyForm.password = this.input.password;
+
+                const instance = axios_b();
                     
-                    axios.post('/profile-login', bodyForm, {
-                        port: 8080,
+                    instance.post('/profile-login', bodyForm, {
                         headers: {
                             'Content-Type': 'application/json'
                         }

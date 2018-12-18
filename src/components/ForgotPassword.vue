@@ -20,15 +20,14 @@
 </template>
 
 <script>
-import axios from 'axios';
-import url_sesh from '../../url_method.js';
+import axios_b from '../../url_method.js';
 
 export default {
 	data() {
 		return {
 			txtActive: true,
 			input: {
-				email: 'test@test.com'
+				email: ''
 			},
 			info: '',
 			pass_info: 'Enter the email address used with your account, and we’ll email you a link to reset your password'
@@ -38,14 +37,9 @@ export default {
 		send_reset() {
 			const vm = this;
 
-			var endpoint = '/send-reset';
+			var url = '/send-reset';
 
-			var urlArr = url_sesh(endpoint);
-
-			var url_env = urlArr['url_env'];
-			var url = urlArr['url'];
-
-			const instance = axios.create({baseURL: url_env })
+			const instance = axios_b();
 
 			const formdata = this.input;
 
