@@ -24,6 +24,7 @@
         <b-dropdown-item href="#">ES</b-dropdown-item>
         <b-dropdown-item href="#">CZ</b-dropdown-item>
         <b-dropdown-item href="#">FR</b-dropdown-item>
+        <b-dropdown-item href="#">RU</b-dropdown-item>
       </b-nav-item-dropdown>
 
       <b-nav-item-dropdown right>

@@ -16,7 +16,18 @@ const bcrypt = require('bcrypt-nodejs');
 const uuid4 = require('uuid/v4');
 
 var multer = require('multer');
-var upload = multer({ dest: 'public/img'});
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/tmp/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)) //path.extname(file.originalname)
+  }
+});
+
+
+var upload = multer({ storage: storage });
 
 var app = express();
 
@@ -254,9 +265,66 @@ app.post('/skoolia', function(req,res) {
   res.send('edit profile page');
 });
 
+app.post('/save-edit', upload.single('myfile'), function(req,res) {
+
+  var user = req.body;
+
+  var img = typeof req.file == 'undefined' ? req.body.myfile : req.file.path;
+
+  var usr_email = user.orig_email;
+  var file_path = img;
+  var new_email = user.email;
+  var about_me = user.about_me;
+  var first_name = user.first_name;
+  var last_name = user.last_name;
+  var phone = '';
+  var profession = req.session.user.profession;//user.profession;
+
+  //var params = [];
+
+  var sql = `UPDATE usr_test SET email='`+ new_email + `', username='` + new_email + `', img_url='` + file_path + `', first_name='` + first_name + `', last_name='` + last_name + `', about_me='` + about_me + `' WHERE email='` + usr_email + `'`;
+
+  connection.query(sql, function(error, results, fields) { 
+    if (error) {
+      console.log('mysql error in server.js');
+      throw error;
+    }
+
+    if (results.length == 0) {
+      console.log('miss');
+      res.sendStatus(404);
+    }
+
+    else {
+      console.log(results);
+      
+      var user_global = {
+        email: new_email,
+        username: new_email,
+        first_name: first_name, 
+        last_name: last_name,
+        img_url: img,
+        id: req.session.user.id,
+        phone: phone,
+        profession: profession
+      };
+
+      req.session.user = user_global;
+      server_user_session = user_global;
+
+      res.sendStatus(200);
+    }
+  
+  });
+});
+
 app.post('/file-upload', upload.single('myfile'), function(req,res) {
   //fs.readFile(req.files.image.path);
-  console.log(req.file);
+  console.log(req.body.orig_email);
+  console.log(req.file.path);
+
+  var usr_email = req.body.user;
+  var file_path = req.file.path;
 
   res.sendStatus(200);
 });
@@ -327,15 +395,26 @@ app.post('/profile-login', function(req,res) {
             res.send({ email: 0});
           }
           else {
-          //if (user_res === NULL)
+          var prof = user_res.profession;
+          var profess = '';
+          if (prof == 0) {
+            profess = 'Teacher';
+          }
+          else if (prof == 1) {
+            profess = 'Learner';
+          }
+          else {
+            profess = 'Skoolia';
+          }
           var user_global = {
             email: user_res.email,
             username: user_res.email,
-            first: user_res.first_name, 
-            last: user_res.last_name,
+            first_name: user_res.first_name, 
+            last_name: user_res.last_name,
+            img_url: user_res.img_url,
             id: user_res.id,
             phone: user_res.phone,
-            profession: user_res.profession
+            profession: profess
           };
 
           req.session.user = user_global;
@@ -357,21 +436,13 @@ app.post('/profile-create', function(req,res) {
   var first_name = req.body.first_name;
   var last_name = req.body.last_name;
   var phone = '';//req.body.phone;
-  var profession = '';//req.body.profession;
-  var send = 0;//req.body.send_emails;
+  var profession = req.body.teach_learn;
+  var send = req.body.send_emails;
   var teach = 0;//req.body.teach;
   var learn = 0;//req.body.learn;
   //var both = req.body.teach_learn;
   var about_me = '';//req.body.about_me;
-
-  /*if (both == '1') {
-    teach = 1;
-    learn = 1;
-  }
-
-  if (send == 'true') {
-    send = 1;
-  }*/
+  var img_url = '/public/img/profile_default.png';
 
   //ER_DUP_ENTRY: Duplicate entry 'test@testy.com' for key 'email'
   var query = 'SELECT * FROM usr_test WHERE email = "' + email + '" ';
@@ -389,7 +460,7 @@ app.post('/profile-create', function(req,res) {
 
       var hash = bcrypt.hashSync(pass);
 
-      var query = 'INSERT INTO usr_test (email, password, username, first_name, last_name, phone, profession, send_email, teach, learn, about_me) VALUES ( "' + email + '", "' + hash + '", "' + username + '", "' + first_name + '", "' + last_name + '", "' + phone + '", "' + profession + '", ' + send + ', ' + teach + ', ' + learn + ', "' + about_me + '" )';
+      var query = 'INSERT INTO usr_test (email, password, username, first_name, last_name, img_url, phone, profession, send_email, teach, learn, about_me) VALUES ( "' + email + '", "' + hash + '", "' + username + '", "' + first_name + '", "' + last_name + '", "' + img_url  + '", "' + phone + '", "' + profession + '", ' + send + ', ' + teach + ', ' + learn + ', "' + about_me + '" )';
       //(type, first_nm,last_nm,eml_addr,pwrd,img_url,img_top,img_left,gender,date_of_birth,location_region,location_city,location_county,location_state,location_country,location_latitude,location_longitude,location_display,native_language,native_country,skype_username,gmail_username,created_on_dt,modified_on_dt, desc, learn, teach, currency, charge, lang_exch, profile_img, sparrow_customer_token, braintree_customer_id, tz_set, tz_last_used, currency_last_used)'
       connection.query(query, function(error, results, fields) {
       if (error) {
@@ -400,8 +471,9 @@ app.post('/profile-create', function(req,res) {
           var user_global = {
             email: email,
             username: email,
-            first: first_name, 
-            last: last_name,
+            first_name: first_name, 
+            last_name: last_name,
+            img_url: img_url,
             id: results.insertId,
             phone: phone,
             profession: profession

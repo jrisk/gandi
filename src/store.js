@@ -19,7 +19,8 @@ export const store = new Vuex.Store({
 	      send_email: 0,
 	      teach: 0,
 	      learn: 0,
-	      about_me: 'hello this is about text'
+	      about_me: 'hello this is about text',
+	      img_url: '/public/img/profile_default.png'
 		}
 	},
 	mutations: {

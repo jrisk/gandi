@@ -1,11 +1,23 @@
 <template>
 <div>
 
-<div class="alert alert-primary create-profile" role="alert">info here</div>
+<div class="alert alert-primary create-profile" role="alert">{{info}}</div>
 
   <div class="container emp-profile" v-if="input">
 
-    <form v-on:submit="editProfile()">
+    <form enctype="multipart/form-data" v-on:submit.prevent="save_changes()" id="photo-form">
+      <div class="form-group row">
+          <div class="col-md-4">
+            <div class="profile-img" href="#">
+              <img v-bind:src="input.img_url" alt=""/>
+              <div class="file btn btn-lg btn-primary">
+                Change Photo
+                <input v-on:change="preview()" ref="myFiles" type="file" name="myfile" accept=".jpg, .jpeg, .png" />
+              </div>
+            </div>
+        </div>
+      </div>
+
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
         <div class="col-sm-10">
@@ -14,14 +26,11 @@
 
         </div>
       </div>
+
       <div class="form-group row">
-
-        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+        <label for="changepass" class="col-sm-2 col-form-label">Change Password</label>
         <div class="col-sm-10">
-
-          <input type="password" class="form-control" id="inputPassword3" v-model="input.password" placeholder="Password"
-          autocomplete="">
-
+          <button type="button" class="btn btn-primary" v-on:click="change_pass()">Make new Password</button>
         </div>
       </div>
 
@@ -46,6 +55,11 @@
       </div>
 
       <div class="form-group row">
+        <label for="about_me" class="col-sm-2 col-form-label">About Me</label>
+          <textarea rows="3" class="form-control" id="aboutme" v-model="input.about_me"></textarea>
+      </div>
+
+      <div class="form-group row">
           <div class="col-sm-12">
 
             <input class="form-check-input" type="checkbox" id="gridCheck1" v-model="input.send_emails">
@@ -57,7 +71,7 @@
 
       <div class="form-group row">
         <div class="col-sm-12">
-          <button type="submit" class="btn btn-primary" v-on:click="loadEditSesh()">Sign Up</button>
+          <button type="submit" class="btn btn-primary" v-on:click="save_changes()">Edit Profile</button>
         </div>
       </div>
 
@@ -67,12 +81,16 @@
 </template>
 
 <script>
+import axios_b from '../../url_method.js'
+
 export default {
   data () {
     return {
       input: {
-
-      }
+        orig_email: '',
+        img_url: ''
+      },
+      info: "Edit Skoolia Profile"
     }
   },
   mounted: function() {
@@ -84,6 +102,54 @@ export default {
     loadEditSesh() {
       this.$store.dispatch('loadSession');
       this.input = this.$store.state.testSession;
+      this.input.orig_email = this.$store.state.testSession.email;
+    },
+    change_pass() {
+      this.$router.replace({name: 'forgot_password'});
+    },
+    preview() {
+      const vm = this;
+      const instance = axios_b();
+
+      var url = '/file-upload';
+
+      this.file = typeof this.$refs.myFiles.files[0] == 'undefined' ? this.input.img_url : this.$refs.myFiles.files[0];
+
+      let formdata = new FormData();
+
+      formdata.append('myfile', this.file);
+
+      formdata.append('orig_email', this.input.orig_email);
+
+      console.log(formdata.get('myfile'));
+
+      instance.post(url, formdata, { headers: { 'Content-Type': 'multipart/form-data'} }).then( function(data) {
+          console.log(data);
+        }).catch(err => console.log(err) );
+    },
+    save_changes() {
+      const vm = this;
+      const instance = axios_b();
+
+      var url = '/save-edit';
+
+      this.file = typeof this.$refs.myFiles.files[0] == 'undefined' ? this.input.img_url : this.$refs.myFiles.files[0];
+
+      let formdata = new FormData();
+
+      console.log(this.file);
+
+      formdata.append('myfile', this.file);
+      formdata.append('first_name', this.input.first_name);
+      formdata.append('last_name', this.input.last_name);
+      formdata.append('about_me', this.input.about_me);
+      formdata.append('orig_email', this.input.orig_email);
+      formdata.append('email', this.input.email);
+
+      instance.post(url, formdata, { headers: { 'Content-Type': 'multipart/form-data'} }).then( function(data) {
+        console.log(data.resp);
+        vm.$router.replace({name: 'profile'});
+        }).catch(err => console.log(err) );
     }
   }
 }

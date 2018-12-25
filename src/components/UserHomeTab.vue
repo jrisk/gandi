@@ -2,18 +2,10 @@
   <div class="profile-tab-data">
     <div class="row">
       <div class="col-md-6">
-        <label>User Id</label>
-      </div>
-      <div class="col-md-6">
-        <p>{{user.id}}</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
         <label>Name</label>
       </div>
       <div class="col-md-6">
-        <p>{{user.first}} {{user.last}}</p>
+        <p>{{user.first_name}} {{user.last_name}}</p>
       </div>
     </div>
     <div class="row">

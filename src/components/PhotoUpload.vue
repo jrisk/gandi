@@ -35,13 +35,9 @@ export default {
 
 			this.file = this.$refs.myFiles.files[0];
 
-			//var form = document.getElementById('photo-form')
-
 			let formdata = new FormData();
 
 			formdata.append('myfile', this.$refs.myFiles.files[0]);
-
-			console.log(formdata.get('myfile'));
 
 			instance.post(url, formdata, { headers: { 'Content-Type': 'multipart/form-data'} }).then( function(data) {
 					console.log(data);

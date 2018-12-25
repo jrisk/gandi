@@ -1,22 +1,18 @@
 <template>
 <div class="container emp-profile">
-  <form v-on:submit="editProfile()">
 
-    <div class="row">
+<form enctype="multipart/form-data" v-on:submit.prevent="edit_view()" id="photo-form">
+  <div class="row">
       <div class="col-md-4">
         <div class="profile-img" href="#">
-          <img src="/public/img/happy.png" alt=""/>
-          <div class="file btn btn-lg btn-primary">
-            Change Photo
-            <input type="file" name="file" accept=".jpg, .jpeg, .png" />
-          </div>
+          <img v-bind:src="user.img_url" alt=""/>
         </div>
-      </div>
+    </div>
 
       <div class="col-md-6">
         <div class="profile-head">
           <h5 v-if="user">
-          <p>My Skoolia Profile</p>
+          <p>My {{user.profession}} Profile</p>
           <p>{{user.first_name }} {{ user.last_name}}</p>
           </h5>
         </div>
@@ -26,12 +22,13 @@
         <input type="submit" class="profile-edit-btn" value="Edit Profile"/>
       </div>
 
-    </div>
+  </div>
 
   <div class="row">
 
     <div class="col-md-4">
-      <user-profile-work></user-profile-work>
+      {{user.about_me}}
+      <p v-if="user">{{user.id}}</p>
     </div>
 
     <div class="col-md-8 user-tabs">
@@ -51,34 +48,35 @@ export default {
     return {
       user: {
         id: 777,
-        about_me: "skoolia profile about me stuff"
+        about_me: "skoolia profile about me stuff",
+        img_url: "/public/img/profile_default.png"
       }
     }
+  },
+  created() {
+      const vm = this;
+      var url = '/api/user-sess';
+
+      const instance = axios_b();
+
+      instance.get(url, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then( function(resp) {
+       vm.user = resp.data;
+       }).catch( (err) => console.log(err) );
   },
   methods: {
     loadSesh () {
       this.$store.dispatch('loadSession');
     },
-    editProfile() {
-      const vm = this;
-
-      var url = '/file-upload';
-
-      const instance = axios_b();
-
-      instance.get(url).then( function(resp) {
-
-          console.log('user-sess call login');
-           if (resp.data.email) {
-              vm.$router.replace({ name: "profile" });
-           }
-           }).catch( err => console.log(err));
-      this.$router.replace({ name: "edit_profile" });
+    edit_view() {
+        this.$router.replace({name: 'edit_profile'});
     }
   },
   mounted: function() {
-    this.loadSesh();
-    console.log('done loading sesh');
+    console.log('mounted');
   }
 }
 </script>
