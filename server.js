@@ -269,7 +269,7 @@ app.post('/save-edit', upload.single('myfile'), function(req,res) {
 
   var user = req.body;
 
-  var img = typeof req.file == 'undefined' ? req.body.myfile : req.file.path;
+  var img = typeof req.file == 'undefined' ? req.body.myfile : '/'+req.file.path;
 
   var usr_email = user.orig_email;
   var file_path = img;
@@ -279,7 +279,6 @@ app.post('/save-edit', upload.single('myfile'), function(req,res) {
   var last_name = user.last_name;
   var phone = '';
   var profession = req.session.user.profession;//user.profession;
-
   //var params = [];
 
   var sql = `UPDATE usr_test SET email='`+ new_email + `', username='` + new_email + `', img_url='` + file_path + `', first_name='` + first_name + `', last_name='` + last_name + `', about_me='` + about_me + `' WHERE email='` + usr_email + `'`;
@@ -304,6 +303,7 @@ app.post('/save-edit', upload.single('myfile'), function(req,res) {
         first_name: first_name, 
         last_name: last_name,
         img_url: img,
+        about_me: about_me,
         id: req.session.user.id,
         phone: phone,
         profession: profession
@@ -324,9 +324,75 @@ app.post('/file-upload', upload.single('myfile'), function(req,res) {
   console.log(req.file.path);
 
   var usr_email = req.body.user;
-  var file_path = req.file.path;
+  var file_path = '/'+req.file.path;
 
-  res.sendStatus(200);
+  res.send(file_path);
+});
+
+app.get('/api/users/:id', function(req,res) {
+
+    var user_id = req.params.id;
+    var query = `SELECT * from usr_test WHERE id=`+user_id;
+    
+    connection.query(query, function(error, results, fields) {
+      if (error) {
+        console.log('mysql error in server.js');
+        throw error;
+        res.sendStatus(500);
+      }
+
+      if (results.length == 0) {
+        res.send({ email: 0 });
+      }
+
+      else {
+        var user = {};
+        var result = results[0];
+
+        user.id = result.id;
+        user.first_name = result.first_name;
+        user.last_name = result.last_name;
+        user.email = result.email;
+        user.profession = result.profession;
+        user.img_url = result.img_url;
+        user.about_me = result.about_me;
+        res.send(user);
+      }
+    })
+
+});
+
+app.get('/api/users', function(req,res) {
+
+    var query = `SELECT * from usr_test ORDER BY id`;
+    
+    connection.query(query, function(error, results, fields) {
+      if (error) {
+        console.log('mysql error in server.js');
+        throw error;
+        res.sendStatus(500);
+      }
+
+      if (results.length == 0) {
+        res.send({ email: 0 });
+      }
+
+      else {
+        users = [];
+
+        for (let result of results) {
+          var user = {};
+          user.value = result.id;
+          user.label = result.first_name;
+          user.last_name = result.last_name;
+          user.about_me = result.about_me;
+          user.email = result.email;
+          user.img_url = result.img_url;
+          users.push(user);
+        }
+        res.send(users);
+      }
+    })
 });
 
 app.get('/api/user-sess', function(req,res) {
@@ -351,6 +417,7 @@ app.get('/api/user-sess', function(req,res) {
       about_me: 'hello this is about text'
     };
     */
+    console.log(server_user_session);
     req.session.user = server_user_session;
 
     res.send(req.session.user);
@@ -412,6 +479,7 @@ app.post('/profile-login', function(req,res) {
             first_name: user_res.first_name, 
             last_name: user_res.last_name,
             img_url: user_res.img_url,
+            about_me: user_res.about_me,
             id: user_res.id,
             phone: user_res.phone,
             profession: profess
@@ -474,6 +542,7 @@ app.post('/profile-create', function(req,res) {
             first_name: first_name, 
             last_name: last_name,
             img_url: img_url,
+            about_me: about_me,
             id: results.insertId,
             phone: phone,
             profession: profession

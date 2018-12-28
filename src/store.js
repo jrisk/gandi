@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
 	state: {
-		userSession: 'user sesh pls',
+		userSession: {},
 		testSession: {
 	      id: 1,
 	      email: 'store email',

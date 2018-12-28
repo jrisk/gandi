@@ -1,27 +1,22 @@
 <template>
 <div class="container emp-profile" v-if="user">
 
-<form enctype="multipart/form-data" v-on:submit.prevent="edit_view()" id="photo-form">
+<form enctype="multipart/form-data" id="photo-form">
   <div class="row">
       <div class="col-md-4">
-        <div class="profile-img" href="#">
-          <img v-bind:src="user.img_url" alt=""/>
+        <div class="profile-img">
+          <img v-bind:src="user.img_url" alt="img">
         </div>
-      </div>
+    </div>
 
       <div class="col-md-6">
         <div class="profile-head">
-          <h5 v-if="user">
+          <h5>
           <p>My {{user.profession}} Profile</p>
           <p>{{user.first_name }} {{ user.last_name}}</p>
           </h5>
         </div>
       </div>
-
-      <div class="col-md-2">
-        <input type="submit" class="profile-edit-btn" value="Edit Profile"/>
-      </div>
-
   </div>
 
   <div class="row">
@@ -42,12 +37,12 @@
             <p>{{user.first_name}} {{user.last_name}}</p>
           </div>
         </div>
-        
+
         <div class="row">
           <div class="col-md-6">
             <label>Email</label>
           </div>
-         <div class="col-md-6">
+          <div class="col-md-6">
             <p>{{user.email}}</p>
           </div>
         </div>
@@ -75,7 +70,7 @@ export default {
   },
   created() {
       const vm = this;
-      var url = '/api/user-sess';
+      var url = '/api/users/' + this.$route.params.id;
 
       const instance = axios_b();
 
@@ -88,16 +83,8 @@ export default {
        }).catch( (err) => console.log(err) );
   },
   methods: {
-    loadSesh () {
-      this.$store.dispatch('loadSession');
-    },
-    edit_view() {
-      this.$router.replace({name: 'edit_profile'});
-    }
   },
   mounted: function() {
-    this.loadSesh();
-    console.log('mounted');
   }
 }
 </script>
@@ -114,6 +101,18 @@ body{
     border-radius: 0.5rem;
     background: #fff;
     text-align: center;
+}
+
+.profile-tab-data {
+  margin-top:5%;
+  text-align: left;
+  font-weight: 600;
+  color: #0062cc;
+}
+
+label {
+  font-weight: bold;
+  color: black;
 }
 
 @media (min-width: 768px) {

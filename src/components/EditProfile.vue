@@ -7,7 +7,7 @@
 
     <form enctype="multipart/form-data" v-on:submit.prevent="save_changes()" id="photo-form">
       <div class="form-group row">
-          <div class="col-md-4">
+          <div class="col-md-12">
             <div class="profile-img" href="#">
               <img v-bind:src="input.img_url" alt=""/>
               <div class="file btn btn-lg btn-primary">
@@ -88,7 +88,7 @@ export default {
     return {
       input: {
         orig_email: '',
-        img_url: ''
+        img_url: '/public/img/profile_default.png'
       },
       info: "Edit Skoolia Profile"
     }
@@ -123,8 +123,9 @@ export default {
 
       console.log(formdata.get('myfile'));
 
-      instance.post(url, formdata, { headers: { 'Content-Type': 'multipart/form-data'} }).then( function(data) {
-          console.log(data);
+      instance.post(url, formdata, { headers: { 'Content-Type': 'multipart/form-data'} }).then( function(resp) {
+          console.log(resp);
+          vm.input.img_url = resp.data;
         }).catch(err => console.log(err) );
     },
     save_changes() {

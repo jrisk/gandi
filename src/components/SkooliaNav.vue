@@ -14,10 +14,13 @@
     <!-- Right aligned nav items -->
     <b-navbar-nav class="ml-auto">
 
-      <b-nav-form id="skoolia-nav-form">
-        <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/>
-        <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-      </b-nav-form>
+      <nav class="nav navbar" id="skoolia-nav-form">
+        <form class="form-inline" autocomplete="off">
+          <input type="password" hidden>
+          <input class="form-control mr-sm-2" id="users" type="text" placeholder="Search" v-bind:value="search_word" />
+          <button size="sm" class="btn my-2 my-sm-0" type="submit" v-on:click="search()">Go</button>
+        </form>
+      </nav>
 
       <b-nav-item-dropdown text="Lang" right>
         <b-dropdown-item href="#">EN</b-dropdown-item>
@@ -43,14 +46,67 @@
 
 <script>
 import axios_b from '../../url_method.js';
+import autocomplete from 'autocompleter';
 
 export default {
   data() {
     return {
-
+      users: {},
+      search_val: 'Search',
+      search_word: ''
     }
   },
+  mounted () {
+    const vm = this;
+
+    var url = '/api/users';
+
+    const instance = axios_b();
+
+    instance.get(url).then( function(resp) {
+    vm.users = resp.data;
+    }).catch( function(err) { 
+    });
+
+      autocomplete({
+        input: document.getElementById("users"),
+        minLength: 1,
+        fetch: function(text, update) {
+          text = text.toLowerCase();
+
+          var users = vm.users;
+
+          var suggestions = users.filter(n => n.label.toLowerCase().startsWith(text))
+          update(suggestions);
+        },
+        onSelect: function(item) {
+          //document.getElementById('users').setAttribute('value', item.value);
+          vm.search_val = item.value;
+          vm.search_word = item.label;
+          vm.$router.push({ name: "user_profile" , params: { id: vm.search_val } });
+        },
+        emptyMsg: 'No Users Found',
+        render: function(item, currentValue) {
+          var div = document.createElement("div");
+          var div2 = document.createElement("p");
+          var img = document.createElement("img");
+          div2.textContent = item.last_name;
+          img.setAttribute('src', item.img_url);
+          img.setAttribute('width', 40);
+          img.setAttribute('height', 40);
+          img.className = 'select-img';
+          //div.textContent = item.label;
+          div.appendChild(div2);
+          div2.parentNode.insertBefore(img, div2.nextSibling);
+
+          return div;
+        },
+      });
+  },
   methods: {
+    search() {
+      this.$router.replace({ name: "user_profile" , params: { id: this.search_val } });
+    },
     logout() {
       const vm = this;
 
@@ -77,5 +133,22 @@ export default {
   #skoolia-nav-form {
     display: block;
   }
+}
+
+.autocomplete {
+  background: white;
+}
+
+.autocomplete > .selected {
+  background: #C1FAFF;
+}
+
+.autocomplete > div > p {
+  margin-left: 20px;
+  display: inline-block;
+}
+
+.autocomplete > div > .select-img {
+  float: left;
 }
 </style>

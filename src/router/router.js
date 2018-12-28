@@ -12,6 +12,7 @@ import PhotoUpload from '../components/PhotoUpload.vue';
 import ForgotPassword from '../components/ForgotPassword.vue';
 import ResetPassword from '../components/ResetPassword.vue';
 import ErrorPage from '../components/ErrorPage.vue';
+import UserProfile from '../components/UserProfile.vue';
 
 Vue.use(Router);
 
@@ -32,7 +33,8 @@ export function createRouter() {
 			{ path: '/edit-profile', component: EditProfile, name: 'edit_profile' },
 			{ path: '/forgot-password', component: ForgotPassword, name: 'forgot_password' },
 			{ path: '/reset-password/:id', component: ResetPassword, name: 'reset_password' },
-			{ path: '/photo-upload', component: PhotoUpload, name: 'photo_upload' }
+			{ path: '/photo-upload', component: PhotoUpload, name: 'photo_upload' },
+			{ path: '/users/:id', component: UserProfile, name: 'user_profile' }
 		]
 	});
 }
