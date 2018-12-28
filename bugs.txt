@@ -2,6 +2,8 @@ vue syntax package control needs fixing
 https://packagecontrol.io/docs/troubleshooting
 https://github.com/20Tauri/DoxyDoxygen/issues/103#issuecomment-375951725
 
+watch v-if with this.$refs, even in mount method, it will not capture a ref if not mounted first with v-if=true
+
 FIXED
 
 vue login econnrefused server route register

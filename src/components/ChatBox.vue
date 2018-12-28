@@ -1,12 +1,13 @@
 <template>
-	<div>
-		<div>{{info}}</div>
+	<div class="container chat-box-container">
 
-		<ul id="messages"></ul>
-	  <form action="" id="chatbox" v-on:submit="form_submit()">
+		<ul ref="messages" id="messages"></ul>
+
+	  <form action="" ref="chatbox_form" id="chatbox" v-on:submit.prevent="form_submit()" class="col-md-12">
 	    <input ref="input_m" id="m" autocomplete="off" />
 	    <button type="submit">Send</button>
 	  </form>
+
 	</div>
 </template>
 
@@ -17,6 +18,7 @@ export default {
 	data () {
 		return {
 			info: "welcome to chat",
+			open: false, 
 			socket: io('localhost:8080')
 		}
 	},
@@ -26,13 +28,10 @@ export default {
 
 			this.socket.emit('chat message', m.value);
 		  m.value = '';
-		  //return false;
+		  return false;
 		}
 	},
 	mounted () {
-
-		//$('form').submit(function() {
-		//});
 
 		const vm = this;
 
@@ -42,28 +41,39 @@ export default {
 		});
 
 		//respond to chat message emit by server
-		/*this.socket.on('chat message', function(data) {
-		  $('#messages')
+		this.socket.on('chat message', function(data) {
+			var msgs = vm.$refs.messages;
+
+			var li = document.createElement("li")
+			li.innerHTML = data.msg;
+			//var li = '<li>test msg</li>';
+
+			msgs.appendChild(li);
+
+		  /*$('#messages')
 		  .append($('<li>')
 		      .append($('<h4>').addClass('time').text(data.time))
 		      .append($('<b>').text(data.user))
 		      .append($(data.emoji))
 		      .append($('<p>').text(data.msg))
 		    );
-		  var msgNode = document.getElementById('messages').lastChild;
+		    */
+		  var msgNode = msgs.lastChild;
 
-		  window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight + 150);
+		  //window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight + 150);
 		  fade(msgNode);
-		});*/
+		});
 
 		/*this.socket.on('join message', function(user) {
 		  $('#messages').append($('<li>').addClass('joinClass').text(user + ' has joined'));
 		});*/
 
-		var msg = document.getElementById('messages');
-		var chatbox = document.getElementById('chatbox');
+		var msg = this.$refs.messages;
+		var chatbox = this.$refs.chatbox_form;
 
-		msg.style.marginBottom = chatbox.clientHeight;
+		console.log(this.$refs);
+
+		//msg.style.marginBottom = chatbox.clientHeight;
 
 		var fade = function(node) {
 		  var level = 1;
@@ -89,11 +99,19 @@ box-sizing: border-box;
 }
 body {  
 font-family: Arial, Helvetica; 
-overflow: scroll; 
 }
 */
+.chat-box-container {
+	height: 50%;
+	width: 50%;
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	overflow: scroll; 
+
+}
 form { 
-	background: #000; 
+	background: #999; 
 	padding: 3px; 
 	position: fixed; 
 	bottom: 0; 
@@ -127,13 +145,14 @@ form button {
 	background: #eee; 
 }
 
-  /* emoji support */
+  /* emoji support
   img.emoji {  
   // Override any img styles to ensure Emojis are displayed inline
   margin: 0px !important;
   display: inline !important;
   animation: rtol 3s;
-}
+  }
+  */
 
 .msg {
   display: inline;
@@ -141,10 +160,7 @@ form button {
   position: absolute;
  animation: rtol 3s; 
 }
-
-
 /* animate scroll the emoji */
-
 @keyframes rtol {
   from {
     display: inline;

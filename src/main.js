@@ -24,6 +24,8 @@ import UserHomeTab from './components/UserHomeTab'
 
 import UserProfileWork from './components/UserProfileWork'
 
+import ChatBox from './components/ChatBox';
+
 Vue.use(Modal);
 Vue.use(Navbar);
 Vue.use(Button);
@@ -51,6 +53,8 @@ Vue.component('user-tabs', UserTabs);
 Vue.component('user-home-tab', UserHomeTab);
 
 Vue.component('user-profile-work', UserProfileWork);
+
+Vue.component('chat-box', ChatBox);
 
 
 
