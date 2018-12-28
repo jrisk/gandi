@@ -253,9 +253,9 @@ app.use('/favicon.ico', function(req,res) {
   res.sendFile(__dirname + '/public/img/favicon.ico');
 });
 
-app.use('/chat', function(req,res) {
+/*app.use('/chat', function(req,res) {
   res.sendFile(__dirname + '/views/chat.html');
-});
+});*/
 
 app.use('/secure', function(req,res) {
   res.sendStatus(200);
@@ -319,8 +319,6 @@ app.post('/save-edit', upload.single('myfile'), function(req,res) {
 });
 
 app.post('/file-upload', upload.single('myfile'), function(req,res) {
-  //fs.readFile(req.files.image.path);
-  console.log(req.body.orig_email);
   console.log(req.file.path);
 
   var usr_email = req.body.user;

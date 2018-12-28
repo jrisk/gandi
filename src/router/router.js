@@ -13,6 +13,7 @@ import ForgotPassword from '../components/ForgotPassword.vue';
 import ResetPassword from '../components/ResetPassword.vue';
 import ErrorPage from '../components/ErrorPage.vue';
 import UserProfile from '../components/UserProfile.vue';
+import ChatBox from '../components/ChatBox.vue';
 
 Vue.use(Router);
 
@@ -34,7 +35,8 @@ export function createRouter() {
 			{ path: '/forgot-password', component: ForgotPassword, name: 'forgot_password' },
 			{ path: '/reset-password/:id', component: ResetPassword, name: 'reset_password' },
 			{ path: '/photo-upload', component: PhotoUpload, name: 'photo_upload' },
-			{ path: '/users/:id', component: UserProfile, name: 'user_profile' }
+			{ path: '/users/:id', component: UserProfile, name: 'user_profile' },
+			{ path: '/chat', component: ChatBox, name: 'chat_box' }
 		]
 	});
 }
