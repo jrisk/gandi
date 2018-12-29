@@ -18,7 +18,7 @@ export default {
 		return {
 			info: "welcome to chat",
 			open: false, 
-			socket: io('localhost:8080'),
+			socket: io(process.env.NODE_HOST+':'+process.env.NODE_PORT)
 		}
 	},
 	methods: {
