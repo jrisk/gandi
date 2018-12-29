@@ -1,14 +1,13 @@
 <template>
-	<div class="container chat-box-container">
-
+	<div>
+	<div ref="chat_container" id="chat-box-container">
 		<ul ref="messages" id="messages"></ul>
-
-	  <form action="" ref="chatbox_form" id="chatbox" v-on:submit.prevent="form_submit()" class="col-md-12">
-	    <input ref="input_m" id="m" autocomplete="off" />
-	    <button type="submit">Send</button>
-	  </form>
-
 	</div>
+		  	<form action="" ref="chatbox_form" id="chatbox" v-on:submit.prevent="form_submit()">
+			<input ref="input_m" id="m" autocomplete="off" />
+			<button class="btn" id="chat_button" type="submit">Send</button>
+	  	</form>
+	  </div>
 </template>
 
 <script>
@@ -19,7 +18,7 @@ export default {
 		return {
 			info: "welcome to chat",
 			open: false, 
-			socket: io('localhost:8080')
+			socket: io('localhost:8080'),
 		}
 	},
 	methods: {
@@ -60,20 +59,11 @@ export default {
 		    */
 		  var msgNode = msgs.lastChild;
 
-		  //window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight + 150);
+		var container = vm.$refs.chat_container;
+		container.scrollTop = container.scrollHeight;
+
 		  fade(msgNode);
 		});
-
-		/*this.socket.on('join message', function(user) {
-		  $('#messages').append($('<li>').addClass('joinClass').text(user + ' has joined'));
-		});*/
-
-		var msg = this.$refs.messages;
-		var chatbox = this.$refs.chatbox_form;
-
-		console.log(this.$refs);
-
-		//msg.style.marginBottom = chatbox.clientHeight;
 
 		var fade = function(node) {
 		  var level = 1;
@@ -92,52 +82,42 @@ export default {
 </script>
 
 <style>
-/*
-* {  
-padding: 0; 
-box-sizing: border-box; 
-}
-body {  
-font-family: Arial, Helvetica; 
-}
-*/
-.chat-box-container {
+#chat-box-container {
 	height: 50%;
 	width: 50%;
-	position: fixed;
-	bottom: 10px;
+	bottom: 30px;
 	right: 10px;
-	overflow: scroll; 
-
+	overflow: scroll;
+	position: fixed;
+	background: #777;
 }
-form { 
-	background: #999; 
-	padding: 3px; 
-	position: fixed; 
-	bottom: 0; 
-	width: 100%; 
+#chatbox {
+	height: 5%;
+	width: 50%;
+	bottom: 20px;
+	right: 5px;
+	position: fixed;
 }
-form input { 
-	border: 0; 
-	padding: 10px; 
-	width: 90%; 
+#chatbox input {
+	padding: 5px;
+	width: 82%;
 	margin-right: .5%; 
+	margin-bottom: 1%;
 }
-form button { 
-	width: 9%; 
-	background: rgb(130, 224, 255); 
-	border: none; 
-	padding: 10px; 
+#chatbox button { 
+	width: 16%; 
+	background: rgb(130, 224, 255);
 }
 #messages { 
 	list-style-type: none; 
-	position: relative; 
-	margin-bottom: 5%; 
+	position: relative;
+	margin-bottom: 5%;
 }
 #messages li { 
 	padding: 5px 10px; 
 	word-wrap: break-word; 
 }
+/*float right for person, left for response*/
 #messages li span {
 	float: right;
 }
@@ -152,7 +132,6 @@ form button {
   display: inline !important;
   animation: rtol 3s;
   }
-  */
 
 .msg {
   display: inline;
@@ -160,7 +139,6 @@ form button {
   position: absolute;
  animation: rtol 3s; 
 }
-/* animate scroll the emoji */
 @keyframes rtol {
   from {
     display: inline;
@@ -171,4 +149,5 @@ form button {
     margin-left: -20%;
   }
 }
+*/
 </style>

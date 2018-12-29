@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div id="chat-button-widget">
   <a href="#" v-on:click="open = !open">
     <img src="/public/img/socket.png"
@@ -6,8 +7,9 @@
           height="60px"
           width="60px" />
   </a>
-  <chat-box v-if="open"></chat-box>
   </div>
+    <chat-box v-if="open"></chat-box>
+</div>
 </template>
 
 <script>
