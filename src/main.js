@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import { createRouter } from './router/router.js'
 import { store } from './store.js'
+import io from 'socket.io-client'
+import VueSocketIO from 'vue-socket.io'
 
 import { Modal, Navbar, Button, Nav, Form, FormInput, Card, Tabs } from 'bootstrap-vue/es/components'
 //Jarisk
@@ -25,6 +27,12 @@ import UserHomeTab from './components/UserHomeTab'
 import UserProfileWork from './components/UserProfileWork'
 
 import ChatBox from './components/ChatBox';
+
+export const socket = io('http://localhost:8080');
+
+Vue.use(new VueSocketIO({
+	connection: io('http://localhost:8080')
+}));
 
 Vue.use(Modal);
 Vue.use(Navbar);

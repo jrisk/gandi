@@ -81,7 +81,7 @@ app.use(session({
 var http = require('http');
 var httpServer = http.Server(app);
 
-var io = require('socket.io')(httpServer);
+var io = require('socket.io')(httpServer, { pingTimeout: 60000 });
 
 var chatApp = require('./chat-app');
 

@@ -1,26 +1,56 @@
 <template>
   <div>
   <div id="chat-button-widget">
-  <a href="#" v-on:click="open = !open">
+  <a href="#" v-on:click="open = chat">
     <img src="/public/img/socket.png"
           alt="Chat Picture"
           height="60px"
           width="60px" />
   </a>
   </div>
-    <chat-box v-if="open"></chat-box>
+    <ChatBox v-if="open" v-on:chatting="open = !open"></ChatBox>
 </div>
 </template>
 
 <script>
+import ChatBox from './ChatBox.vue';
 
 export default {
-  data () {
-    return {
-      open: false
+  sockets: {
+    connect: function () {
+        console.log('socket connected');
+    },
+    customEmit: function (data) {
+        console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)');
     }
   },
+  components: {
+    ChatBox
+  },
+  data () {
+    return {
+      open: false,
+      chat: true,
+      chatting: true
+    }
+  },
+  created () {
+    const vm = this;
+
+    this.$socket.on('join', function(info) {
+      console.log('join fired');
+      vm.socket.emit('join', info);
+      return false;
+    });
+  },
   methods: {
+  },
+  computed: {
+    open_chat: function () {
+      this.open = true;
+      console.log(this.open);
+      return this.open;
+    }
   }
 }
 </script>

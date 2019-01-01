@@ -18,7 +18,6 @@ module.exports = (env = {}) => {
       ENV = 'local'
     }
 
-
   return {
     entry: './src/client-entry.js',
     mode: 'production',
@@ -33,6 +32,7 @@ module.exports = (env = {}) => {
       },
       extensions: ['*', '.js', '.vue', '.json']
     },
+    externals: ['ws'], //socket.io warnings
     module: {
       rules: [
         {

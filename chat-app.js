@@ -4,7 +4,39 @@ var emoji = require('emoji');
 
 var clients = {};
 
-module.exports = SocketRun;
+module.exports = SocketSkoolia; //make this use real id/etc
+
+function SocketSkoolia(io) {
+	io.on('connection', function(socket) {
+
+		var new_usr = 'new user 19';
+
+		io.emit('join', new_usr);
+
+		socket.on('join', function(person) {
+			io.emit('join message', person);
+		});
+
+		socket.on('chat_message', function(msg) {
+			var time = new Date();
+			var timeNow = time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds() + '';
+
+			console.log(socket.request.sessionID);
+
+			var person = clients[socket.request.sessionID];
+
+			io.emit('chat_message', { msg: msg, time: timeNow });
+		});
+
+		socket.on('disconnect', function () {
+			console.log('user disconnected');
+		});
+
+		socket.on('error', function(err) {
+			console.log(err);
+		});
+	});
+}
 
 function SocketRun(io) {
 	io.on('connection', function (socket) {
