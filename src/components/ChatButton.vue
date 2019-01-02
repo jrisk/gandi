@@ -48,7 +48,6 @@ export default {
   computed: {
     open_chat: function () {
       this.open = true;
-      console.log(this.open);
       return this.open;
     }
   }

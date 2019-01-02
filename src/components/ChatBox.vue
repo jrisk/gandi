@@ -11,7 +11,7 @@
 
 			<form ref="chatbox_form" id="chatbox_form" v-on:submit.prevent="form_submit()">
 				<input ref="input_m" id="m" maxlength="140" autocomplete="off" />
-				<button class="btn btn-sm" id="chat_button" type="submit">Send</button>
+				<button class="btn btn-sm btn-primary" id="chat_button" type="submit">Send</button>
 		  </form>
 
 	</div>
@@ -82,6 +82,8 @@ export default {
 	},
 	mounted () {
 
+		this.$refs.input_m.focus();
+
 		var fade = function(node) {
 		  var level = 1;
 		  var step = function() {
@@ -102,9 +104,9 @@ export default {
 
 @media (max-width: 767px) {
   #message-container {
-    height: 85%;
+    height: 80%;
     width: 100%;
-    bottom: 1px;
+    bottom: 10px;
 		right: 1px;
 		overflow: scroll;
 		position: fixed;
@@ -112,7 +114,7 @@ export default {
 		background: -webkit-linear-gradient(left, #3931af, #00c6ff);
   }
   #chat-options {
-	height: 10%;
+	height: 5%;
 	width: 100%;
 	top: 50px;
 	right: 1px;
@@ -121,20 +123,22 @@ export default {
 	}
 
 	#chatbox_form {
-	height: 10%;
+	height: 5%;
 	width: 100%;
-	bottom: 2px;
+	bottom: 15px;
 	right: 0px;
+	padding-left: 5px;
+	margin-left: 5px;
 	position: fixed;
-	background: #777
+	background: -webkit-linear-gradient(left, #3931af, #00c6ff);
 	}
 }
 
 @media (min-width: 768px) {
 	#message-container {
-		height: 55%;
+		height: 60%;
 		width: 50%;
-		bottom: 30px;
+		bottom: 20px;
 		right: 10px;
 		overflow: scroll;
 		position: fixed;
@@ -147,7 +151,11 @@ export default {
 	bottom: 60%;
 	right: 10px;
 	position: fixed;
-	background: #777;
+	padding-left: 5px;
+	margin-left: 5px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	background: -webkit-linear-gradient(left, #3931af, #00c6ff);
 	z-index: 1;
 	}
 
@@ -157,7 +165,7 @@ export default {
 	bottom: 20px;
 	right: 10px;
 	position: fixed;
-	background: #777
+	background: -webkit-linear-gradient(left, #3931af, #00c6ff)
 	}
 }
 #chatbox_form input {
@@ -175,7 +183,8 @@ export default {
 
 #messages li { 
 	padding: 5px 10px; 
-	word-wrap: break-word; 
+	word-wrap: break-word;
+	
 }
 /*float right for person, left for response*/
 #messages li span {
