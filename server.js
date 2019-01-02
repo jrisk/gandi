@@ -330,7 +330,8 @@ app.post('/file-upload', upload.single('myfile'), function(req,res) {
 app.get('/api/users/:id', function(req,res) {
 
     var user_id = req.params.id;
-    var query = `SELECT * from usr_test WHERE id=`+user_id;
+    console.log(typeof user_id);
+    var query = `SELECT * from usr_test WHERE id='`+user_id+`'`;
     
     connection.query(query, function(error, results, fields) {
       if (error) {

@@ -18,7 +18,7 @@
         <form class="form-inline" autocomplete="off">
           <input type="password" hidden>
           <input class="form-control mr-sm-2" id="users" type="text" placeholder="Search" v-bind:value="search_word" />
-          <button size="sm" class="btn my-2 my-sm-0" type="submit" v-on:click="search()">Go</button>
+          <button size="sm" class="btn my-2 my-sm-0" v-on:click="search()">Go</button>
         </form>
       </nav>
 
