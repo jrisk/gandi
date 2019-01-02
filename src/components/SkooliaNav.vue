@@ -135,6 +135,11 @@ export default {
   }
 }
 
+#nav_collapse {
+  z-index: 2;
+  background: #007bff;
+}
+
 .autocomplete {
   background: white;
 }

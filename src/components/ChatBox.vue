@@ -10,8 +10,8 @@
 		</div>
 
 			<form ref="chatbox_form" id="chatbox_form" v-on:submit.prevent="form_submit()">
-				<input ref="input_m" id="m" autocomplete="off" />
-				<button class="btn" id="chat_button" type="submit">Send</button>
+				<input ref="input_m" id="m" maxlength="140" autocomplete="off" />
+				<button class="btn btn-sm" id="chat_button" type="submit">Send</button>
 		  </form>
 
 	</div>
@@ -23,6 +23,25 @@ export default {
 	sockets: {
 		chat_message: function(data) {
 			console.log(data);
+			var msgs = this.$refs.messages;
+
+			var msg_li = document.createElement("li")
+			msg_li.innerHTML = data.msg;
+
+			var time_b = document.createElement("span")
+			time_b.innerHTML = data.time;
+
+			msg_li.appendChild(time_b);
+
+			msgs.appendChild(msg_li);
+
+			var msgNode = msgs.lastChild;
+
+			var container = this.$refs.message_container;
+			
+			container.scrollTop = container.scrollHeight;
+
+			this.fade(msgNode);
 		} 
 	},
 	data () {
@@ -40,8 +59,21 @@ export default {
 		  m.value = '';
 		  return false;
 		},
+		fade(node) {
+		  var level = 1;
+		  var step = function() {
+		    var hex = level.toString(16);
+		    node.style.backgroundColor = "#FFFF" + hex + hex;
+		      if (level < 15) {
+		        level++;
+		        setTimeout(step, 100);
+		        }
+		      };
+		      step();
+		},
 		minimize() {
-			//this.open = false;
+			this.open = false
+			this.$emit("chatting", false);
 		},
 		close() {
 			this.open = false
@@ -49,34 +81,6 @@ export default {
 		}
 	},
 	mounted () {
-
-		const vm = this;
-
-		//respond to chat message emit by server
-		this.$socket.on('chat_message', function(data) {
-			var msgs = vm.$refs.messages;
-
-			var li = document.createElement("li")
-			li.innerHTML = data.msg;
-			//var li = '<li>test msg</li>';
-
-			msgs.appendChild(li);
-
-		  $('#messages')
-		  .append($('<li>')
-		      .append($('<h4>').addClass('time').text(data.time))
-		      .append($('<b>').text(data.user))
-		      .append($(data.emoji))
-		      .append($('<p>').text(data.msg))
-		    );
-		    
-		  var msgNode = msgs.lastChild;
-
-		var container = vm.$refs.message_container;
-		container.scrollTop = container.scrollHeight;
-
-		  fade(msgNode);
-		});
 
 		var fade = function(node) {
 		  var level = 1;
@@ -95,50 +99,80 @@ export default {
 </script>
 
 <style>
-#chatbox-container {
-	background-color: orange;
-}
-#message-container {
-	height: 55%;
-	width: 50%;
-	bottom: 30px;
-	right: 10px;
-	overflow: scroll;
+
+@media (max-width: 767px) {
+  #message-container {
+    height: 85%;
+    width: 100%;
+    bottom: 1px;
+		right: 1px;
+		overflow: scroll;
+		position: fixed;
+		border-radius: 5px;
+		background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+  }
+  #chat-options {
+	height: 10%;
+	width: 100%;
+	top: 50px;
+	right: 1px;
 	position: fixed;
-	background: #777;
+	z-index: 1;
+	}
+
+	#chatbox_form {
+	height: 10%;
+	width: 100%;
+	bottom: 2px;
+	right: 0px;
+	position: fixed;
+	background: #777
+	}
 }
 
-#chat-options {
+@media (min-width: 768px) {
+	#message-container {
+		height: 55%;
+		width: 50%;
+		bottom: 30px;
+		right: 10px;
+		overflow: scroll;
+		position: fixed;
+		background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+		border-radius: 5px;
+	}
+	#chat-options {
 	height: 10%;
-	width: 55%;
+	width: 50%;
 	bottom: 60%;
 	right: 10px;
 	position: fixed;
-}
+	background: #777;
+	z-index: 1;
+	}
 
-#chatbox_form {
+	#chatbox_form {
 	height: 5%;
 	width: 50%;
 	bottom: 20px;
-	right: 5px;
+	right: 10px;
 	position: fixed;
+	background: #777
+	}
 }
 #chatbox_form input {
-	padding: 5px;
 	width: 82%;
-	margin-right: .5%; 
-	margin-bottom: 1%;
 }
 #chatbox_form button { 
-	width: 16%; 
-	background: rgb(130, 224, 255);
+	width: 16%;
 }
-#messages { 
+	#messages { 
 	list-style-type: none; 
 	position: relative;
 	margin-bottom: 5%;
 	margin-top: 10%;
-}
+	}
+
 #messages li { 
 	padding: 5px 10px; 
 	word-wrap: break-word; 

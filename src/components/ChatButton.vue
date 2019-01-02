@@ -59,6 +59,8 @@ export default {
 #chat-button-widget {
   position: fixed;
   bottom: 10px;
-  right: 10px; 
+  right: 10px;
+  border-radius: 30px;
+  background: -webkit-linear-gradient(left, #8fe0f7, #00c6ff);
 }
 </style>

@@ -19,11 +19,16 @@ function SocketSkoolia(io) {
 
 		socket.on('chat_message', function(msg) {
 			var time = new Date();
-			var timeNow = time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds() + '';
+			var hours = ('0' + time.getHours()).slice(-2);
+			var minutes = ('0' + time.getMinutes()).slice(-2);
+			var seconds = ('0' + time.getSeconds()).slice(-2);
+			var timeNow = hours + ':' + minutes + ':' + seconds;
 
-			console.log(socket.request.sessionID);
+			console.log(socket.id);
 
-			var person = clients[socket.request.sessionID];
+			//socket.request
+
+			//var person = clients[socket.request.sessionID];
 
 			io.emit('chat_message', { msg: msg, time: timeNow });
 		});

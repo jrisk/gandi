@@ -28,10 +28,8 @@ import UserProfileWork from './components/UserProfileWork'
 
 import ChatBox from './components/ChatBox';
 
-export const socket = io('http://localhost:8080');
-
 Vue.use(new VueSocketIO({
-	connection: io('http://localhost:8080')
+	connection: io(process.env.NODE_HOST+':'+process.env.NODE_PORT)
 }));
 
 Vue.use(Modal);
