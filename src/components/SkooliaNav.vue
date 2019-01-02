@@ -142,6 +142,7 @@ export default {
 
 .autocomplete {
   background: white;
+  z-index: 3;
 }
 
 .autocomplete > .selected {
