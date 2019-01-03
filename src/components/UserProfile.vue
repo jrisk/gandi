@@ -12,8 +12,9 @@
       <div class="col-md-6">
         <div class="profile-head">
           <h5>
-          <p>My {{user.profession}} Profile</p>
-          <p>{{user.first_name }} {{ user.last_name}}</p>
+          <p>{{user.first_name}}'s Profile</p>
+          <p>{{user.profession}}</p>
+          <p>Offering Lessons in {{user.lang}}</p>
           </h5>
         </div>
       </div>
@@ -64,7 +65,8 @@ export default {
       user: {
         id: 777,
         about_me: "skoolia profile about me stuff",
-        img_url: "/public/img/profile_default.png"
+        img_url: "/public/img/profile_default.png",
+        lang: "English, Spanish"
       }
     }
   },

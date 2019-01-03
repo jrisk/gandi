@@ -13,7 +13,7 @@
         <div class="profile-head">
           <h5 v-if="user">
           <p>My {{user.profession}} Profile</p>
-          <p>{{user.first_name }} {{ user.last_name}}</p>
+          <p>Offers lessons in {{user.lang}}</p>
           </h5>
         </div>
       </div>

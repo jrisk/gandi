@@ -279,9 +279,10 @@ app.post('/save-edit', upload.single('myfile'), function(req,res) {
   var last_name = user.last_name;
   var phone = '';
   var profession = req.session.user.profession;//user.profession;
+  var lang = user.lang_teach;
   //var params = [];
 
-  var sql = `UPDATE usr_test SET email='`+ new_email + `', username='` + new_email + `', img_url='` + file_path + `', first_name='` + first_name + `', last_name='` + last_name + `', about_me='` + about_me + `' WHERE email='` + usr_email + `'`;
+  var sql = `UPDATE usr_test SET email='`+ new_email + `', username='` + new_email + `', img_url='` + file_path + `', first_name='` + first_name + `', last_name='` + last_name + `', about_me='` + about_me + `', lang_teach='` + lang  + `' WHERE email='` + usr_email + `'`;
 
   connection.query(sql, function(error, results, fields) { 
     if (error) {
@@ -306,7 +307,8 @@ app.post('/save-edit', upload.single('myfile'), function(req,res) {
         about_me: about_me,
         id: req.session.user.id,
         phone: phone,
-        profession: profession
+        profession: profession,
+        lang: lang
       };
 
       req.session.user = user_global;
@@ -325,6 +327,23 @@ app.post('/file-upload', upload.single('myfile'), function(req,res) {
   var file_path = '/'+req.file.path;
 
   res.send(file_path);
+});
+
+app.get('/testsql', function(req,res) {
+  //var user_id = req.params.id;
+  //var query = `SELECT * from usr_test WHERE id='`+user_id+`'`;
+  
+  var query = `SELECT u.id, u.first_name, u.last_name, u.profession, u.img_url, u.about_me, l.lang_id ON usr_test u LEFT JOIN lang_teach l ON u.id = l.usr_id`;
+
+  connection.query(query, function(error, results, fields) {
+
+    if (error) {
+      throw error;
+    }
+
+    console.log(results);
+    console.log(fields);
+  });
 });
 
 app.get('/api/users/:id', function(req,res) {
@@ -348,13 +367,26 @@ app.get('/api/users/:id', function(req,res) {
         var user = {};
         var result = results[0];
 
+          var prof = result.profession;
+          var profess = '';
+          if (prof == 0) {
+            profess = 'Teacher';
+          }
+          else if (prof == 1) {
+            profess = 'Learner';
+          }
+          else {
+            profess = 'Skoolia';
+          }
+
         user.id = result.id;
         user.first_name = result.first_name;
         user.last_name = result.last_name;
         user.email = result.email;
-        user.profession = result.profession;
+        user.profession = profess;
         user.img_url = result.img_url;
         user.about_me = result.about_me;
+        user.lang = result.lang_teach;
         res.send(user);
       }
     })
@@ -481,7 +513,8 @@ app.post('/profile-login', function(req,res) {
             about_me: user_res.about_me,
             id: user_res.id,
             phone: user_res.phone,
-            profession: profess
+            profession: profess,
+            lang: user_res.lang_teach
           };
 
           req.session.user = user_global;
@@ -504,6 +537,7 @@ app.post('/profile-create', function(req,res) {
   var last_name = req.body.last_name;
   var phone = '';//req.body.phone;
   var profession = req.body.teach_learn;
+  var lang = req.body.lang_teach;
   var send = req.body.send_emails;
   var teach = 0;//req.body.teach;
   var learn = 0;//req.body.learn;
@@ -527,7 +561,7 @@ app.post('/profile-create', function(req,res) {
 
       var hash = bcrypt.hashSync(pass);
 
-      var query = 'INSERT INTO usr_test (email, password, username, first_name, last_name, img_url, phone, profession, send_email, teach, learn, about_me) VALUES ( "' + email + '", "' + hash + '", "' + username + '", "' + first_name + '", "' + last_name + '", "' + img_url  + '", "' + phone + '", "' + profession + '", ' + send + ', ' + teach + ', ' + learn + ', "' + about_me + '" )';
+      var query = 'INSERT INTO usr_test (email, password, username, first_name, last_name, img_url, phone, profession, lang_teach, send_email, teach, learn, about_me) VALUES ( "' + email + '", "' + hash + '", "' + username + '", "' + first_name + '", "' + last_name + '", "' + img_url  + '", "' + phone + '", "' + profession + '", ' + lang + ', ' + send + ', ' + teach + ', ' + learn + ', "' + about_me + '" )';
       //(type, first_nm,last_nm,eml_addr,pwrd,img_url,img_top,img_left,gender,date_of_birth,location_region,location_city,location_county,location_state,location_country,location_latitude,location_longitude,location_display,native_language,native_country,skype_username,gmail_username,created_on_dt,modified_on_dt, desc, learn, teach, currency, charge, lang_exch, profile_img, sparrow_customer_token, braintree_customer_id, tz_set, tz_last_used, currency_last_used)'
       connection.query(query, function(error, results, fields) {
       if (error) {
@@ -535,6 +569,17 @@ app.post('/profile-create', function(req,res) {
       }
       console.log(results.insertId);
       //make this a method
+          var prof = profession;
+          var profess = '';
+          if (prof == 0) {
+            profess = 'Teacher';
+          }
+          else if (prof == 1) {
+            profess = 'Learner';
+          }
+          else {
+            profess = 'Skoolia';
+          }
           var user_global = {
             email: email,
             username: email,
@@ -544,7 +589,8 @@ app.post('/profile-create', function(req,res) {
             about_me: about_me,
             id: results.insertId,
             phone: phone,
-            profession: profession
+            profession: profess,
+            lang: lang
           };
 
           req.session.user = user_global;

@@ -54,6 +54,17 @@
         </div>
       </div>
 
+    <div class="form-group row" v-if="input.teach_learn != 1">
+      <label class="col-sm-2 col-form-label" for="teach_option_label">{{teach_option_q}}?</label>
+      <div class="col-sm-10">
+        <select class="form-control" id="teach_option" v-model="input.lang_teach">
+          <option v-for="option in teach_options" v-bind:value="option.value">
+            {{ option.text }}
+          </option>
+        </select>
+      </div>
+    </div>
+
       <div class="form-group row">
         <label for="about_me" class="col-sm-2 col-form-label">About Me</label>
           <textarea rows="3" class="form-control" id="aboutme" v-model="input.about_me"></textarea>
@@ -90,7 +101,10 @@ export default {
         orig_email: '',
         img_url: '/public/img/profile_default.png'
       },
-      info: "Edit Skoolia Profile"
+      info: "Edit Skoolia Profile",
+      teach_or_learn: "Are you a Teacher or Learner",
+      teach_option_q: "What language do you teach",
+      teach_options: [ {text: "English", value: 1, code: "en"}, {text: "Czech", value: 2, code: "cz"}, {text: "Spanish", value: 3, code: "sp"}, {text: "French", value: 4, code: "fr"}, {text: "Chinese", value: 5, code: "ch"}, {text: "Russian", value: 6, code: "ru"}]      
     }
   },
   mounted: function() {
@@ -146,6 +160,7 @@ export default {
       formdata.append('about_me', this.input.about_me);
       formdata.append('orig_email', this.input.orig_email);
       formdata.append('email', this.input.email);
+      formdata.append('lang_teach', this.input.lang_teach);
 
       instance.post(url, formdata, { headers: { 'Content-Type': 'multipart/form-data'} }).then( function(data) {
         console.log(data.resp);

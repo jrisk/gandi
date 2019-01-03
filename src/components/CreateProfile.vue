@@ -11,29 +11,10 @@
 
         </div>
       </div>
-      <div class="form-group row">
-
-        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-        <div class="col-sm-10">
-
-          <input type="password" minlength="4" class="form-control" id="inputPassword3" v-model="input.password" placeholder="Password">
-
-        </div>
-      </div>
 
       <div class="form-group row">
 
-        <label for="inputPassword3" class="col-sm-2 col-form-label">Confirm Password</label>
-        <div class="col-sm-10">
-
-          <input type="password" minlength="4" class="form-control" id="inputPasswordConfirm" v-model="input.password_confirm" placeholder="Password">
-
-        </div>
-      </div>
-
-      <div class="form-group row">
-
-        <label for="firstname" class="col-sm-2 col-form-label">First Name (optional)</label>
+        <label for="firstname" class="col-sm-2 col-form-label">First Name</label>
         <div class="col-sm-10">
 
           <input type="string" class="form-control" id="inputfirstname" v-model="input.first_name" placeholder="First">
@@ -61,6 +42,37 @@
         </select>
       </div>
     </div>
+
+    <div class="form-group row" v-if="input.teach_learn != 1">
+      <label class="col-sm-2 col-form-label" for="teach_option_label">{{teach_option_q}}?</label>
+      <div class="col-sm-10">
+        <select class="form-control" id="teach_option" v-model="input.lang_teach">
+          <option v-for="option in teach_options" v-bind:value="option.value">
+            {{ option.text }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+      <div class="form-group row">
+
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-10">
+
+          <input type="password" minlength="4" class="form-control" id="inputPassword3" v-model="input.password" placeholder="Password">
+
+        </div>
+      </div>
+
+      <div class="form-group row">
+
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Confirm Password</label>
+        <div class="col-sm-10">
+
+          <input type="password" minlength="4" class="form-control" id="inputPasswordConfirm" v-model="input.password_confirm" placeholder="Password">
+
+        </div>
+      </div>
 
       <div class="form-group row">
           <div class="col-sm-12">
@@ -97,13 +109,16 @@ export default {
         first_name: "",
         last_name: "",
         teach_learn: 0,
-        send_emails: 0
+        send_emails: 0,
+        lang_teach: "en"
       },
       info: "Choose a good password",
       teach: "Teacher",
       learn: "Learner",
       both: "Both",
-      teach_or_learn: "Are you a Teacher or Learner"
+      teach_or_learn: "Are you a Teacher or Learner",
+      teach_option_q: "What language do you teach",
+      teach_options: [ {text: "English", value: 1, code: "en"}, {text: "Czech", value: 2, code: "cz"}, {text: "Spanish", value: 3, code: "sp"}, {text: "French", value: 4, code: "fr"}, {text: "Chinese", value: 5, code: "ch"}, {text: "Russian", value: 6, code: "ru"}]
     }
   },
   methods: {

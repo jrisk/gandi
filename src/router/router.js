@@ -6,7 +6,6 @@ import Login from '../components/Login.vue';
 import Logout from '../components/Logout.vue';
 import SkooliaHome from '../components/SkooliaHome.vue';
 import CreateProfile from '../components/CreateProfile.vue';
-import ViewProfile from '../components/ViewProfile.vue';
 import EditProfile from '../components/EditProfile.vue';
 import PhotoUpload from '../components/PhotoUpload.vue';
 import ForgotPassword from '../components/ForgotPassword.vue';
