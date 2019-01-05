@@ -19,8 +19,10 @@ function SocketSkoolia(io) {
 
 		console.log('socket connected');
 
-		socket.on('join', function(person) {
-			io.emit('join message', person);
+		socket.on('join', function(string) {
+			console.log('got the socket msg from comp');
+			console.log(string);
+			io.emit('join_message', {user: sid});
 		});
 
 		socket.on('chat_message', function(msg) {

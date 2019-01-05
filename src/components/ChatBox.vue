@@ -21,6 +21,15 @@
 
 export default {
 	sockets: {
+		join_message: function(data) {
+			if (this.original_user != '') {
+
+			}
+			else {
+				this.original_user = data.user;
+			}
+			console.log(this.original_user);
+		},
 		chat_message: function(data) {
 			console.log(data);
 			var msgs = this.$refs.messages;
@@ -34,6 +43,19 @@ export default {
 			var user_c = document.createElement("span")
 			user_c.innerHTML = data.user;
 
+			var self_other = '';
+
+			if (data.user == this.original_user) {
+				self_other = 'self';
+				msg_li.className = 'self';
+				msg_li.style.background = '#0000FF';
+			}
+			else {
+				self_other = 'other';
+				msg_li.className = 'other';
+				msg_li.style.background = '#008000';
+			}
+
 			msgs.appendChild(msg_li);
 
 			msg_li.appendChild(user_c);
@@ -45,14 +67,15 @@ export default {
 			
 			container.scrollTop = container.scrollHeight;
 
-			this.fade(msgNode);
+			this.fade(msgNode, self_other);
 		} 
 	},
 	data () {
 		return {
 			info: "welcome to chat",
 			open: true,
-			min: false
+			min: false,
+			original_user: ""
 		}
 	},
 	methods: {
@@ -63,11 +86,18 @@ export default {
 		  m.value = '';
 		  return false;
 		},
-		fade(node) {
+		fade(node, self) {
+			var backgroundColor = '';
+		if (self == 'self') {
+			backgroundColor = '#FFFF';
+		}
+		else {
+			backgroundColor = '#99FF';
+		}
 		  var level = 1;
 		  var step = function() {
 		    var hex = level.toString(16);
-		    node.style.backgroundColor = "#FFFF" + hex + hex;
+		    node.style.backgroundColor = backgroundColor + hex + hex;
 		      if (level < 15) {
 		        level++;
 		        setTimeout(step, 100);
@@ -85,6 +115,8 @@ export default {
 		}
 	},
 	mounted () {
+
+		this.$socket.emit('join', 'joining');
 
 		this.$refs.input_m.focus();
 
@@ -190,6 +222,13 @@ export default {
 	padding: 5px 10px; 
 	word-wrap: break-word;
 }
+
+.self {
+	background-color: blue;
+}
+.other {
+	background-color: orange;
+}
 /*float right for person, left for response*/
 #messages li span {
 	float: right;
@@ -197,7 +236,7 @@ export default {
 }
 
 #messages li h6 {
-		font-size: 10px;
+	font-size: 10px;
 }
 #messages li:nth-child(odd) { 
 	background: #eee; 
