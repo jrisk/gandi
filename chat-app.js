@@ -7,30 +7,31 @@ var clients = {};
 module.exports = SocketSkoolia; //make this use real id/etc
 
 function SocketSkoolia(io) {
-	io.on('connection', function(socket) {
 
-		var new_usr = 'new user 19';
+	io.on('connect', function(socket) {
 
-		io.emit('join', new_usr);
+		console.log('user session');
+
+		var sid = socket.handshake.session.id;
+
+		socket.handshake.session.userdata = socket.id;
+		socket.handshake.session.save();
+
+		console.log('socket connected');
 
 		socket.on('join', function(person) {
 			io.emit('join message', person);
 		});
 
 		socket.on('chat_message', function(msg) {
+
 			var time = new Date();
 			var hours = ('0' + time.getHours()).slice(-2);
 			var minutes = ('0' + time.getMinutes()).slice(-2);
 			var seconds = ('0' + time.getSeconds()).slice(-2);
 			var timeNow = hours + ':' + minutes + ':' + seconds;
 
-			console.log(socket.id);
-
-			//socket.request
-
-			//var person = clients[socket.request.sessionID];
-
-			io.emit('chat_message', { msg: msg, time: timeNow });
+			io.emit('chat_message', { msg: msg, time: timeNow, user: sid });
 		});
 
 		socket.on('disconnect', function () {
@@ -44,6 +45,7 @@ function SocketSkoolia(io) {
 }
 
 function SocketRun(io) {
+
 	io.on('connection', function (socket) {
 		
 		randomNames.getNewName(function(info) {

@@ -2,6 +2,32 @@ vue syntax package control needs fixing
 https://packagecontrol.io/docs/troubleshooting
 https://github.com/20Tauri/DoxyDoxygen/issues/103#issuecomment-375951725
 
+cookie session in socket.io
+https://stackoverflow.com/questions/19082693/how-to-access-session-identifier-when-using-socket-io
+https://stackoverflow.com/questions/25532692/how-to-share-sessions-with-socket-io-1-x-and-express-4-x
+
+//MEMORY STORE
+
+//npm install memorystore, express-session extension
+//or use express-mysql-session
+//Gandi may not allow in memory store
+//req.session.key=req.body.email;
+//client.set('c_key', req.session.key);
+
+/*var RedisStore = require('connect-redis')(session);
+
+var client = redis.createClient();
+
+let redis_opts = { 
+  host: 'localhost', 
+  port: 6379,
+  client: client,
+  ttl :  260
+};
+store: new RedisStore(redis_opts),
+
+*/
+
 watch v-if with this.$refs, even in mount method, it will not capture a ref if not mounted first with v-if=true
 
 FIXED

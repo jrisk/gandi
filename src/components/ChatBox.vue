@@ -1,5 +1,5 @@
 <template>
-	<div id="chatbox-container" v-if="open">
+	<div id="chatbox-container">
 			<div id="chat-options">
 		  	<button aria-label="Close" type="button" id="chat-close" v-on:click="close()" class="btn btn-lg btn-primary float-right">X</button>
 		  	<button aria-label="Minimize" type="button" id="chat-minimize" v-on:click="minimize()" class="btn btn-lg btn-warning float-right">~</button>
@@ -28,12 +28,16 @@ export default {
 			var msg_li = document.createElement("li")
 			msg_li.innerHTML = data.msg;
 
-			var time_b = document.createElement("span")
+			var time_b = document.createElement("h6")
 			time_b.innerHTML = data.time;
 
-			msg_li.appendChild(time_b);
+			var user_c = document.createElement("span")
+			user_c.innerHTML = data.user;
 
 			msgs.appendChild(msg_li);
+
+			msg_li.appendChild(user_c);
+			msg_li.appendChild(time_b);
 
 			var msgNode = msgs.lastChild;
 
@@ -174,21 +178,26 @@ export default {
 #chatbox_form button { 
 	width: 16%;
 }
-	#messages { 
+
+#messages { 
 	list-style-type: none; 
 	position: relative;
 	margin-bottom: 5%;
 	margin-top: 10%;
-	}
+}
 
 #messages li { 
 	padding: 5px 10px; 
 	word-wrap: break-word;
-	
 }
 /*float right for person, left for response*/
 #messages li span {
 	float: right;
+	font-size: 10px;
+}
+
+#messages li h6 {
+		font-size: 10px;
 }
 #messages li:nth-child(odd) { 
 	background: #eee; 

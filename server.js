@@ -1,4 +1,4 @@
- var express = require('express');
+var express = require('express');
 var path = require('path');
 var session = require('express-session');
 var server_user_session = {};
@@ -26,81 +26,17 @@ var storage = multer.diskStorage({
   }
 });
 
-
 var upload = multer({ storage: storage });
 
 var app = express();
 
-//MEMORY STORE
-
-//npm install memorystore, express-session extension
-//or use express-mysql-session
-//Gandi may not allow in memory store
-//req.session.key=req.body.email;
-//client.set('c_key', req.session.key);
-
-//var redis = require('redis');
-
-//may need to require redis-server, test this
-
-//var redisClient = redis.createClient({host : 'localhost', port : 6379});
-
-/*var RedisStore = require('connect-redis')(session);
-
-var client = redis.createClient();
-
-client.on('connect', function() {
-    console.log('Redis client connected');
-});
-
-client.on('ready',function() {
- console.log("Redis is ready");
-});
-
-client.on('error',function(err) {
- console.log("Error in Redis");
- console.log(err);
-})
-
-let redis_opts = { 
-  host: 'localhost', 
-  port: 6379,
-  client: client,
-  ttl :  260
-};
- 
-app.use(session({
-    store: new RedisStore(redis_opts),
-    secret: 'keyboard cat',
-    saveUninitialized: false,
-    resave: false
-}));
-
-*/
-
 var http = require('http');
 var httpServer = http.Server(app);
-
-var io = require('socket.io')(httpServer, { pingTimeout: 60000 });
-
-var chatApp = require('./chat-app');
-
-chatApp(io);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('trust proxy', 1) // trust first proxy
-
-app.use(session({
-  secret: 'le shiggy diggy',
-  resave: false,
-  saveUninitialized: true
-  //,
-  //cookie: { secure: true }
-}));
-
-var port = process.env.PORT || 8080;
 
 var enviro = require('dotenv').config();
 
@@ -118,9 +54,9 @@ else {
   mailgun_key = process.env.MAILGUN_KEY;
 }
 
-//process.env.TERM_PROGRAM != 'iTerm.app'
+var mysql_store = require('express-mysql-session')(session);
 
-//DATABASE MYSQL
+var port = process.env.PORT || 8080;
 
 var connection = mysql.createConnection({
 
@@ -133,8 +69,33 @@ var connection = mysql.createConnection({
 
 });
 
+var session_store = new mysql_store({}, connection);
+
+var sessionMiddleware = session({
+  secret: 'its a secret',
+  store: session_store,
+  resave: false,
+  saveUninitialized: true
+  //,
+  //cookie: { secure: true }
+})
+
 //USE CONNECTION POOLING INSTEAD
 connection.connect();
+
+app.use(sessionMiddleware);
+
+var io = require('socket.io')(httpServer, { pingTimeout: 60000 });
+
+var shared_session = require("express-socket.io-session");
+
+io.use(shared_session(sessionMiddleware, {
+    autoSave:true
+}));
+
+var chatApp = require('./chat-app');
+
+chatApp(io);
 
 //MAILGUN STUFF
 
@@ -419,6 +380,7 @@ app.get('/api/users', function(req,res) {
           user.about_me = result.about_me;
           user.email = result.email;
           user.img_url = result.img_url;
+          user.lang = result.lang_teach;
           users.push(user);
         }
         res.send(users);
@@ -432,22 +394,6 @@ app.get('/api/user-sess', function(req,res) {
     res.send(req.session.user);
   }
   else {
-    /*
-    test_user = {
-      id: 1,
-      email: 'serveremail@example.com',
-      password: 'pass',
-      username: 'username',
-      first_name: 'server first',
-      last_name: 'server last',
-      phone: '',
-      profession: '',
-      send_email: 0,
-      teach: 0,
-      learn: 0,
-      about_me: 'hello this is about text'
-    };
-    */
     console.log(server_user_session);
     req.session.user = server_user_session;
 
@@ -615,7 +561,7 @@ const renderer = require('vue-server-renderer').createRenderer({
   template: fs.readFileSync('./index.html', 'utf-8')
 });
 
-app.get('*', (req, res) => { 
+app.get('*', (req, res) => {
     
   bundle.default({ url: req.url }).then((app) => {
 

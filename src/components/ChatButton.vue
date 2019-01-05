@@ -8,7 +8,9 @@
           width="60px" />
   </a>
   </div>
+  <keep-alive>
     <ChatBox v-if="open" v-on:chatting="open = !open"></ChatBox>
+  </keep-alive>
 </div>
 </template>
 
@@ -17,9 +19,6 @@ import ChatBox from './ChatBox.vue';
 
 export default {
   sockets: {
-    connect: function () {
-        console.log('socket connected');
-    },
     customEmit: function (data) {
         console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)');
     }
