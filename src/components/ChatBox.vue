@@ -116,6 +116,8 @@ export default {
 	},
 	mounted () {
 
+		console.log(localStorage);
+
 		this.$socket.emit('join', 'joining');
 
 		this.$refs.input_m.focus();
