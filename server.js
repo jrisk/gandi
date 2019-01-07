@@ -257,7 +257,7 @@ app.post('/save-edit', upload.single('myfile'), function(req,res) {
 
     else {
 
-      var lang_file = JSON.parse(fs.readFileSync('./public/tmp/langs.json', 'utf-8'));
+      var lang_file = JSON.parse(fs.readFileSync(__dirname + '/public/tmp/langs.json', 'utf-8'));
 
       var lang_str = '';
       lang_file.forEach( function(obj) {
@@ -366,7 +366,7 @@ function session_global(data) {
 
   var lang = data.lang_teach;
 
-  var lang_file = JSON.parse(fs.readFileSync('./public/tmp/langs.json', 'utf-8'));
+  var lang_file = JSON.parse(fs.readFileSync(__dirname + '/public/tmp/langs.json', 'utf-8'));
 
   var lang_str = '';
 
@@ -420,7 +420,7 @@ function get_lang(data, callback) {
 }
 
 get_langs(function(cb) {
-  fs.writeFile('./public/tmp/langs.json', JSON.stringify(cb), function(err,data) {
+  fs.writeFile(__dirname + '/public/tmp/langs.json', JSON.stringify(cb), function(err,data) {
     if (err) console.log(err);
   });
 });
@@ -606,7 +606,7 @@ app.post('/profile-create', function(req,res) {
             profess = 'Skoolia';
           }
 
-          var lang_file = JSON.parse(fs.readFileSync('./public/tmp/langs.json', 'utf-8'));
+          var lang_file = JSON.parse(fs.readFileSync(__dirname + '/public/tmp/langs.json', 'utf-8'));
 
           var lang_str = '';
           lang_file.forEach( function(obj) {
