@@ -7,7 +7,6 @@ import VueSocketIO from 'vue-socket.io'
 
 import { Modal, Navbar, Button, Nav, Form, FormInput, Card, Tabs } from 'bootstrap-vue/es/components'
 //Jarisk
-import Menu from './components/jarisk/Menu'
 import JariskNav from './components/jarisk/JariskNav'
 import Jarisk from './components/jarisk/Jarisk'
 import CardMenu from './components/jarisk/CardMenu'
@@ -42,7 +41,7 @@ Vue.use(Card);
 Vue.use(Tabs);
 
 Vue.component('jarisk', Jarisk);
-Vue.component('jarisk-menu', Menu);
+
 Vue.component('jarisk-nav', JariskNav);
 Vue.component('jarisk-card-menu', CardMenu);
 

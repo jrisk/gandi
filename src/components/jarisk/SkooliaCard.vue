@@ -5,7 +5,7 @@
           img-top
           tag="article"
           style="max-width: 20rem;"
-          class="mb-2">
+          class="mx-auto">
     <p class="card-text">
       Skoolia is a place where teachers and students can find eachother and plan online lessons together
     </p>

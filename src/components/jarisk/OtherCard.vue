@@ -5,7 +5,7 @@
           img-top
           tag="article"
           style="max-width: 20rem;"
-          class="mb-2">
+          class="mx-auto">
     <p class="card-text">
       More projects
     </p>
