@@ -419,11 +419,11 @@ function get_lang(data, callback) {
     })
 }
 
-get_langs(function(cb) {
+/*get_langs(function(cb) {
   fs.writeFile(__dirname + '/public/tmp/langs.json', JSON.stringify(cb), function(err,data) {
     if (err) console.log(err);
   });
-});
+});*/
 
 app.get('/lang-test/:id', function(req,res) {
   var data = req.params.id;
