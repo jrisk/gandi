@@ -54,6 +54,17 @@
         </div>
       </div>
 
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label" for="teach_learn_label">{{teach_or_learn}}?</label>
+      <div class="col-sm-10">
+        <select class="form-control" id="teach_learn" v-model="input.teach_learn">
+          <option value="0">{{teach}}</option>
+          <option value="1">{{learn}}</option>
+          <option value="2">{{both}}</option>
+        </select>
+      </div>
+    </div>
+
     <div class="form-group row" v-if="input.teach_learn != 1">
       <label class="col-sm-2 col-form-label" for="teach_option_label">{{teach_option_q}}?</label>
       <div class="col-sm-10">
@@ -99,9 +110,14 @@ export default {
     return {
       input: {
         orig_email: '',
-        img_url: '/public/img/profile_default.png'
+        img_url: '/public/img/profile_default.png',
+        lang_teach: 0,
+        teach_learn: 0
       },
       info: "Edit Skoolia Profile",
+      teach: "Teacher",
+      learn: "Learner",
+      both: "Both",
       teach_or_learn: "Are you a Teacher or Learner",
       teach_option_q: "What language do you teach",
       teach_options: [ {text: "English", value: 1, code: "en"}, {text: "Czech", value: 2, code: "cz"}, {text: "Spanish", value: 3, code: "sp"}, {text: "French", value: 4, code: "fr"}, {text: "Chinese", value: 5, code: "ch"}, {text: "Russian", value: 6, code: "ru"}]      
@@ -160,7 +176,10 @@ export default {
       formdata.append('about_me', this.input.about_me);
       formdata.append('orig_email', this.input.orig_email);
       formdata.append('email', this.input.email);
-      formdata.append('lang_teach', this.input.lang_teach);
+      var lang = this.input.lang_teach;
+      console.log(lang);
+      if (typeof this.input.lang_teach == 'undefined') { lang = 0; }
+      formdata.append('lang_teach', lang);
 
       instance.post(url, formdata, { headers: { 'Content-Type': 'multipart/form-data'} }).then( function(data) {
         console.log(data.resp);

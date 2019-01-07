@@ -14,7 +14,7 @@
           <h5>
           <p>{{user.first_name}}'s Profile</p>
           <p>{{user.profession}}</p>
-          <p>Offering Lessons in {{user.lang}}</p>
+          <p v-if="user.lang && user.lang != '0'">{{user.lang}}</p>
           </h5>
         </div>
       </div>
@@ -66,7 +66,7 @@ export default {
         id: 777,
         about_me: "skoolia profile about me stuff",
         img_url: "/public/img/profile_default.png",
-        lang: "English, Spanish"
+        lang: ""
       }
     }
   },

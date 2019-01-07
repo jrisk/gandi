@@ -1,7 +1,6 @@
 var express = require('express');
 var path = require('path');
 var session = require('express-session');
-var server_user_session = {};
 
 var bodyParser = require('body-parser');
 
@@ -257,7 +256,15 @@ app.post('/save-edit', upload.single('myfile'), function(req,res) {
     }
 
     else {
-      console.log(results);
+
+      var lang_file = JSON.parse(fs.readFileSync('./public/tmp/langs.json', 'utf-8'));
+
+      var lang_str = '';
+      lang_file.forEach( function(obj) {
+        if (obj.id == lang) {
+           lang_str = obj.name
+        }
+      })
       
       var user_global = {
         email: new_email,
@@ -269,11 +276,10 @@ app.post('/save-edit', upload.single('myfile'), function(req,res) {
         id: req.session.user.id,
         phone: phone,
         profession: profession,
-        lang: lang
+        lang: lang_str
       };
 
       req.session.user = user_global;
-      server_user_session = user_global;
 
       res.sendStatus(200);
     }
@@ -307,6 +313,125 @@ app.get('/testsql', function(req,res) {
   });
 });
 
+function get_langs(callback) {
+
+    var query = `SELECT * from languages`;
+    var lang_arr = [];
+    
+    connection.query(query, function(error, results, fields) {
+      if (error) {
+        console.log('mysql error in server.js lang query');
+        throw error;
+      }
+
+      if (results.length == 0) {
+        console.log('lang return err');
+      }
+
+      else {
+
+        //should be none val in table
+        lang_zero = {};
+        lang_zero.id = 0;
+        lang_zero.name = "";
+        lang_arr.push(lang_zero);
+
+        for (let result of results) {
+          lang_obj = {};
+          lang_obj.id = result.id;
+          lang_obj.name = result.name;
+
+          lang_arr.push(lang_obj);
+        }
+
+        callback(lang_arr);
+      }
+    })
+}
+
+function session_global(data) {
+  var prof = data.profession;
+
+  var pro_str = '';
+
+  if (prof == 0) {
+    pro_str = 'Teacher';
+  }
+  else if (prof == 1) {
+    pro_str = 'Learner';
+  }
+  else { //2=both
+    pro_str = '';
+  }
+
+  var lang = data.lang_teach;
+
+  var lang_file = JSON.parse(fs.readFileSync('./public/tmp/langs.json', 'utf-8'));
+
+  var lang_str = '';
+
+  lang_file.forEach( function(obj) {
+    if (obj.id == lang) {
+       lang_str = obj.name
+    }
+  });
+
+  var user_global = {
+    id: data.id,
+    email: data.email,
+    username: data.username,
+    first_name: data.first_name, 
+    last_name: data.last_name,
+    img_url: data.img_url,
+    about_me: data.about_me,
+    phone: data.phone,
+    profession: pro_str,
+    lang: lang_str
+  }
+  return user_global;
+}
+
+function get_lang(data, callback) {
+
+  console.log(data);
+
+    var query = `SELECT * from languages where id='`+ data + `'`;
+    var lang_arr = [];
+    
+    connection.query(query, function(error, results, fields) {
+      if (error) {
+        console.log('mysql error in server.js lang query');
+        throw error;
+      }
+
+      if (results.length == 0) {
+        console.log('lang return err');
+      }
+
+      else {
+        var lang_obj;
+
+        lang_obj.id = results[0].id;
+        lang_obj.name = results[0].name;
+
+        callback(lang_obj);
+      }
+    })
+}
+
+get_langs(function(cb) {
+  fs.writeFile('./public/tmp/langs.json', JSON.stringify(cb), function(err,data) {
+    if (err) console.log(err);
+  });
+});
+
+app.get('/lang-test/:id', function(req,res) {
+  var data = req.params.id;
+  get_lang(data, function(callbacker) {
+    res.send(callbacker);
+  });
+});
+
 app.get('/api/users/:id', function(req,res) {
 
     var user_id = req.params.id;
@@ -325,29 +450,8 @@ app.get('/api/users/:id', function(req,res) {
       }
 
       else {
-        var user = {};
-        var result = results[0];
 
-          var prof = result.profession;
-          var profess = '';
-          if (prof == 0) {
-            profess = 'Teacher';
-          }
-          else if (prof == 1) {
-            profess = 'Learner';
-          }
-          else {
-            profess = 'Skoolia';
-          }
-
-        user.id = result.id;
-        user.first_name = result.first_name;
-        user.last_name = result.last_name;
-        user.email = result.email;
-        user.profession = profess;
-        user.img_url = result.img_url;
-        user.about_me = result.about_me;
-        user.lang = result.lang_teach;
+        var user = session_global(results[0]);
         res.send(user);
       }
     })
@@ -377,8 +481,6 @@ app.get('/api/users', function(req,res) {
           user.value = result.id;
           user.label = result.first_name;
           user.last_name = result.last_name;
-          user.about_me = result.about_me;
-          user.email = result.email;
           user.img_url = result.img_url;
           user.lang = result.lang_teach;
           users.push(user);
@@ -394,11 +496,9 @@ app.get('/api/user-sess', function(req,res) {
     res.send(req.session.user);
   }
   else {
-    console.log(server_user_session);
-    req.session.user = server_user_session;
-
-    res.send(req.session.user);
+    res.send({});
   }
+
 });
 
 app.get('/profile-login', function(req,res) {
@@ -408,7 +508,7 @@ app.get('/profile-login', function(req,res) {
   }
   else {
     req.session.reset();
-    res.send('howdy there reset');
+    res.send('login reset');
   }
 });
 
@@ -416,6 +516,8 @@ app.get('/logout', function(req,res) {
   req.session.user = {};
   res.sendStatus(200);
 });
+
+//where session is set first
 
 app.post('/profile-login', function(req,res) {
   if (req.body) {
@@ -439,37 +541,14 @@ app.post('/profile-login', function(req,res) {
             res.send({ email: 0});
           }
           else {
-          var prof = user_res.profession;
-          var profess = '';
-          if (prof == 0) {
-            profess = 'Teacher';
-          }
-          else if (prof == 1) {
-            profess = 'Learner';
-          }
-          else {
-            profess = 'Skoolia';
-          }
-          var user_global = {
-            email: user_res.email,
-            username: user_res.email,
-            first_name: user_res.first_name, 
-            last_name: user_res.last_name,
-            img_url: user_res.img_url,
-            about_me: user_res.about_me,
-            id: user_res.id,
-            phone: user_res.phone,
-            profession: profess,
-            lang: user_res.lang_teach
-          };
 
+          var user_global = session_global(user_res);
           req.session.user = user_global;
-          server_user_session = user_global;
+          
+          res.send(req.session.user);
 
-          res.send(server_user_session);
           }
         }
-
       }); //end connect query
     }
 });
@@ -526,6 +605,16 @@ app.post('/profile-create', function(req,res) {
           else {
             profess = 'Skoolia';
           }
+
+          var lang_file = JSON.parse(fs.readFileSync('./public/tmp/langs.json', 'utf-8'));
+
+          var lang_str = '';
+          lang_file.forEach( function(obj) {
+            if (obj.id == lang) {
+               lang_str = obj.name
+            }
+          });
+
           var user_global = {
             email: email,
             username: email,
@@ -536,11 +625,10 @@ app.post('/profile-create', function(req,res) {
             id: results.insertId,
             phone: phone,
             profession: profess,
-            lang: lang
+            lang: lang_str
           };
 
           req.session.user = user_global;
-          server_user_session = user_global;
 
       res.send('Ok');
       });

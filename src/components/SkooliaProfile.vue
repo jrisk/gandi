@@ -13,7 +13,7 @@
         <div class="profile-head">
           <h5 v-if="user">
           <p>My {{user.profession}} Profile</p>
-          <p>Offers lessons in {{user.lang}}</p>
+          <p v-if="user.lang != 0">{{user.lang}}</p>
           </h5>
         </div>
       </div>
@@ -69,7 +69,8 @@ export default {
       user: {
         id: 777,
         about_me: "skoolia profile about me stuff",
-        img_url: "/public/img/profile_default.png"
+        img_url: "/public/img/profile_default.png",
+        offering: "Offers lessons in"
       }
     }
   },
