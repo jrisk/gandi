@@ -14,7 +14,7 @@
           <h5>
           <p>{{user.first_name}}'s Profile</p>
           <p>{{user.profession}}</p>
-          <p v-if="user.lang && user.lang != '0'">{{user.lang}}</p>
+          <p v-if="user.profession_raw != '1'">{{user.lang}}</p>
           </h5>
         </div>
       </div>

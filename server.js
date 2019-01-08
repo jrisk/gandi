@@ -238,11 +238,11 @@ app.post('/save-edit', upload.single('myfile'), function(req,res) {
   var first_name = user.first_name;
   var last_name = user.last_name;
   var phone = '';
-  var profession = req.session.user.profession;//user.profession;
+  var profession = user.profession_raw;//user.profession;
   var lang = user.lang_teach;
   //var params = [];
 
-  var sql = `UPDATE usr_test SET email='`+ new_email + `', username='` + new_email + `', img_url='` + file_path + `', first_name='` + first_name + `', last_name='` + last_name + `', about_me='` + about_me + `', lang_teach='` + lang  + `' WHERE email='` + usr_email + `'`;
+  var sql = `UPDATE usr_test SET email='`+ new_email + `', username='` + new_email + `', img_url='` + file_path + `', first_name='` + first_name + `', last_name='` + last_name + `', profession='` + profession + `', about_me='` + about_me + `', lang_teach='` + lang  + `' WHERE email='` + usr_email + `'`;
 
   connection.query(sql, function(error, results, fields) { 
     if (error) {
@@ -265,6 +265,16 @@ app.post('/save-edit', upload.single('myfile'), function(req,res) {
            lang_str = obj.name
         }
       })
+
+        if (profession == 0) {
+          pro_str = 'Teacher';
+        }
+        else if (profession == 1) {
+          pro_str = 'Learner';
+        }
+        else { //2=both
+          pro_str = '';
+        }
       
       var user_global = {
         email: new_email,
@@ -275,8 +285,10 @@ app.post('/save-edit', upload.single('myfile'), function(req,res) {
         about_me: about_me,
         id: req.session.user.id,
         phone: phone,
-        profession: profession,
-        lang: lang_str
+        profession_raw: profession,
+        profession: pro_str,
+        lang: lang_str,
+        lang_teach: lang
       };
 
       req.session.user = user_global;
@@ -349,6 +361,23 @@ function get_langs(callback) {
     })
 }
 
+function session_raw(data) {
+
+  var user_global = {
+    id: data.id,
+    email: data.email,
+    username: data.username,
+    first_name: data.first_name, 
+    last_name: data.last_name,
+    img_url: data.img_url,
+    about_me: data.about_me,
+    phone: data.phone,
+    profession: data.profession,
+    lang: data.lang_teach
+  }
+  return user_global;
+}
+
 function session_global(data) {
   var prof = data.profession;
 
@@ -386,7 +415,9 @@ function session_global(data) {
     about_me: data.about_me,
     phone: data.phone,
     profession: pro_str,
-    lang: lang_str
+    profession_raw: prof,
+    lang: lang_str,
+    lang_teach: lang
   }
   return user_global;
 }
@@ -420,9 +451,7 @@ function get_lang(data, callback) {
 }
 
 /*get_langs(function(cb) {
-  fs.writeFile(__dirname + '/public/tmp/langs.json', JSON.stringify(cb), function(err,data) {
-    if (err) console.log(err);
-  });
+  fs.writeFileSync(__dirname + '/public/tmp/langs.json', JSON.stringify(cb));
 });*/
 
 app.get('/lang-test/:id', function(req,res) {
@@ -625,7 +654,9 @@ app.post('/profile-create', function(req,res) {
             id: results.insertId,
             phone: phone,
             profession: profess,
-            lang: lang_str
+            profession_raw: profession,
+            lang: lang_str,
+            lang_teach: lang
           };
 
           req.session.user = user_global;

@@ -16,11 +16,14 @@ export const store = new Vuex.Store({
 	      last_name: 'store last',
 	      phone: '',
 	      profession: '',
+	      profession_raw: 0,
 	      send_email: 0,
 	      teach: 0,
 	      learn: 0,
 	      teach_learn: 0,
 	      lang: 0,
+	      lang_raw: 0,
+	      lang_teach: 0,
 	      about_me: 'hello this is about text',
 	      img_url: '/public/img/profile_default.png'
 		}

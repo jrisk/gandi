@@ -57,7 +57,7 @@
     <div class="form-group row">
       <label class="col-sm-2 col-form-label" for="teach_learn_label">{{teach_or_learn}}?</label>
       <div class="col-sm-10">
-        <select class="form-control" id="teach_learn" v-model="input.teach_learn">
+        <select class="form-control" id="teach_learn" v-model="input.profession_raw">
           <option value="0">{{teach}}</option>
           <option value="1">{{learn}}</option>
           <option value="2">{{both}}</option>
@@ -65,7 +65,7 @@
       </div>
     </div>
 
-    <div class="form-group row" v-if="input.teach_learn != 1">
+    <div class="form-group row" v-if="input.profession_raw != 1">
       <label class="col-sm-2 col-form-label" for="teach_option_label">{{teach_option_q}}?</label>
       <div class="col-sm-10">
         <select class="form-control" id="teach_option" v-model="input.lang_teach">
@@ -112,7 +112,8 @@ export default {
         orig_email: '',
         img_url: '/public/img/profile_default.png',
         lang_teach: 0,
-        teach_learn: 0
+        teach_learn: 0,
+        profession_raw: 0
       },
       info: "Edit Skoolia Profile",
       teach: "Teacher",
@@ -177,9 +178,9 @@ export default {
       formdata.append('orig_email', this.input.orig_email);
       formdata.append('email', this.input.email);
       var lang = this.input.lang_teach;
-      console.log(lang);
       if (typeof this.input.lang_teach == 'undefined') { lang = 0; }
       formdata.append('lang_teach', lang);
+      formdata.append('profession_raw', this.input.profession_raw);
 
       instance.post(url, formdata, { headers: { 'Content-Type': 'multipart/form-data'} }).then( function(data) {
         console.log(data.resp);

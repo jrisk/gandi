@@ -16,6 +16,7 @@ function SocketSkoolia(io) {
 
 		socket.handshake.session.userdata = socket.id;
 		socket.handshake.session.save();
+		//socket.handshake.session.user;
 
 		console.log('socket connected');
 
@@ -25,6 +26,12 @@ function SocketSkoolia(io) {
 			io.emit('join_message', {user: sid});
 		});
 
+		socket.on('login', function(data) {
+			console.log(data);
+			//socket.handshake.session.email = data;
+			//socket.handshake.session.save();
+		});
+
 		socket.on('chat_message', function(msg) {
 
 			var time = new Date();
@@ -32,6 +39,8 @@ function SocketSkoolia(io) {
 			var minutes = ('0' + time.getMinutes()).slice(-2);
 			var seconds = ('0' + time.getSeconds()).slice(-2);
 			var timeNow = hours + ':' + minutes + ':' + seconds;
+
+			//save chat
 
 			io.emit('chat_message', { msg: msg, time: timeNow, user: sid });
 		});

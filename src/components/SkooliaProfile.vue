@@ -13,7 +13,7 @@
         <div class="profile-head">
           <h5 v-if="user">
           <p>My {{user.profession}} Profile</p>
-          <p v-if="user.lang != 0">{{user.lang}}</p>
+          <p v-if="user.profession_raw != '1'">{{user.lang}}</p>
           </h5>
         </div>
       </div>

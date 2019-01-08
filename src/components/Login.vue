@@ -81,6 +81,7 @@ import axios_b from '../../url_method.js'
                           vm.info = "Username or Password not found"
                         }
                         else {
+                            vm.$socket.emit('login', usr.email);
                         vm.$router.replace({ name: "profile" });
                         }
                     }).catch(err => 
