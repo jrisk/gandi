@@ -82,6 +82,7 @@ import axios_b from '../../url_method.js'
                         }
                         else {
                             vm.$socket.emit('login', usr.email);
+                            //close current chat?
                         vm.$router.replace({ name: "profile" });
                         }
                     }).catch(err => 

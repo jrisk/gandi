@@ -118,6 +118,8 @@ export default {
 
         vm.user = {};
 
+        vm.$socket.emit('logout');
+
         vm.$router.replace({ name: "login" });
         }).catch( function(err) { console.log(err.code); })
 

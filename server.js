@@ -542,6 +542,8 @@ app.get('/profile-login', function(req,res) {
 });
 
 app.get('/logout', function(req,res) {
+  console.log('server js logout');
+  console.log(req.session.user.email);
   req.session.user = {};
   res.sendStatus(200);
 });

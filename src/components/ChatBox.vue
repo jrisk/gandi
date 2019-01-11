@@ -1,17 +1,28 @@
 <template>
 	<div id="chatbox-container">
-			<div id="chat-options">
-		  	<button aria-label="Close" type="button" id="chat-close" v-on:click="close()" class="btn btn-lg btn-primary float-right">X</button>
-		  	<button aria-label="Minimize" type="button" id="chat-minimize" v-on:click="minimize()" class="btn btn-lg btn-warning float-right">~</button>
+
+			<div id="chat-options" class="form-group row justify-content-end">
+				<div id="chat-options-pad">
+
+				<input v-model="chat_search">
+				
+				<button aria-label="Minimize" type="button" id="chat-minimize" v-on:click="minimize()" class="btn btn-md btn-warning">~</button>
+				
+				<button aria-label="Close" type="button" id="chat-close" v-on:click="close()" class="btn btn-md btn-primary">X</button>
+
+				</div>
+
 			</div>
 
 		<div ref="message_container" id="message-container">
 			<ul ref="messages" id="messages"></ul>
 		</div>
 
-			<form ref="chatbox_form" id="chatbox_form" v-on:submit.prevent="form_submit()">
-				<input ref="input_m" id="m" maxlength="140" autocomplete="off" />
-				<button class="btn btn-sm btn-primary" id="chat_button" type="submit">Send</button>
+			<form ref="chatbox_form" id="chatbox-form" v-on:submit.prevent="form_submit()">
+				<div id="chatbox-form-pad">
+					<input ref="input_m" id="m" maxlength="140" autocomplete="off" />
+					<button class="btn btn-sm btn-primary" id="chat_button" type="submit">Send</button>
+				</div>
 		  </form>
 
 	</div>
@@ -29,6 +40,10 @@ export default {
 				this.original_user = data.user;
 			}
 			console.log(this.original_user);
+		},
+		login_client: function(data) {
+			console.log('in chatbox');
+			this.original_user = data.user;
 		},
 		chat_message: function(data) {
 			console.log(data);
@@ -75,7 +90,8 @@ export default {
 			info: "welcome to chat",
 			open: true,
 			min: false,
-			original_user: ""
+			original_user: "",
+			chat_search: ""
 		}
 	},
 	methods: {
@@ -142,41 +158,48 @@ export default {
 
 @media (max-width: 767px) {
   #message-container {
-    height: 80%;
+    height: 70%;
     width: 100%;
-    bottom: 10px;
-		right: 1px;
-		overflow: scroll;
-		position: fixed;
-		border-radius: 5px;
-		background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    bottom: 5px;
+	right: 1px;
+	padding-top: 5px;
+	margin-bottom: 5px;
+	overflow: scroll;
+	position: fixed;
+	border-radius: 5px;
+	background: -webkit-linear-gradient(left, #3931af, #00c6ff);
   }
   #chat-options {
-	height: 5%;
+	height: 12%;
 	width: 100%;
-	top: 50px;
-	right: 1px;
+	top: 80px;
+	padding-bottom: 10px;
+	right: 15px;
 	position: fixed;
 	z-index: 1;
+	border-radius: 5px;
+	background: -webkit-linear-gradient(left, #3931af, #00c6ff);
 	}
 
-	#chatbox_form {
+	#chatbox-form {
 	height: 5%;
 	width: 100%;
-	bottom: 15px;
-	right: 0px;
-	padding-left: 5px;
+	bottom: 25px;
+	right: 5px;
+	padding-left: 20px;
+	padding-top: 5px;
 	margin-left: 5px;
 	position: fixed;
+	z-index: 1;
 	background: -webkit-linear-gradient(left, #3931af, #00c6ff);
 	}
 }
 
 @media (min-width: 768px) {
 	#message-container {
-		height: 60%;
+		height: 65%;
 		width: 50%;
-		bottom: 20px;
+		bottom: 12px;
 		right: 10px;
 		overflow: scroll;
 		position: fixed;
@@ -184,32 +207,41 @@ export default {
 		border-radius: 5px;
 	}
 	#chat-options {
-	height: 10%;
+	height: 8%;
 	width: 50%;
 	bottom: 60%;
-	right: 10px;
+	right: 25px;
 	position: fixed;
-	padding-left: 5px;
-	margin-left: 5px;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
 	background: -webkit-linear-gradient(left, #3931af, #00c6ff);
 	z-index: 1;
 	}
 
-	#chatbox_form {
+	#chatbox-form {
 	height: 5%;
 	width: 50%;
 	bottom: 20px;
-	right: 10px;
+	right: 5px;
 	position: fixed;
 	background: -webkit-linear-gradient(left, #3931af, #00c6ff)
 	}
 }
-#chatbox_form input {
+#chatbox-form input {
 	width: 82%;
 }
-#chatbox_form button { 
+
+#chat-options-pad {
+}
+
+#chatbox-form-pad {
+
+}
+
+#chat-options input {
+}
+
+#chatbox-form button { 
 	width: 16%;
 }
 
@@ -227,6 +259,7 @@ export default {
 
 .self {
 	background-color: blue;
+	/*float: left;*/
 }
 .other {
 	background-color: orange;
@@ -243,30 +276,4 @@ export default {
 #messages li:nth-child(odd) { 
 	background: #eee; 
 }
-
-  /* emoji support
-  img.emoji {  
-  // Override any img styles to ensure Emojis are displayed inline
-  margin: 0px !important;
-  display: inline !important;
-  animation: rtol 3s;
-  }
-
-.msg {
-  display: inline;
-  visibility: hidden;
-  position: absolute;
- animation: rtol 3s; 
-}
-@keyframes rtol {
-  from {
-    display: inline;
-    visibility: visible;
-    margin-left: 120%;
-  }
-  to {
-    margin-left: -20%;
-  }
-}
-*/
 </style>

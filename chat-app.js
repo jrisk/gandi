@@ -14,22 +14,59 @@ function SocketSkoolia(io) {
 
 		var sid = socket.handshake.session.id;
 
+		console.log(socket.id);
+		console.log(sid);
+
 		socket.handshake.session.userdata = socket.id;
 		socket.handshake.session.save();
-		//socket.handshake.session.user;
+
+		console.log('user info');
+
+		var room = socket.id;
+
+		socket.join(sid);
 
 		console.log('socket connected');
+
+		var user_name = '';
+
+		var usr_obj = socket.handshake.session.user;
+
+		if (typeof usr_obj != 'undefined' && usr_obj.hasOwnProperty('email')) {
+
+			user_name = usr_obj.email
+
+			if (usr_obj.email == 'joeyrsk@gmail.com') {
+				socket.join('admin');
+				console.log('admin room');
+			}
+			else {
+				socket.join('user');
+				console.log('user room');
+			}
+		}
+		else {
+			var user_name = 'guest'+(sid.slice(0,4));
+		}
+
+		console.log(user_name);
 
 		socket.on('join', function(string) {
 			console.log('got the socket msg from comp');
 			console.log(string);
-			io.emit('join_message', {user: sid});
+			io.to(room).emit('join_message', {user: user_name});
 		});
 
 		socket.on('login', function(data) {
 			console.log(data);
-			//socket.handshake.session.email = data;
-			//socket.handshake.session.save();
+			user_name = data;
+			io.to(room).emit('login_client', {user: user_name});
+		});
+
+		socket.on('logout', function(data) {
+			console.log('logout socket');
+			console.log(usr_obj);
+			//socket.disconnect();
 		});
 
 		socket.on('chat_message', function(msg) {
@@ -42,7 +79,7 @@ function SocketSkoolia(io) {
 
 			//save chat
 
-			io.emit('chat_message', { msg: msg, time: timeNow, user: sid });
+			io.to(room).emit('chat_message', { msg: msg, time: timeNow, user: user_name });
 		});
 
 		socket.on('disconnect', function () {

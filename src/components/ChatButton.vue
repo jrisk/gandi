@@ -22,6 +22,10 @@ export default {
     customEmit: function (data) {
         console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)');
     }
+    /*login_client: function(data) {
+      this.open = false;
+      console.log('in chatbutton');
+    },*/
   },
   components: {
     ChatBox

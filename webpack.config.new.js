@@ -32,7 +32,6 @@ module.exports = (env = {}) => {
       },
       extensions: ['*', '.js', '.vue', '.json']
     },
-    externals: ['ws'], //socket.io warnings
     module: {
       rules: [
         {
@@ -90,6 +89,6 @@ module.exports = (env = {}) => {
       }),
       new VueLoaderPlugin()
     ],
-    //devtool: '#eval-source-map' //this bloats it
+    //devtool: 'source-map' //eval-this bloats it
   }
 }

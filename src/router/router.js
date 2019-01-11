@@ -14,6 +14,9 @@ import ErrorPage from '../components/ErrorPage.vue';
 import UserProfile from '../components/UserProfile.vue';
 import ChatBox from '../components/ChatBox.vue';
 
+import CryptoHead from '../components/crypto/CryptoHead.vue';
+import DataDriven from '../components/crypto/DataDriven.vue';
+
 Vue.use(Router);
 
 export function createRouter() {
@@ -35,7 +38,10 @@ export function createRouter() {
 			{ path: '/reset-password/:id', component: ResetPassword, name: 'reset_password' },
 			{ path: '/photo-upload', component: PhotoUpload, name: 'photo_upload' },
 			{ path: '/users/:id', component: UserProfile, name: 'user_profile' },
-			{ path: '/chat', component: ChatBox, name: 'chat_box' }
+			{ path: '/chat', component: ChatBox, name: 'chat_box' },
+			//{},
+			{ path: '/crypto', component: CryptoHead, name: 'crypto' },
+			{ path: '/d3', component: DataDriven, name: 'd3' }
 		]
 	});
 }
