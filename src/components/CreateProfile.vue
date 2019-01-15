@@ -188,13 +188,4 @@ body{
   text-weight: bold;
   text-align: center;
 }
-.emp-profile{
-    padding: 3%;
-    margin-top: 3%;
-    margin-bottom: 3%;
-
-    border-radius: 0.5rem;
-    background: #fff;
-    text-align: center;
-}
 </style>

@@ -12,7 +12,7 @@ import ForgotPassword from '../components/ForgotPassword.vue';
 import ResetPassword from '../components/ResetPassword.vue';
 import ErrorPage from '../components/ErrorPage.vue';
 import UserProfile from '../components/UserProfile.vue';
-import ChatBox from '../components/ChatBox.vue';
+import ChatBox from '../components/skoolia/ChatButton2.vue';
 
 import CryptoHead from '../components/crypto/CryptoHead.vue';
 import DataDriven from '../components/crypto/DataDriven.vue';

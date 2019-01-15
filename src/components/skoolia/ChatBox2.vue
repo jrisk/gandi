@@ -1,30 +1,21 @@
 <template>
 	<div id="chatbox-container">
 
-			<div id="chat-options" class="form-group row justify-content-end">
-				<div id="chat-options-pad">
-
-				<input v-model="chat_search">
-				
-				<button aria-label="Minimize" type="button" id="chat-minimize" v-on:click="minimize()" class="btn btn-md btn-warning">~</button>
-				
-				<button aria-label="Close" type="button" id="chat-close" v-on:click="close()" class="btn btn-md btn-primary">X</button>
-
-				</div>
-
+		<div id="chatbox-options" class="row form-group">
+				<div class="col-6 text-left chat-text-div">Skoolia Chat</div>
+			<div v-on:click="minimize()" class="col-6 icon-div">
+				<i class="far fa-minus-square skoolia-font"></i>
 			</div>
+		</div>
 
-		<div ref="message_container" id="message-container">
+		<div ref="message_container" id="message-container" class="form-group">
 			<ul ref="messages" id="messages"></ul>
 		</div>
 
-			<form ref="chatbox_form" id="chatbox-form" v-on:submit.prevent="form_submit()">
-				<div id="chatbox-form-pad">
-					<input ref="input_m" id="m" maxlength="140" autocomplete="off" />
-					<button class="btn btn-sm btn-primary" id="chat_button" type="submit">Send</button>
-				</div>
-		  </form>
-
+		<form ref="chatbox_form" id="chatbox-form" v-on:submit.prevent="form_submit()" class="row">
+			<input ref="input_m" id="m" class="col-10" maxlength="140" autocomplete="off" >
+			<button class="btn btn-md btn-primary col-2" id="chat-button" type="submit">Send</button>
+		</form>
 	</div>
 </template>
 
@@ -57,6 +48,9 @@ export default {
 
 			var user_c = document.createElement("span")
 			user_c.innerHTML = data.user;
+
+			//var img_d = document.createElement("img")
+			//img_d.src = data.avatar;
 
 			var self_other = '';
 
@@ -157,41 +151,30 @@ export default {
 <style>
 
 @media (max-width: 767px) {
-  #message-container {
-    height: 70%;
-    width: 100%;
-    bottom: 5px;
-	right: 1px;
-	padding-top: 5px;
-	margin-bottom: 5px;
-	overflow: scroll;
-	position: fixed;
-	border-radius: 5px;
-	background: #777;
-  }
-  #chat-options {
-	height: 12%;
-	width: 100%;
-	top: 80px;
-	padding-bottom: 10px;
-	right: 15px;
-	position: fixed;
-	z-index: 1;
-	border-radius: 5px;
-	background: #777;
+	#chatbox-options {
+		background: -webkit-linear-gradient(left, #e6f7f5, #b7f4ed);
+		z-index: 1;
+		margin-right: 0;
+		height: 15%;
+	}
+
+	#message-container {
+		background: -webkit-linear-gradient(left, #8fe0f7, #00c6ff);
+		top: 27%;
+		bottom: 25%;
+		z-index: 0;
 	}
 
 	#chatbox-form {
-	height: 5%;
-	width: 100%;
-	bottom: 25px;
-	right: 5px;
-	padding-left: 20px;
-	padding-top: 5px;
-	margin-left: 5px;
-	position: fixed;
-	z-index: 1;
-	background: #777;
+		background: -webkit-linear-gradient(left, #e6f7f5, #b7f4ed);
+		z-index: 1;
+		height: 10%;
+		border: 2px solid #3931af;
+		border-radius: 5px;
+		bottom: 0;
+		margin-right: -5px;
+		margin-left: 0;
+		padding: 0;
 	}
 }
 
@@ -206,40 +189,36 @@ export default {
 		background: -webkit-linear-gradient(left, #3931af, #00c6ff);
 		border-radius: 5px;
 	}
-	#chat-options {
-	height: 8%;
+	#chatbox-options {
+	height: 9%;
 	width: 50%;
 	bottom: 60%;
 	right: 25px;
 	position: fixed;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
-	background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+	background: -webkit-linear-gradient(left, #e6f7f5, #b7f4ed);
 	z-index: 1;
 	}
 
 	#chatbox-form {
-	height: 5%;
+	height: 10%;
 	width: 50%;
-	bottom: 20px;
-	right: 5px;
+	bottom: 5px;
+	right: 10px;
+	margin-left: 0;
+	margin-right: 0;
 	position: fixed;
+	border: 2px solid #3931af;
 	background: -webkit-linear-gradient(left, #3931af, #00c6ff)
 	}
-}
-#chatbox-form input {
-	width: 82%;
-}
-
-#chatbox-form button { 
-	width: 16%;
-}
-
-#messages { 
-	list-style-type: none; 
-	position: relative;
-	margin-bottom: 5%;
-	margin-top: 10%;
+	#messages { 
+		list-style-type: none; 
+		position: relative;
+		margin-bottom: 5%;
+		margin-top: 5%;
+		padding-top: 5%;
+	}
 }
 
 #messages li { 
@@ -264,5 +243,20 @@ export default {
 }
 .other {
 	background-color: orange;
+}
+
+.skoolia-font {
+	font-size: 34px;
+	float: right;
+	padding-left: 0;
+	margin-left: 0;
+}
+
+.icon-div {
+	padding: 5px;
+}
+
+.chat-text-div {
+	font-size: 26px;
 }
 </style>

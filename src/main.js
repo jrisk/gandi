@@ -2,8 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import { createRouter } from './router/router.js'
 import { store } from './store.js'
+
 import io from 'socket.io-client'
 import VueSocketIO from 'vue-socket.io'
+
+/*import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faCoffee)*/
 
 import { Modal, Navbar, Button, Nav, Form, FormInput, Card, Tabs } from 'bootstrap-vue/es/components'
 //Jarisk
@@ -25,11 +32,13 @@ import UserHomeTab from './components/UserHomeTab'
 
 import UserProfileWork from './components/UserProfileWork'
 
-import ChatBox from './components/ChatBox';
+import ChatBox from './components/ChatBox'
 
 Vue.use(new VueSocketIO({
 	connection: io(process.env.NODE_HOST+':'+process.env.NODE_PORT)
 }));
+
+/*Vue.component('font-awesome-icon', FontAwesomeIcon);*/
 
 Vue.use(Modal);
 Vue.use(Navbar);

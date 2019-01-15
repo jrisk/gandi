@@ -108,6 +108,11 @@ export default {
       .catch(err => console.log(err));
   },
   methods: {
+  	get_swarm() {
+  		var info = 'To restate and summarize, it takes a given set of parameters as candidate triggers and stop loss, simulates that on historical data, and then returns the best one it finds.';
+  		var extra = 'avoid premature convergence to a local minimum';
+  		var problem = 'first positive movers after market-wide losses predict any momentum on next price surge or continued loss';
+  	},
   	get_RSI(prices, days) {
 	//calculate RSI
 	var avg_gain = '';//0.01/14 1% gain over 7 days
@@ -127,7 +132,7 @@ export default {
 
 		//smooth operation
 
-		if (x > days-1) {
+		/*if (x > days-1) {
 			var diff = arr[x] - arr[x-1];
 
 			if (diff < 0) {
@@ -139,7 +144,9 @@ export default {
 			}
 
 			smooth_prices.push(cur_p);
-		}
+
+			//var RSI_step2 = 100 - (100/1+(avg_gain*13+current_gain)/avg_loss*13+current_loss)
+		}*/
 
 		if (x > 0) {
 			var diff = arr[x] - arr[x-1];
@@ -170,8 +177,6 @@ export default {
 	var rsi = 100 - (100/(1+rs));
 
 	console.log(rsi);
-
-	var RSI_step2 = 100 - (100/1+(avg_gain*13+current_gain)/avg_loss*13+current_loss)
   	},
   	get_Bollinger() {
 
