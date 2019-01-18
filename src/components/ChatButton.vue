@@ -16,6 +16,7 @@
 
 <script>
 import ChatBox from './ChatBox.vue';
+import EventBus from '../../event-bus.js';
 
 export default {
   sockets: {
@@ -46,13 +47,16 @@ export default {
       return false;
     });
   },
+  mounted() {
+    const vm = this;
+    EventBus.$on('open_chat', function(data) {
+      console.log(data);
+      vm.open = true;
+    });
+  },
   methods: {
   },
   computed: {
-    open_chat: function () {
-      this.open = true;
-      return this.open;
-    }
   }
 }
 </script>

@@ -48,6 +48,12 @@
           </div>
         </div>
 
+        <div class="row">
+          <div class="col-md-12">
+            <button v-on:click="direct_msg()" class="btn btn-lg btn-primary" type="button">Message</button>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -57,7 +63,8 @@
 </template>
 
 <script>
-import axios_b from '../../url_method.js'
+import axios_b from '../../url_method.js';
+import EventBus from '../../event-bus.js';
 
 export default {
   data () {
@@ -85,6 +92,10 @@ export default {
        }).catch( (err) => console.log(err) );
   },
   methods: {
+    direct_msg() {
+      this.$socket.emit('direct_msg', this.$route.params.id);
+      EventBus.$emit('open_chat', this.$route.params.id);
+    }
   },
   mounted: function() {
   }

@@ -8,33 +8,28 @@ module.exports = SocketSkoolia; //make this use real id/etc
 
 function SocketSkoolia(io) {
 
+	//var nsp = io.of('/'+namespace);
+
 	io.on('connect', function(socket) {
 
-		console.log('user session');
+		console.log('socket connected');
 
 		var sid = socket.handshake.session.id;
-
-		console.log(socket.id);
-		console.log(sid);
+		console.log('handshake session id: ' + sid);
 
 		socket.handshake.session.userdata = socket.id;
 		socket.handshake.session.save();
 
-		console.log('user info');
-
-		var room = socket.id;
-
-		socket.join(sid);
-
-		console.log('socket connected');
-
 		var user_name = '';
+		var img_src = '/public/img/profile_default.png';
 
 		var usr_obj = socket.handshake.session.user;
+		console.log(usr_obj);
 
 		if (typeof usr_obj != 'undefined' && usr_obj.hasOwnProperty('email')) {
 
-			user_name = usr_obj.email
+			user_name = usr_obj.email;
+			img_src = usr_obj.img_url;
 
 			if (usr_obj.email == 'joeyrsk@gmail.com') {
 				socket.join('admin');
@@ -49,12 +44,24 @@ function SocketSkoolia(io) {
 			var user_name = 'guest'+(sid.slice(0,4));
 		}
 
-		console.log(user_name);
+		var room = user_name;
+		socket.join(room);
+
+		console.log('joining room ' + room);
 
 		socket.on('join', function(string) {
 			console.log('got the socket msg from comp');
 			console.log(string);
 			io.to(room).emit('join_message', {user: user_name});
+		});
+
+		socket.on('direct_msg', function(data) {
+			console.log('dm server socket call');
+			console.log(data);
+			//var dm_room = user + current_room;
+			//socket.join(string + current_room);
+			//io.to(dm_room).emit('now chatting with ' + user2)
+			//add user1 and user2 together to make same room
 		});
 
 		socket.on('login', function(data) {
@@ -79,7 +86,7 @@ function SocketSkoolia(io) {
 
 			//save chat
 
-			io.to(room).emit('chat_message', { msg: msg, time: timeNow, user: user_name });
+			io.to(room).emit('chat_message', { msg: msg, time: timeNow, user: user_name, avatar: img_src });
 		});
 
 		socket.on('disconnect', function () {

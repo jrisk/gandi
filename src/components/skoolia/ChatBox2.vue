@@ -2,8 +2,10 @@
 	<div id="chatbox-container">
 
 		<div id="chatbox-options" class="row form-group">
-				<div class="col-6 text-left chat-text-div">Skoolia Chat</div>
-			<div v-on:click="minimize()" class="col-6 icon-div">
+				<div class="col-6">
+					<span class="chat-text-div">Skoolia Chat</span>
+				</div>
+				<div v-on:click="minimize()" class="col-6 icon-div">
 				<i class="far fa-minus-square skoolia-font"></i>
 			</div>
 		</div>
@@ -148,33 +150,43 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 @media (max-width: 767px) {
 	#chatbox-options {
 		background: -webkit-linear-gradient(left, #e6f7f5, #b7f4ed);
 		z-index: 1;
-		margin-right: 0;
-		height: 15%;
+		top: 15%;
+		right: 0;
+		margin: 0;
+		height: 12%;
+		width: 100%;
+		position: fixed;
 	}
 
 	#message-container {
-		background: -webkit-linear-gradient(left, #8fe0f7, #00c6ff);
+		height: 65%;
+		width: 100%;
 		top: 27%;
 		bottom: 25%;
+		right: 10px;
 		z-index: 0;
+		overflow: scroll;
+		position: fixed;
+		background: -webkit-linear-gradient(left, #8fe0f7, #00c6ff);
 	}
 
 	#chatbox-form {
 		background: -webkit-linear-gradient(left, #e6f7f5, #b7f4ed);
 		z-index: 1;
+		width: 100%;
 		height: 10%;
-		border: 2px solid #3931af;
 		border-radius: 5px;
 		bottom: 0;
+		right: 5px;
 		margin-right: -5px;
-		margin-left: 0;
 		padding: 0;
+		position: fixed;
 	}
 }
 
@@ -192,7 +204,7 @@ export default {
 	#chatbox-options {
 	height: 9%;
 	width: 50%;
-	bottom: 60%;
+	bottom: 65%;
 	right: 25px;
 	position: fixed;
 	border-top-left-radius: 10px;
@@ -212,14 +224,14 @@ export default {
 	border: 2px solid #3931af;
 	background: -webkit-linear-gradient(left, #3931af, #00c6ff)
 	}
-	#messages { 
+}
+
+#messages { 
 		list-style-type: none; 
 		position: relative;
 		margin-bottom: 5%;
 		margin-top: 5%;
-		padding-top: 5%;
 	}
-}
 
 #messages li { 
 	padding: 5px 10px; 
@@ -257,6 +269,6 @@ export default {
 }
 
 .chat-text-div {
-	font-size: 26px;
+	font-size: 22px;
 }
 </style>
