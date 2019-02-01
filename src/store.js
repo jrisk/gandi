@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import VuexPersistence from 'vuex-persist'
 import axios from 'axios'
 
 Vue.use(Vuex)
@@ -29,7 +28,7 @@ export const store = new Vuex.Store({
 	      img_url: '/public/img/profile_default.png'
 		}
 	},
-	plugins: [new VuexPersistence().plugin],
+	/*plugins: [new VuexPersistence().plugin],*/
 	mutations: {
 		updateTestSession(state, testSession) {
 			state.testSession = testSession;
