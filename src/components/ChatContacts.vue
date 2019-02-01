@@ -18,9 +18,8 @@
 					</div> <!-- end card-header -->
 
 					<div class="card-body contacts_body">
-						<ol class="contacts">
 
-							<li v-for="contact in contacts" class="active" :id="'user'+contact.id">
+							<div v-for="contact in contacts" class="active contacts" :id="'user'+contact.id">
 								<div class="d-flex bd-highlight" v-on:click="load_msgs(contact.to_id, contact.from_id, contact.room)">
 									<div class="img_cont">
 										<img v-bind:src="contact.avatar" class="rounded-circle user_img">
@@ -31,20 +30,17 @@
 										<p>{{contact.name}} is online</p>
 									</div>
 								</div>
-							</li>
-
-						</ol>
+							</div>
 					</div> <!-- end contacts body -->
 
-					<div class="card-footer"></div>
+					<div class="card-footer">
+						<span v-on:click="close_contacts()">
+						<i class="fas fa-arrow-right"></i>
+						</span>
+					</div>
 
 				</div>
 			</div>
-		
-		<!-- <div class="col-md-8 col-xl-6 chat">
-			<div class="card">
-			<div class="card-header msg_head">
-			-->
 </template>
 
 <script>
@@ -71,6 +67,9 @@ export default {
 			console.log('in load msgs');
 			console.log(user_id + ' ' + from_id + ' ' + room);
 			EventBus.$emit('change_chat', {to_id: user_id, from_id: from_id, room: room});
+		},
+		close_contacts() {
+			EventBus.$emit('close_contacts', {});
 		}
 	}
 }
@@ -88,9 +87,9 @@ export default {
 	width: 100%;
 }
 .card {
-	height: 500px;
+	height: 100%;
 	border-radius: 15px !important;
-	background-color: rgba(0,0,0,0.8) !important;
+	background-color: rgba(0,0,0,1) !important;
 }
 .contacts_body{
 	padding:  0.75rem 0 !important;
@@ -105,6 +104,12 @@ export default {
 .card-footer{
 	border-radius: 0 0 15px 15px !important;
 	border-top: 0 !important;
+	bottom: 0;
+}
+
+.card-footer span {
+	float: right;
+	font-size: 40px;
 }
 
 .search{
@@ -126,12 +131,10 @@ export default {
 }
 .contacts{
 	list-style: none;
-	padding: 0;
-}
-.contacts li{
-	width: 100% !important;
 	padding: 5px 10px;
-	margin-bottom: 15px !important;
+	overflow-y: auto;
+	width: 100% !important;
+	margin-bottom: 5px !important;
 }
 .active{
 	background-color: rgba(0,0,0,0.3);

@@ -326,7 +326,11 @@ export default {
 		document.getElementById('hidden-chat').appendChild(msg_box);
 
 		EventBus.$on('load_contacts', function(data) {
-			this.contacts = data;
+			vm.contacts = data;
+		});
+
+		EventBus.$on('close_contacts', function(data) {
+			vm.open_contacts();
 		});
 
 		EventBus.$on('change_chat', function(data) {
@@ -468,7 +472,7 @@ export default {
 .chat-card {
 	height: 100%;
 	border-radius: 15px !important;
-	background-color: rgba(0,0,0,0.8) !important;
+	background-color: rgba(0,0,0,0.9) !important;
 }
 
 .card-header{
