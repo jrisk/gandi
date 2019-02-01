@@ -110,6 +110,7 @@ export default {
 .card-footer span {
 	float: right;
 	font-size: 40px;
+	color: white;
 }
 
 .search{
