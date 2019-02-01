@@ -94,12 +94,12 @@ io.use(shared_session(sessionMiddleware, {
 
 var chatApp = require('./chat-app');
 
-chatApp(io);
+chatApp(io, connection);
 
 //MAILGUN STUFF
 
 var mailgun = require('mailgun-js');
-var DOMAIN = 'jarisk.com';
+var DOMAIN = 'mg.jarisk.com';
 
 var mailgun = require('mailgun-js')({apiKey: mailgun_key, domain: DOMAIN});
 
@@ -542,6 +542,7 @@ app.get('/profile-login', function(req,res) {
 });
 
 app.get('/logout', function(req,res) {
+  //not callable til logged in
   console.log('server js logout');
   console.log(req.session.user.email);
   req.session.user = {};

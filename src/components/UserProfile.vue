@@ -3,13 +3,13 @@
 
 <form enctype="multipart/form-data" id="photo-form">
   <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4 col-sm-12">
         <div class="profile-img">
           <img v-bind:src="user.img_url" alt="img">
         </div>
     </div>
 
-      <div class="col-md-6">
+      <div class="col-md-6 col-sm-12">
         <div class="profile-head">
           <h5>
           <p>{{user.first_name}}'s Profile</p>
@@ -17,6 +17,12 @@
           <p v-if="user.profession_raw != '1'">{{user.lang}}</p>
           </h5>
         </div>
+      </div>
+
+      <div class="profile-edit col-md-2 col-sm-12">
+          <div class="profile-edit-btn">
+            <button v-if="$store.getters.isLoggedIn" v-on:click="direct_msg()" class="btn btn-lg btn-primary" type="button">Message</button>
+          </div>
       </div>
   </div>
 
@@ -45,12 +51,6 @@
           </div>
           <div class="col-md-6">
             <p>{{user.email}}</p>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12">
-            <button v-on:click="direct_msg()" class="btn btn-lg btn-primary" type="button">Message</button>
           </div>
         </div>
 
@@ -93,16 +93,23 @@ export default {
   },
   methods: {
     direct_msg() {
-      this.$socket.emit('direct_msg', this.$route.params.id);
-      EventBus.$emit('open_chat', this.$route.params.id);
+      var to_id = parseInt(this.$route.params.id,10);
+      var from_id = this.$store.state.userSession.id
+      this.$socket.emit('direct_msg', {from_id: from_id, to_id: to_id });
+      EventBus.$emit('open_chat', {from_id: from_id, to_id: to_id });
     }
   },
   mounted: function() {
+  },
+  computed: {
+    computed_auth() {
+      return this.$store.getters.isLoggedIn;
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
 
 body{
   background: -webkit-linear-gradient(left, #3931af, #00c6ff);
@@ -163,6 +170,8 @@ label {
 .profile-head h6{
     color: #0062cc;
 }
+
+@media (min-width: 765px) {
 .profile-edit-btn{
     border: none;
     border-radius: 1.5rem;
@@ -172,6 +181,15 @@ label {
     color: #6c757d;
     cursor: pointer;
     white-space: normal;
+  }
+}
+
+@media (max-width: 764px) {
+  .profile-edit-btn {
+    width: 100%;
+    padding: 2%;
+    text-align: center;
+  }
 }
 .profile-rating{
     font-size: 12px;

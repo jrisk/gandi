@@ -7,8 +7,8 @@
     "start": "node server.js",
     "dev-start": "npm run dev-build && npm run dev-server",
     "dev-build": "npm run dev-build-client && npm run dev-build-server",
-    "dev-build-client": "webpack --config webpack.config.new.js --hide-modules --env.production=false",
-    "dev-build-server": "webpack --config webpack.server.config.js --hide-modules --env.production=false",
+    "dev-build-client": "webpack --config webpack.config.new.js --hide-modules --env.production",
+    "dev-build-server": "webpack --config webpack.server.config.js --hide-modules --env.production",
     "dev-server": "node server.js",
     "build": "npm run build-client && npm run build-server",
     "build-client": "cross-env NODE_ENV=production webpack --config webpack.config.old.js --hide-modules",
@@ -45,7 +45,8 @@
     "vue-router": "^3.0.1",
     "vue-server-renderer": "^2.5.17",
     "vue-socket.io": "^3.0.4",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "vuex-persist": "^2.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

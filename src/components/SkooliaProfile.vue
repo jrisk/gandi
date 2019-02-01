@@ -98,7 +98,6 @@ export default {
   },
   mounted: function() {
     this.loadSesh();
-    console.log('mounted');
   }
 }
 </script>

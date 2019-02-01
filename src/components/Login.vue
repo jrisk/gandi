@@ -53,6 +53,7 @@ import axios_b from '../../url_method.js'
 
                 console.log('user-sess call login');
                  if (resp.data.email) {
+                    vm.$store.dispatch('setUser', resp.data);
                     vm.$router.replace({ name: "profile" });
                  }
                  }).catch( err => console.log(err));
@@ -81,7 +82,8 @@ import axios_b from '../../url_method.js'
                           vm.info = "Username or Password not found"
                         }
                         else {
-                            vm.$socket.emit('login', usr.email);
+                            vm.$socket.emit('login', usr.id);
+                            vm.$store.dispatch('setUser', usr);
                             //close current chat?
                         vm.$router.replace({ name: "profile" });
                         }

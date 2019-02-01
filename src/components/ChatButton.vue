@@ -1,7 +1,7 @@
 <template>
   <div>
   <div id="chat-button-widget">
-  <a href="#" v-on:click="open = chat">
+  <a href="#" v-on:click="open_chat()">
     <img src="/public/img/socket.png"
           alt="Chat Picture"
           height="60px"
@@ -20,13 +20,6 @@ import EventBus from '../../event-bus.js';
 
 export default {
   sockets: {
-    customEmit: function (data) {
-        console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)');
-    }
-    /*login_client: function(data) {
-      this.open = false;
-      console.log('in chatbutton');
-    },*/
   },
   components: {
     ChatBox
@@ -39,24 +32,33 @@ export default {
     }
   },
   created () {
-    const vm = this;
-
-    this.$socket.on('join', function(info) {
-      console.log('join fired');
-      vm.socket.emit('join', info);
-      return false;
-    });
   },
   mounted() {
     const vm = this;
+
     EventBus.$on('open_chat', function(data) {
-      console.log(data);
-      vm.open = true;
+      vm.open_chat();
     });
+    
   },
   methods: {
+    open_chat() {
+      if (this.$store.state.userSession) {
+      var user_id = this.$store.state.userSession.id;
+      this.$socket.emit('login', user_id);
+      this.$socket.emit('contact_list', user_id); 
+      
+      this.open = true;
+      }
+      else {
+        console.log('no user session');
+      }
+    }
   },
   computed: {
+    logged() {
+      return this.$store.getters.isLoggedIn;
+    }
   }
 }
 </script>
