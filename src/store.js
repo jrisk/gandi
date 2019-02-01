@@ -1,8 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import VuexPersist from 'vuex-persist'
 
 Vue.use(Vuex)
+let vuexLocalStorage = null;
+
+if (process.browser) {
+    vuexLocalStorage = new VuexPersist({
+      key: 'vuex', // The key to store the state on in the storage provider.
+      storage: window.localStorage, // or window.sessionStorage or localForage
+    })
+}
 
 export const store = new Vuex.Store({
 	state: {
@@ -28,7 +37,6 @@ export const store = new Vuex.Store({
 	      img_url: '/public/img/profile_default.png'
 		}
 	},
-	/*plugins: [new VuexPersistence().plugin],*/
 	mutations: {
 		updateTestSession(state, testSession) {
 			state.testSession = testSession;
@@ -76,5 +84,6 @@ export const store = new Vuex.Store({
 		isLoggedIn(state) {
 			return (state.userSession !== null); 
 		}
-	}
+	},
+	plugins: process.browser ? [vuexLocalStorage.plugin] : []
 })
