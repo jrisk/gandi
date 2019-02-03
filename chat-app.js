@@ -59,8 +59,8 @@ function SocketSkoolia(io, mysql) {
 			console.log('dm server socket call');
 			var dm_room = user_id < data.to_id ? user_id + '.' + data.to_id : data.to_id + '.' + user_id;
 			room = dm_room;
-			socket.join(dm_room);
-			io.to(dm_room).emit('direct_msg', {user_id: user_id, from_id: data.from_id, to_id: data.to_id, room: dm_room });
+			socket.join(room);
+			io.to(room).emit('direct_msg', {user_id: user_id, from_id: data.from_id, to_id: data.to_id, room: room });
 		});
 
 		socket.on('contact_list', function(data) {
