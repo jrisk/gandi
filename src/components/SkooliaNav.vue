@@ -114,9 +114,14 @@ export default {
 
       const instance = axios_b();
 
+      /*if (already_logged_out) {
+        skip page reload
+      }*/
+
       instance.get(url).then( function(resp) {
 
         vm.user = {};
+        vm.$store.state.userSession = null;
 
         vm.$socket.emit('logout');
 

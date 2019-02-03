@@ -45,8 +45,8 @@ export default {
     open_chat() {
       if (this.$store.state.userSession) {
       var user_id = this.$store.state.userSession.id;
-      this.$socket.emit('login', user_id);
-      this.$socket.emit('contact_list', user_id); 
+
+      this.$socket.emit('contact_list', ''); 
       
       this.open = true;
       }

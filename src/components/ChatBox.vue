@@ -21,7 +21,7 @@
 								</div>
 
 								<div class="user_info">
-									<span id="chat-header" ref="chat_header">Chat with</span>
+									<span id="chat-header" ref="chat_header"></span>
 									<p>183 Messages</p>
 								</div>
 
@@ -110,6 +110,7 @@ export default {
 			this.contacts = contacts;
 
 			var container = this.$refs.message_container;
+
 			var hidden_container = document.getElementById('hidden-chat');
 
 			var msg_box = '';
@@ -119,11 +120,17 @@ export default {
 				hidden_container.removeChild(hidden_container.firstChild);
 			}
 
+			var home_room = 0;
+
 			for (var i = rooms.length - 1; i >= 0; i--) {
 
 				var d_obj = rooms[i];
 				var d_id = d_obj.id;
 				var d_val = d_obj.value
+
+				if (home_room == 0 && d_obj.to_id == d_obj.from_id) {
+					home_room = d_id;
+				}
 
 				if (document.getElementById('room'+d_id) != null) {
 					msg_box = document.getElementById('room'+d_id);
@@ -139,16 +146,31 @@ export default {
 				msg_box.appendChild(styled_msg);
 			}
 
+			var home = document.getElementById('room'+home_room);
+
+			if (!container.firstChild) {
+				container.appendChild(home);
+			}
+
 		},
 		direct_msg: function(data) {
 			console.log('direct msg called');
-			var to_id = data.to_id;
-			this.other_user = to_id;
-			var msgs = data.msgs;
 
-			var room = this.original_user < to_id ? this.original_user + '.' + to_id : to_id + '.' + this.original_user;
+			var from = data.from_id;
+			var to = data.to_id;
+
+			if (this.original_user != '') {
+			}
+			else {
+				this.original_user = this.$store.state.userSession.id;
+			}
+
+
+			this.other_user = from == this.original_user ? to : from;
 
 			console.log(this.other_user);
+
+			this.change_chat(to, from, data.room);
 		},
 		chat_message: function(data) {
 
@@ -193,7 +215,6 @@ export default {
 			var top_img = document.getElementById('top-user-img');
 
 			top_img.src = data.avatar;
-
 
 			img_d.className = 'rounded-circle user_img_msg';
 
@@ -254,8 +275,13 @@ export default {
 					msg_box.id = 'room'+room;
 			}
 
-			while (container.childNodes.length > 0) {
+			/*while (container.childNodes.length > 0) {
     		hidden_container.appendChild(container.childNodes[0]);
+			}*/
+
+			while (container.childNodes.length > 0) {
+				hidden_container.appendChild(container.childNodes[0]);
+				//container.removeChild(container.childNodes[0]);
 			}
 
 			container.appendChild(msg_box);
@@ -316,7 +342,7 @@ export default {
 
 		this.original_user = this.$store.state.userSession.id;
 
-		this.other_user = this.original_user;
+		this.other_user = this.other_user == '' ? this.original_user : this.other_user;
 
 		var msg_box = document.createElement('div');
 		var room = this.original_user < this.other_user ? this.original_user + '.' + this.other_user : this.other_user + '.' + this.original_user;
@@ -336,7 +362,7 @@ export default {
 		EventBus.$on('change_chat', function(data) {
 			console.log(data.to_id);
 			vm.other_user = data.to_id;
-			vm.change_chat(data.to_id, data.from_id, data.room, data.avatar);
+			vm.change_chat(data.to_id, data.from_id, data.room);
 		})
 
 		EventBus.$on('open_chat', function(user) {
@@ -355,109 +381,8 @@ export default {
 	background: #7F7FD5;
 	background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
 	background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+	background: -webkit-linear-gradient(left, #8fe0f7, #00c6ff);
 }
-/*
-
-@media (max-width: 767px) {
-	#chatbox-options {
-		background: -webkit-linear-gradient(left, #e6f7f5, #b7f4ed);
-		z-index: 1;
-		top: 15%;
-		height: 12%;
-		width: 100%;
-		position: fixed;
-		margin: auto;
-	}
-
-	#message-container {
-		height: 65%;
-		width: 100%;
-		top: 27%;
-		bottom: 10%;
-		margin: auto;
-		z-index: 0;
-		overflow: scroll;
-		position: fixed;
-		background: -webkit-linear-gradient(left, #8fe0f7, #00c6ff);
-	}
-
-	#chatbox-form {
-		background: -webkit-linear-gradient(left, #e6f7f5, #b7f4ed);
-		z-index: 1;
-		width: 100%;
-		height: 10%;
-		border-radius: 5px;
-		border: 1px solid grey;
-		bottom: 0;
-		margin: auto;
-		padding: 0;
-		position: fixed;
-	}
-}
-
-@media (min-width: 768px) {
-	#message-container {
-		height: 65%;
-		width: 50%;
-		bottom: 25px;
-		right: 5px;
-		margin: auto;
-		overflow: scroll;
-		position: fixed;
-		background: -webkit-linear-gradient(left, #3931af, #00c6ff);
-		border-radius: 5px;
-	}
-	#chatbox-options {
-	height: 9%;
-	width: 50%;
-	bottom: 65%;
-	right: 5px;
-	position: fixed;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	margin: auto;
-	background: -webkit-linear-gradient(left, #e6f7f5, #b7f4ed);
-	z-index: 1;
-	}
-
-	#chatbox-form {
-	height: 10%;
-	width: 50%;
-	bottom: 5px;
-	right: 5px;
-	margin: auto;
-	border: 1px solid grey;
-	position: fixed;
-	border: 2px solid #3931af;
-	background: -webkit-linear-gradient(left, #3931af, #00c6ff)
-	}
-}
-
-#messages { 
-	list-style-type: none;
-}
-
-.skoolia-font {
-	font-size: 34px;
-	float: right;
-	padding-left: 0;
-	margin-left: 0;
-}
-
-.icon-div {
-	padding: 5px;
-}
-
-.chat-text-span {
-	position: absolute;
-	bottom: 2px;
-	font-size: 22px;
-}
-
-.chat-header-div {
-	position: relative;
-}
-*/
 
 .chat {
 	margin-top: auto;

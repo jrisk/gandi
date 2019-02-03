@@ -19,7 +19,7 @@
 
 					<div class="card-body contacts_body">
 
-							<div v-for="contact in contacts" class="active contacts" :id="'user'+contact.id">
+							<div v-for="contact in contacts" class="active contacts" :id="'user'+contact.room">
 								<div class="d-flex bd-highlight" v-on:click="load_msgs(contact.to_id, contact.from_id, contact.room)">
 									<div class="img_cont">
 										<img v-bind:src="contact.avatar" class="rounded-circle user_img">
@@ -61,6 +61,7 @@ export default {
 	},
 	mounted () {
 		console.log('contacts mounted called');
+		console.log(this.$store.state.userSession)
 	},
 	methods: {
 		load_msgs(user_id, from_id, room) {
