@@ -46,7 +46,7 @@ export default {
       if (this.$store.state.userSession) {
       var user_id = this.$store.state.userSession.id;
 
-      this.$socket.emit('contact_list', ''); 
+      this.$socket.emit('contact_list', {}); 
       
       this.open = true;
       }
