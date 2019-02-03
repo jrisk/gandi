@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import VuexPersist from 'vuex-persist'
+
+/*import VuexPersist from 'vuex-persist'*/
 
 Vue.use(Vuex)
+
+/*
 let vuexLocalStorage = null;
 
 if (process.browser) {
@@ -12,7 +15,7 @@ if (process.browser) {
       storage: window.localStorage, // or window.sessionStorage or localForage
     })
 }
-
+*/
 export const store = new Vuex.Store({
 	state: {
 		userSession: null,
@@ -84,6 +87,6 @@ export const store = new Vuex.Store({
 		isLoggedIn(state) {
 			return (state.userSession !== null); 
 		}
-	},
-	plugins: process.browser ? [vuexLocalStorage.plugin] : []
+	}/*,
+	plugins: process.browser ? [vuexLocalStorage.plugin] : []*/
 })
