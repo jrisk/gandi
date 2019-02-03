@@ -454,12 +454,14 @@ function get_lang(data, callback) {
   fs.writeFileSync(__dirname + '/public/tmp/langs.json', JSON.stringify(cb));
 });*/
 
+/*
 app.get('/lang-test/:id', function(req,res) {
   var data = req.params.id;
   get_lang(data, function(callbacker) {
     res.send(callbacker);
   });
 });
+*/
 
 app.get('/api/users/:id', function(req,res) {
 
