@@ -103,6 +103,8 @@ export default {
 		},
 		load_history(data) {
 
+			//load msgs in correct order
+
 			var rooms = data.rooms;
 
 			var contacts = data.contacts;
@@ -116,8 +118,10 @@ export default {
 			var msg_box = '';
 
 			//make sure container empty on each call
-			while (hidden_container.firstChild) {
-				hidden_container.removeChild(hidden_container.firstChild);
+			if (hidden_container.firstChild) {
+				while (hidden_container.firstChild) {
+					hidden_container.removeChild(hidden_container.firstChild);
+				}
 			}
 
 			var home_room = 0;
@@ -165,18 +169,21 @@ export default {
 				this.original_user = this.$store.state.userSession.id;
 			}
 
-
 			this.other_user = from == this.original_user ? to : from;
 
 			console.log(this.other_user);
+			console.log(data.room);
 
 			this.change_chat(to, from, data.room);
+			console.log('end direct msg');
 		},
 		chat_message: function(data) {
 
+			console.log('in chat msgs');
+			console.log(data.room);
+
 			var msgs = document.getElementById('room'+data.room);
 
-			console.log('in chat msgs');
 			console.log(msgs);
 
 			var container = this.$refs.message_container;

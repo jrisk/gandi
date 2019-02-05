@@ -1,22 +1,22 @@
-const webpack = require('webpack')
 const path = require('path')
+const webpack = require('webpack')
 const { VueLoaderPlugin } = require('vue-loader')
 
-module.exports = (env = {}) => {
+module.exports = function(env) {
   // Variables set by npm scripts in package.json
   const isProduction = env.production === true
 
-    var HOST = 'http://jarisk.com'
-    var PORT = 80;
-    var ENV = 'prod'
+  var HOST = 'http://jarisk.com'
+  var PORT = 80;
+  var ENV = 'prod'
 
-    console.log(isProduction);
+  console.log(isProduction);
 
-    if (!isProduction) {
-      HOST = 'http://localhost'
-      PORT = 8080
-      ENV = 'local'
-    }
+  if (!isProduction) {
+    HOST = 'http://localhost'
+    PORT = 8080
+    ENV = 'local'
+  }
 
   return {
     entry: './src/client-entry.js',
@@ -25,12 +25,6 @@ module.exports = (env = {}) => {
       path: path.join(__dirname, './dist'),
       publicPath: '/dist/',
       filename: 'build.js'
-    },
-    resolve: {
-      alias: {
-        'vue$': 'vue/dist/vue.esm.js'
-      },
-      extensions: ['*', '.js', '.vue', '.json']
     },
     module: {
       rules: [
@@ -79,6 +73,12 @@ module.exports = (env = {}) => {
         }
       ]
     },
+    resolve: {
+      alias: {
+        'vue$': 'vue/dist/vue.esm.js'
+      },
+      extensions: ['*', '.js', '.vue', '.json']
+    },
     plugins: [
       new webpack.DefinePlugin({
         'process.env': {
@@ -89,6 +89,35 @@ module.exports = (env = {}) => {
       }),
       new VueLoaderPlugin()
     ],
-    //devtool: 'source-map' //eval-this bloats it
+    /*
+    devServer: {
+      historyApiFallback: true,
+      noInfo: true,
+      overlay: true
+    },
+    performance: {
+      hints: false
+    },
+    devtool: 'source-map' //eval-this bloats it
+    */
   }
 }
+
+/*
+
+module.exports.plugins = (module.exports.plugins || []).concat([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"production"',
+        NODE_HOST: '"http://localhost"',
+        NODE_PORT: 8080
+      }
+    }),
+    new VueLoaderPlugin()
+  ])
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports.devtool = '#source-map'
+  // http://vue-loader.vuejs.org/en/workflow/production.html
+}
+*/

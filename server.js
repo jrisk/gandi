@@ -240,6 +240,11 @@ app.post('/save-edit', upload.single('myfile'), function(req,res) {
   var phone = '';
   var profession = user.profession_raw;//user.profession;
   var lang = user.lang_teach;
+  //lang is null bug
+  if (isNaN(lang)) {
+    lang = 0;
+  }
+  console.log(lang);
   //var params = [];
 
   var sql = `UPDATE usr_test SET email='`+ new_email + `', username='` + new_email + `', img_url='` + file_path + `', first_name='` + first_name + `', last_name='` + last_name + `', profession='` + profession + `', about_me='` + about_me + `', lang_teach='` + lang  + `' WHERE email='` + usr_email + `'`;

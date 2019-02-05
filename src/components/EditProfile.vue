@@ -178,7 +178,6 @@ export default {
       formdata.append('orig_email', this.input.orig_email);
       formdata.append('email', this.input.email);
       var lang = this.input.lang_teach;
-      if (typeof this.input.lang_teach == 'undefined') { lang = 0; }
       formdata.append('lang_teach', lang);
       formdata.append('profession_raw', this.input.profession_raw);
 

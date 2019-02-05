@@ -30,79 +30,79 @@
 <script>
 import axios_b from '../../url_method.js'
 
-    export default {
-        name: 'Login',
-        data() {
-            return {
-                input: {
-                    username: "",
-                    password: "",
-                    id: 0
-                },
-                info: ''
-            }
-        },
-        created: function() {
-            const vm = this;
+export default {
+  name: 'Login',
+  data() {
+      return {
+          input: {
+              username: "",
+              password: "",
+              id: 0
+          },
+          info: ''
+      }
+  },
+  created: function() {
+      const vm = this;
 
-            var url = '/api/user-sess';
+      var url = '/api/user-sess';
 
-            const instance = axios_b();
+      const instance = axios_b();
 
-            instance.get(url).then( function(resp) {
+      instance.get(url).then( function(resp) {
 
-                console.log('user-sess call login');
-                 if (resp.data.email) {
-                    vm.$store.dispatch('setUser', resp.data);
-                    vm.$router.replace({ name: "profile" });
-                 }
-                 }).catch( err => console.log(err));
-        },
-        methods: {
-            login() {
-                const vm = this;
+          console.log('user-sess call login');
+           if (resp.data.email) {
+              vm.$store.dispatch('setUser', resp.data);
+              vm.$router.replace({ name: "profile" });
+           }
+           }).catch( err => console.log(err));
+  },
+  methods: {
+      login() {
+          const vm = this;
 
-                if (this.input.username != "" && this.input.password != "") {
+          if (this.input.username != "" && this.input.password != "") {
 
-                var bodyForm = {};
+          var bodyForm = {};
 
-                bodyForm.username = this.input.username;
-                bodyForm.password = this.input.password;
+          bodyForm.username = this.input.username;
+          bodyForm.password = this.input.password;
 
-                const instance = axios_b();
-                    
-                    instance.post('/profile-login', bodyForm, {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    }).then( function(resp) {
-                        console.log('first login then');
-                        var usr = resp.data;
-                        if (usr.email == 0) {
-                          vm.info = "Username or Password not found"
-                        }
-                        else {
-                            vm.$socket.emit('login', usr.id);
-                            vm.$store.dispatch('setUser', usr);
-                            vm.$socket.emit('contact_list', usr.id);
-                            //close current chat?
-                        vm.$router.replace({ name: "profile" });
-                        }
-                    }).catch(err => 
-                        (console.log(err))
-                    );
-                } else {
-                    vm.info = 'No Username and Password present';
-                }
-            },
-            create_profile() {
-                this.$router.replace({ name: "create" });
-            },
-            forgot_password() {
-              this.$router.replace({ name: "forgot_password" });
-            }
-        }
-    }
+          const instance = axios_b();
+              
+              instance.post('/profile-login', bodyForm, {
+                  headers: {
+                      'Content-Type': 'application/json'
+                  }
+              }).then( function(resp) {
+                  console.log('first login then');
+                  var usr = resp.data;
+                  if (usr.email == 0) {
+                    vm.info = "Username or Password not found"
+                  }
+                  else {
+                      vm.$store.dispatch('setUser', usr);
+                      vm.$socket.emit('login', usr.id);
+                      vm.$socket.emit('contact_list', usr.id);
+                      //close current chat?
+                  vm.$router.replace({ name: "profile" });
+                  }
+              }).catch(err => 
+                  (console.log(err))
+              );
+          } else {
+              vm.info = 'No Username and Password present';
+          }
+      },
+      create_profile() {
+          this.$router.replace({ name: "create" });
+      },
+      forgot_password() {
+        this.$router.replace({ name: "forgot_password" });
+      }
+  }
+}
 </script>
 
 <style scoped>

@@ -64,7 +64,7 @@ function SocketSkoolia(io, mysql) {
 		});
 
 		socket.on('contact_list', function(data) {
-			var query = `SELECT m.id, room, from_id, to_id, dt, txt, img_url, first_name FROM msg m JOIN usr_test u ON m.to_id = u.id WHERE from_id = ` + user_id + ` OR to_id = ` + user_id + ` UNION SELECT m.id, room, from_id, to_id, dt, txt, img_url, first_name FROM msg m JOIN usr_test u ON m.from_id = u.id WHERE to_id = ` + user_id + ` OR from_id = ` + user_id;
+			var query = `SELECT m.id, room, from_id, to_id, dt, txt, img_url, first_name FROM msg m LEFT JOIN usr_test u ON m.to_id = u.id WHERE from_id = ` + user_id + ` UNION SELECT m.id, room, from_id, to_id, dt, txt, img_url, first_name FROM msg m LEFT JOIN usr_test u ON m.from_id = u.id WHERE to_id = ` + user_id + ` ORDER BY id DESC`;
 
 			mysql.query(query, function(error, results, fields) {
 				if (error) {
@@ -79,51 +79,32 @@ function SocketSkoolia(io, mysql) {
 					var contacts = [];
 					var rooms = [];
 					var contact_list = [];
-					var dupe_shit = [];
-					var fug = [];
 
 						for (result in results) {
 							var res = results[result];
 
-							//uggo hack for bad mysql join
-							if (!contact_list.includes(res.img_url)) {
-								var contact = { to_id: res.to_id, name: res.first_name, from_id: res.from_id, room: res.room, avatar: res.img_url }
+							//hack for bad join on img
+							var avatar = res.img_url;
+							var chat_room = res.room;
+
+							if (res.from_id == user_id && res.img_url != img_src) {
+								avatar = img_src;
+							}
+
+							if (!contact_list.includes(chat_room) && avatar != img_src || res.from_id == res.to_id && !contact_list.includes(user_id+'.'+user_id)) {
+
+								var contact = { to_id: res.to_id, name: res.first_name, from_id: res.from_id, room: chat_room, avatar: avatar };
+								contact_list.push(chat_room);
 								contacts.push(contact);
-								var help = {};
-								console.log(res.to_id);
-								//its always going to save the img url from the first from_id
-
-								help.id = res.to_id;
-								help.img = res.img_url;
-								fug.push(help);
-								contact_list.push(res.img_url);
 							}
 
-							if (!dupe_shit.includes(res.id)) {
+							var room_obj = { id: chat_room, value: {msg: res.txt, msg_id: res.id, from_id: res.from_id, to_id: res.to_id, user_id: user_id, first_name: res.first_name, avatar: avatar, time: res.dt} };
 
-								var chat_room = res.room;
-
-								var avatar = img_src;
-
-								if (res.from_id == user_id) {
-								}
-								else {
-									for (var i = fug.length - 1; i >= 0; i--) {
-										if (fug[i].id == res.from_id) {
-											avatar = fug[i].img;
-										}
-									}
-								}
-
-								var room_obj = { id: chat_room, value: {msg: res.txt, msg_id: res.id, from_id: res.from_id, to_id: res.to_id, user_id: res.from_id, first_name: res.first_name, avatar: avatar, time: res.dt} };
-
-								rooms.push(room_obj);
-
-								dupe_shit.push(res.id);
-
-							}
+							rooms.push(room_obj);
 
 						}
+
+					//picture from to_id if to_id != from_id and from_id == user_id
 
 					console.log('contact_list called, now loading history');
 

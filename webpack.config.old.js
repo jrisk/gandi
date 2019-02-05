@@ -88,30 +88,18 @@ module.exports = {
   devtool: '#eval-source-map'
 }
 
+module.exports.plugins = (module.exports.plugins || []).concat([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"production"',
+        NODE_HOST: '"http://localhost"',
+        NODE_PORT: 8080
+      }
+    }),
+    new VueLoaderPlugin()
+  ])
+
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
   // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"',
-        NODE_HOST: '"http://localhost"',
-        NODE_PORT: 8080
-      }
-    }),
-    new VueLoaderPlugin()
-  ])
-}
-
-else {
-    module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"',
-        NODE_HOST: '"http://localhost"',
-        NODE_PORT: 8080
-      }
-    }),
-    new VueLoaderPlugin()
-  ])
 }
