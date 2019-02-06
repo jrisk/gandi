@@ -46,12 +46,7 @@ function SocketSkoolia(io, mysql) {
 		socket.on('get-session', function(data) {
 			socket.join(room);
 			console.log('socket get-session called');
-			io.to(room).emit('getSocketSession', {user_id: user_id, room: room});
-		});
-
-		socket.on('login', function(data) {
-			console.log('user id on login: ' + data);
-			io.to(room).emit('login_client', {user_name: user_name, user_id: user_id, to_id: data, room: room});
+			io.to(room).emit('getSocketSession', {user_id: user_id, room: room, avatar: img_src});
 		});
 
 		socket.on('direct_msg', function(data) {
@@ -90,7 +85,7 @@ function SocketSkoolia(io, mysql) {
 								avatar = img_src;
 							}
 
-							if (!contact_list.includes(chat_room) && avatar != img_src || res.from_id == res.to_id && !contact_list.includes(user_id+'.'+user_id)) {
+							if (!contact_list.includes(chat_room)) {
 
 								var contact = { to_id: res.to_id, name: res.first_name, from_id: res.from_id, room: chat_room, avatar: avatar };
 								contact_list.push(chat_room);
@@ -107,8 +102,11 @@ function SocketSkoolia(io, mysql) {
 
 					console.log('contact_list called, now loading history');
 
+					console.log(contacts);
+					console.log('rooms:\n');
+					console.log(rooms);
 					socket.join(room);
-					io.to(room).emit('chat_history', { rooms: rooms, contacts: contacts } );
+					io.to(room).emit('initial_data', { rooms: rooms, contacts: contacts } );
 				}
 			})
 		});

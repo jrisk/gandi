@@ -9,7 +9,7 @@
   </a>
   </div>
   <keep-alive>
-    <ChatBox v-if="open" v-on:chatting="open = !open"></ChatBox>
+    <ChatBox v-if="open" v-on:chatting="open = !open" v-bind:contactList="contactList" v-bind:roomList="roomList" v-bind:topUserImg="topUserImg"></ChatBox>
   </keep-alive>
 </div>
 </template>
@@ -27,15 +27,23 @@ export default {
       console.log(this.$store.state.userSession.id);
 
       if (data.user_id == this.$store.state.userSession.id) {
-        //are these returnables mounted?
-        this.$socket.emit('login', data.user_id);
         this.$socket.emit('contact_list', data.user_id);
+        this.topUserImg = data.avatar;
+        console.log(this.topUserImg);
         this.loggedIn = true;
       }
       else {
         console.log('socket session id not same as store session id');
         console.log(this.socketID = data.user_id);
       }
+    },
+    initial_data(data) {
+      this.roomList = data.rooms;
+
+      this.contactList = data.contacts;
+
+      console.log('loading contacts from chatBUTTON');
+      console.log(this.contactList);
     }
   },
   components: {
@@ -47,7 +55,10 @@ export default {
       chat: true,
       chatting: true,
       loggedIn: false,
-      socketID: ''
+      socketID: '',
+      contacts: [],
+      rooms: [],
+      topUserImg: ''
     }
   },
   created () {

@@ -3,7 +3,7 @@
 	<div class="container-fluid h-100" id="chatbox-container">
 		<div class="row justify-content-right h-100">
 		
-			<ChatContacts v-if="contact_open == true" :contacts="contacts"></ChatContacts>
+			<ChatContacts v-if="contact_open == true" v-bind:contacts="contactList"></ChatContacts>
 
 			<div id="hidden-chat" ref="hidden_chat" hidden>
 			</div>
@@ -16,7 +16,7 @@
 							<div class="d-flex bd-highlight">
 
 								<div class="img_cont">
-									<img src="" id="top-user-img" class="rounded-circle user_img">
+									<img v-bind:src="topUserImg" id="top-user-img" class="rounded-circle user_img">
 									<span class="online_icon"></span>
 								</div>
 
@@ -80,82 +80,14 @@ export default {
 			original_user: "",
 			other_user: "",
 			chat_search: "",
-			contact_open: false,
-			contacts: []
+			contact_open: false
 		}
 	},
+	props: ['contactList', 'roomList', 'topUserImg'],
 	components: {
 		ChatContacts
 	},
 	sockets: {
-		login_client: function(data) {
-			//definetly set a login for head pic
-			//and last msg box
-			
-			var c_header = this.$refs.chat_header;
-			this.other_user = data.to_id;
-			c_header.innerHTML = 'To: ' + this.other_user;
-			
-			if (this.original_user != '') {
-			}
-			else {
-				this.original_user = this.$store.state.userSession.id;
-			}
-		},
-		chat_history(data) {
-
-			var rooms = data.rooms;
-
-			var contacts = data.contacts;
-
-			this.contacts = contacts;
-
-			var container = this.$refs.message_container;
-
-			var hidden_container = document.getElementById('hidden-chat');
-
-			var msg_box = '';
-
-			//make sure container empty on each call
-			if (hidden_container.firstChild) {
-				while (hidden_container.firstChild) {
-					hidden_container.removeChild(hidden_container.firstChild);
-				}
-			}
-
-			var home_room = 0;
-
-			for (var i = rooms.length - 1; i >= 0; i--) {
-
-				var d_obj = rooms[i];
-				var d_id = d_obj.id;
-				var d_val = d_obj.value
-
-				if (home_room == 0 && d_obj.to_id == d_obj.from_id) {
-					home_room = d_id;
-				}
-
-				if (document.getElementById('room'+d_id) != null) {
-					msg_box = document.getElementById('room'+d_id);
-				}
-				else {
-					msg_box = document.createElement('div');
-					msg_box.id = 'room'+d_id;
-					hidden_container.appendChild(msg_box);
-				}
-
-				var styled_msg = this.style_message(d_val);
-
-				msg_box.appendChild(styled_msg);
-			}
-
-			var home = document.getElementById('room'+home_room);
-
-			if (!container.firstChild) {
-				container.appendChild(home);
-			}
-
-		},
 		direct_msg: function(data) {
 			console.log('direct msg called');
 
@@ -205,6 +137,61 @@ export default {
 		open_contacts() {
 			this.contact_open = !(this.contact_open);
 		},
+		assemble_chat() {
+
+			var rooms = this.roomList;
+
+			var contacts = this.contactList;
+
+			console.log('loading contacts');
+			console.log(contacts);
+
+			var container = this.$refs.message_container;
+
+			var hidden_container = document.getElementById('hidden-chat');
+
+			var msg_box = '';
+
+			//make sure container empty on each call
+			if (hidden_container.firstChild) {
+				while (hidden_container.firstChild) {
+					hidden_container.removeChild(hidden_container.firstChild);
+				}
+			}
+
+			var home_room = 0;
+
+			for (var i = rooms.length - 1; i >= 0; i--) {
+
+				var d_obj = rooms[i];
+				var d_id = d_obj.id;
+				var d_val = d_obj.value
+
+				if (home_room == 0 && d_obj.to_id == d_obj.from_id) {
+					home_room = d_id;
+				}
+
+				if (document.getElementById('room'+d_id) != null) {
+					msg_box = document.getElementById('room'+d_id);
+				}
+				else {
+					msg_box = document.createElement('div');
+					msg_box.id = 'room'+d_id;
+					hidden_container.appendChild(msg_box);
+				}
+
+				var styled_msg = this.style_message(d_val);
+
+				msg_box.appendChild(styled_msg);
+			}
+
+			var home = document.getElementById('room'+home_room);
+
+			if (!container.firstChild) {
+				container.appendChild(home);
+			}
+
+		},
 		style_message(data) {
 
 			var msg_contain = document.createElement('div');
@@ -235,8 +222,6 @@ export default {
 			img_contain.appendChild(img_d);
 
 			msg_cot.appendChild(time_span);
-
-			console.log("user_id : " + data.user_id + " original user: " + this.original_user + "other user: " + this.other_user);
 
 			if (data.user_id == this.original_user) {
 				msg_contain.className += ' justify-content-end';
@@ -344,20 +329,22 @@ export default {
 	mounted () {
 		const vm = this;
 
-		this.$refs.input_m.focus();
-
 		this.original_user = this.$store.state.userSession.id;
-
-		console.log('this original user mounted as' + this.original_user);
 
 		this.other_user = this.other_user == '' ? this.original_user : this.other_user;
 
 		var msg_box = document.createElement('div');
+
 		var room = this.original_user < this.other_user ? this.original_user + '.' + this.other_user : this.other_user + '.' + this.original_user;
 
 		msg_box.id = 'room'+room;
 
 		document.getElementById('hidden-chat').appendChild(msg_box);
+		//var container = this.$refs.message_container;
+
+		//container.appendChild(msg_box);
+
+		this.assemble_chat();
 
 		EventBus.$on('load_contacts', function(data) {
 			vm.contacts = data;
@@ -371,14 +358,9 @@ export default {
 			console.log(data.to_id);
 			vm.other_user = data.to_id;
 			vm.change_chat(data.to_id, data.from_id, data.room);
-		})
-
-		EventBus.$on('open_chat', function(user) {
-			console.log('event bus open chat : ' + user);
-
-			vm.$refs.input_m.focus();
-			//emit from user to user
 		});
+
+		this.$refs.input_m.focus();
 	}
 }
 </script>
