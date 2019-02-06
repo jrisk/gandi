@@ -87,7 +87,7 @@ function SocketSkoolia(io, mysql) {
 
 							if (!contact_list.includes(chat_room)) {
 
-								var contact = { to_id: res.to_id, name: res.first_name, from_id: res.from_id, room: chat_room, avatar: avatar };
+								var contact = { to_id: res.to_id, name: res.first_name, from_id: res.from_id, room: chat_room, avatar: res.img_url };
 								contact_list.push(chat_room);
 								contacts.push(contact);
 							}
