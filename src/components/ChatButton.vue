@@ -20,6 +20,23 @@ import EventBus from '../../event-bus.js';
 
 export default {
   sockets: {
+    getSocketSession(data) {
+      console.log('get socket session called');
+
+      //this is persisting on logout, fix
+      console.log(this.$store.state.userSession.id);
+
+      if (data.user_id == this.$store.state.userSession.id) {
+        //are these returnables mounted?
+        this.$socket.emit('login', data.user_id);
+        this.$socket.emit('contact_list', data.user_id);
+        this.loggedIn = true;
+      }
+      else {
+        console.log('socket session id not same as store session id');
+        console.log(this.socketID = data.user_id);
+      }
+    }
   },
   components: {
     ChatBox
@@ -28,13 +45,17 @@ export default {
     return {
       open: false,
       chat: true,
-      chatting: true
+      chatting: true,
+      loggedIn: false,
+      socketID: ''
     }
   },
   created () {
   },
   mounted() {
     const vm = this;
+
+    this.$socket.emit('get-session', {});
 
     EventBus.$on('open_chat', function(data) {
       vm.open_chat();
@@ -43,15 +64,12 @@ export default {
   },
   methods: {
     open_chat() {
-      if (this.$store.state.userSession) {
-      var user_id = this.$store.state.userSession.id;
-
-      this.$socket.emit('contact_list', {}); 
-      
-      this.open = true;
+      if (this.loggedIn) { 
+        this.open = true;
       }
       else {
-        console.log('no user session');
+        console.log('user session not aligned');
+        console.log(this.socketID);
       }
     }
   },

@@ -125,6 +125,9 @@ export default {
 
         vm.$socket.emit('logout');
 
+        //vm.router.go();
+        //window.location.reload(true);
+        vm.$router.go('/login');
         vm.$router.replace({ name: "login" });
         }).catch( function(err) { console.log(err.code); })
 

@@ -89,6 +89,9 @@ export default {
 	},
 	sockets: {
 		login_client: function(data) {
+			//definetly set a login for head pic
+			//and last msg box
+			
 			var c_header = this.$refs.chat_header;
 			this.other_user = data.to_id;
 			c_header.innerHTML = 'To: ' + this.other_user;
@@ -98,12 +101,8 @@ export default {
 			else {
 				this.original_user = this.$store.state.userSession.id;
 			}
-
-			//move load history here
 		},
-		load_history(data) {
-
-			//load msgs in correct order
+		chat_history(data) {
 
 			var rooms = data.rooms;
 
@@ -348,6 +347,8 @@ export default {
 		this.$refs.input_m.focus();
 
 		this.original_user = this.$store.state.userSession.id;
+
+		console.log('this original user mounted as' + this.original_user);
 
 		this.other_user = this.other_user == '' ? this.original_user : this.other_user;
 

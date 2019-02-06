@@ -2,6 +2,8 @@ vue syntax package control needs fixing
 https://packagecontrol.io/docs/troubleshooting
 https://github.com/20Tauri/DoxyDoxygen/issues/103#issuecomment-375951725
 
+userSession.id persisting without being logged in!
+
 cookie session in socket.io
 https://stackoverflow.com/questions/19082693/how-to-access-session-identifier-when-using-socket-io
 https://stackoverflow.com/questions/25532692/how-to-share-sessions-with-socket-io-1-x-and-express-4-x

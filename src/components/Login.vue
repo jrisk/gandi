@@ -86,7 +86,9 @@ export default {
                       vm.$socket.emit('login', usr.id);
                       vm.$socket.emit('contact_list', usr.id);
                       //close current chat?
-                  vm.$router.replace({ name: "profile" });
+                      vm.$router.go();
+                      //window.location.reload(true);
+                      //vm.$router.replace({ name: "profile" });
                   }
               }).catch(err => 
                   (console.log(err))

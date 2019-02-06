@@ -3,9 +3,9 @@ import Vuex from 'vuex'
 import axios from 'axios'
 
 import VuexPersist from 'vuex-persist'
+/*import VuexPersistedStore from 'vuex-persistedstate'*/
 
 Vue.use(Vuex)
-
 
 let vuexLocalStorage = null;
 

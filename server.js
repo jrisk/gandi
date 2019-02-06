@@ -551,7 +551,14 @@ app.get('/profile-login', function(req,res) {
 app.get('/logout', function(req,res) {
   //not callable til logged in
   console.log('server js logout');
-  console.log(req.session.user.email);
+  
+  if (typeof req.session.user == 'undefined') {
+    console.log('dumb logout');
+  }
+  else {
+    console.log(req.session.user.email);
+  }
+
   req.session.user = {};
   res.sendStatus(200);
 });

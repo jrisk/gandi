@@ -43,16 +43,15 @@ function SocketSkoolia(io, mysql) {
 
 		var room = user_id+'.'+user_id;
 
+		socket.on('get-session', function(data) {
+			socket.join(room);
+			console.log('socket get-session called');
+			io.to(room).emit('getSocketSession', {user_id: user_id, room: room});
+		});
+
 		socket.on('login', function(data) {
 			console.log('user id on login: ' + data);
-			var first_room = data+'.'+data;
-
-			room = first_room;
-			
-			console.log('first joining room: ' + room);
-			socket.join(room);
-			var to_id = data;
-			io.to(room).emit('login_client', {user_name: user_name, user_id: user_id, to_id: to_id, room: first_room});
+			io.to(room).emit('login_client', {user_name: user_name, user_id: user_id, to_id: data, room: room});
 		});
 
 		socket.on('direct_msg', function(data) {
@@ -109,7 +108,7 @@ function SocketSkoolia(io, mysql) {
 					console.log('contact_list called, now loading history');
 
 					socket.join(room);
-					io.to(room).emit('load_history', { rooms: rooms, contacts: contacts } );
+					io.to(room).emit('chat_history', { rooms: rooms, contacts: contacts } );
 				}
 			})
 		});
