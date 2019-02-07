@@ -223,7 +223,8 @@ export default {
 
 			msg_cot.appendChild(time_span);
 
-			if (data.user_id == this.original_user) {
+			//from_id user_id
+			if (data.from_id == this.original_user) {
 				msg_contain.className += ' justify-content-end';
 				msg_cot.className = 'msg_cotainer_send';
 				time_span.className = 'msg_time_send';
