@@ -221,7 +221,7 @@ export default {
 
 			img_contain.appendChild(img_d);
 
-			msg_cot.appendChild(time_span);
+			//msg_cot.appendChild(time_span);
 
 			//from_id user_id
 			if (data.from_id == this.original_user) {
@@ -229,6 +229,7 @@ export default {
 				msg_cot.className = 'msg_cotainer_send';
 				time_span.className = 'msg_time_send';
 
+				msg_contain.appendChild(time_span);
 				msg_contain.appendChild(msg_cot);
 				msg_contain.appendChild(img_contain);
 
@@ -237,8 +238,10 @@ export default {
 				msg_contain.className += ' justify-content-start';
 				msg_cot.className = 'msg_cotainer';
 				time_span.className = 'msg_time';
+
 				msg_contain.appendChild(img_contain);
 				msg_contain.appendChild(msg_cot);
+				msg_contain.appendChild(time_span);
 			}
 
 			return msg_contain;
@@ -526,16 +529,20 @@ export default {
 		position: relative;
 	}
 	.msg_time{
-		position: absolute;
+		/*position: absolute;
 		left: 0;
 		bottom: -15px;
+		*/
 		color: rgba(255,255,255,0.5);
 		font-size: 10px;
 	}
 	.msg_time_send{
-		position: absolute;
+		/*position: absolute;
 		right:0;
 		bottom: -15px;
+		color: rgba(255,255,255,0.5);
+		font-size: 10px;
+		*/
 		color: rgba(255,255,255,0.5);
 		font-size: 10px;
 	}

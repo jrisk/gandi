@@ -74,6 +74,10 @@ function SocketSkoolia(io, mysql) {
 					var rooms = [];
 					var contact_list = [];
 
+					const monthNames = ["January", "February", "March", "April", "May", "June",
+  				"July", "August", "September", "October", "November", "December"
+					];
+
 						for (result in results) {
 							var res = results[result];
 
@@ -92,7 +96,46 @@ function SocketSkoolia(io, mysql) {
 								contacts.push(contact);
 							}
 
-							var room_obj = { id: chat_room, value: {msg: res.txt, msg_id: res.id, from_id: res.from_id, to_id: res.to_id, user_id: user_id, first_name: res.first_name, avatar: avatar, time: res.dt} };
+							var h_time = new Date(res.dt);
+
+							var week_day = '';
+							var day = h_time.getDate();
+
+							switch (h_time.getDay()) {
+								case 0:
+								week_day = 'Sunday';
+								break;
+								case 1:
+								week_day = 'Monday';
+								break;
+								case 2:
+								week_day = 'Tuesday';
+								break;
+								case 3:
+								week_day = 'Wednesday';
+								break;
+								case 4:
+								week_day = 'Thursday';
+								break;
+								case 5:
+								week_day = 'Friday';
+								break;
+								case 6:
+								week_day = 'Saturday';
+								break;
+							}
+
+							var month = monthNames[h_time.getMonth()];
+
+							var hours = ('0' + h_time.getHours()).slice(-2);
+							var minutes = ('0' + h_time.getMinutes()).slice(-2);
+							var seconds = ('0' + h_time.getSeconds()).slice(-2);
+							
+							var f_time = week_day + ', ' + month + ' ' + day + ', ' + hours + ':' + minutes + ':' + seconds;
+
+							console.log(f_time);
+
+							var room_obj = { id: chat_room, value: {msg: res.txt, msg_id: res.id, from_id: res.from_id, to_id: res.to_id, user_id: user_id, first_name: res.first_name, avatar: avatar, time: f_time } };
 
 							rooms.push(room_obj);
 
