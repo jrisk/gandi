@@ -83,7 +83,7 @@ export default {
                   }
                   else {
                       vm.$store.dispatch('setUser', usr);
-                      vm.$socket.emit('login', usr.id);
+                      vm.$socket.emit('get_session', usr.id);
                       vm.$socket.emit('contact_list', usr.id);
                       //close current chat?
                       vm.$router.go();

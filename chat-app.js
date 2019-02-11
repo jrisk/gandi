@@ -45,7 +45,7 @@ function SocketSkoolia(io, mysql) {
 
 		socket.on('get-session', function(data) {
 			socket.join(room);
-			console.log('socket get-session called');
+			console.log('socket get-session called, joined room ' + room + ' with user_id ' + user_id);
 			io.to(room).emit('getSocketSession', {user_id: user_id, room: room, avatar: img_src});
 		});
 
@@ -133,8 +133,6 @@ function SocketSkoolia(io, mysql) {
 							
 							var f_time = week_day + ', ' + month + ' ' + day + ', ' + hours + ':' + minutes + ':' + seconds;
 
-							console.log(f_time);
-
 							var room_obj = { id: chat_room, value: {msg: res.txt, msg_id: res.id, from_id: res.from_id, to_id: res.to_id, user_id: user_id, first_name: res.first_name, avatar: avatar, time: f_time } };
 
 							rooms.push(room_obj);
@@ -142,13 +140,8 @@ function SocketSkoolia(io, mysql) {
 						}
 
 					//picture from to_id if to_id != from_id and from_id == user_id
-
-					console.log('contact_list called, now loading history');
-
-					console.log(contacts);
-					console.log('rooms:\n');
-					console.log(rooms);
 					socket.join(room);
+					console.log('joined room ' + room + ' from contact_list method');
 					io.to(room).emit('initial_data', { rooms: rooms, contacts: contacts } );
 				}
 			})

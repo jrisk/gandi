@@ -114,10 +114,6 @@ export default {
 
       const instance = axios_b();
 
-      /*if (already_logged_out) {
-        skip page reload
-      }*/
-
       instance.get(url).then( function(resp) {
 
         vm.user = {};

@@ -167,7 +167,7 @@ export default {
 				var d_id = d_obj.id;
 				var d_val = d_obj.value
 
-				if (home_room == 0 && d_obj.to_id == d_obj.from_id) {
+				if (home_room == 0 && d_val.to_id == d_val.from_id) {
 					home_room = d_id;
 				}
 
@@ -188,6 +188,7 @@ export default {
 			var home = document.getElementById('room'+home_room);
 
 			if (!container.firstChild) {
+				console.log('appending first chat to main container' + home_room);
 				container.appendChild(home);
 			}
 
