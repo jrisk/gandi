@@ -496,6 +496,8 @@ app.get('/api/users/:id', function(req,res) {
 
 app.get('/api/users', function(req,res) {
 
+  //filter by student and teacher
+
     var query = `SELECT * from usr_test ORDER BY id`;
     
     connection.query(query, function(error, results, fields) {
@@ -518,6 +520,7 @@ app.get('/api/users', function(req,res) {
           user.label = result.first_name;
           user.last_name = result.last_name;
           user.img_url = result.img_url;
+          user.profession = result.profession;
           user.lang = result.lang_teach;
           users.push(user);
         }

@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faCoffee)*/
 
-import { Modal, Navbar, Button, Nav, Form, FormInput, Card, Tabs } from 'bootstrap-vue/es/components'
+import { Modal, Navbar, Button, Nav, Form, FormInput, Card, Tabs, FormCheckbox } from 'bootstrap-vue/es/components'
 //Jarisk
 import JariskNav from './components/jarisk/JariskNav'
 import Jarisk from './components/jarisk/Jarisk'
@@ -48,6 +48,8 @@ Vue.use(Form);
 Vue.use(FormInput);
 Vue.use(Card);
 Vue.use(Tabs);
+
+Vue.use(FormCheckbox);
 
 Vue.component('jarisk', Jarisk);
 

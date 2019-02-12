@@ -14,6 +14,25 @@
     <!-- Right aligned nav items -->
     <b-navbar-nav class="ml-auto">
 
+      <b-nav-item-dropdown v-bind:text="'Search by: ' + profileTypes">
+        <b-nav-form autocomplete="off">
+
+        <!--@click.native.stop-->
+          <b-dropdown-item-button>
+              <b-form-checkbox id="teacher_select" value="Teacher" v-model="profileTypes">
+                Teachers
+              </b-form-checkbox>
+          </b-dropdown-item-button>
+
+          <b-dropdown-item-button>
+              <b-form-checkbox id="student_select" value="Student" v-model="profileTypes">
+                Students
+              </b-form-checkbox>
+          </b-dropdown-item-button>
+
+        </b-nav-form>
+      </b-nav-item-dropdown>
+
       <nav class="nav navbar" id="skoolia-nav-form">
         <form class="form-inline" autocomplete="off">
           <input type="password" hidden>
@@ -53,7 +72,9 @@ export default {
     return {
       users: {},
       search_val: 'Search',
-      search_word: ''
+      search_word: '',
+      profileTypes: ["Teacher"],
+      type: "Teacher"
     }
   },
   mounted () {
@@ -76,7 +97,50 @@ export default {
 
           var users = vm.users;
 
-          var suggestions = users.filter(n => n.label.toLowerCase().startsWith(text))
+          //console.log(vm.users.length);
+          console.log(vm.profileTypes.length);
+
+          //being run twice
+
+          var type = '2';
+          var type_derp = 0;
+
+          if (vm.profileTypes.length == 1) {
+            type = vm.profileTypes[0] == 'Teacher' ? '0' : '1';
+          }
+
+          else {
+            type_derp = 3;
+          }
+          // and user privacy set to = 1
+
+          console.log('type = ' + type);
+          console.log('types: ');
+          console.log(vm.profileTypes);
+
+          var suggestions = users.filter(function(n) {
+              return n.label.toLowerCase().startsWith(text);
+              }).filter(function(n) {
+                  return n.profession == 2 || n.profession == type || n.profession < type_derp; 
+            });
+
+              console.log(suggestions);
+
+            /*
+          if (type != -1 && vm.profileTypes.length != 2) {
+              var suggestions = users.filter(function(n) {
+              return n.label.toLowerCase().startsWith(text);
+              }).filter(function(n) {
+              return n.profession == type || n.profession == 2; 
+            })
+          }
+
+          else {
+            var suggestions = users.filter(function(n) {
+              return n.label.toLowerCase().startsWith(text);
+              });
+          }
+          */
           update(suggestions);
         },
         onSelect: function(item) {
@@ -89,8 +153,11 @@ export default {
         render: function(item, currentValue) {
           var div = document.createElement("div");
           var div2 = document.createElement("p");
-          var img = document.createElement("img");
+
           div2.textContent = item.last_name;
+
+          var img = document.createElement("img");
+          
           img.setAttribute('src', item.img_url);
           img.setAttribute('width', 40);
           img.setAttribute('height', 40);
@@ -106,6 +173,7 @@ export default {
   methods: {
     search() {
       this.$router.replace({ name: "user_profile" , params: { id: this.search_val } });
+      //console.log(this.profileTypes);
     },
     logout() {
       const vm = this;
