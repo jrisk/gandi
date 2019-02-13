@@ -14,29 +14,26 @@
     <!-- Right aligned nav items -->
     <b-navbar-nav class="ml-auto">
 
-      <b-nav-item-dropdown v-bind:text="'Search by: ' + profileTypes">
-        <b-nav-form autocomplete="off">
+      <b-nav-item-dropdown text="Search by:">
 
-        <!--@click.native.stop-->
-          <b-dropdown-item-button>
-              <b-form-checkbox id="teacher_select" value="Teacher" v-model="profileTypes">
-                Teachers
-              </b-form-checkbox>
-          </b-dropdown-item-button>
-
-          <b-dropdown-item-button>
-              <b-form-checkbox id="student_select" value="Student" v-model="profileTypes">
-                Students
-              </b-form-checkbox>
-          </b-dropdown-item-button>
-
-        </b-nav-form>
+        <div class="container" v-on:click="go_search()">
+          <!--
+        <b-form-group label="Skoolia Users">
+          <b-form-checkbox-group buttons v-model="selected_type" button-variant="primary" name="user_types" :options="options">
+            </b-form-checkbox-group>
+          </b-form-group>
+        -->
+          <b-form-group label="Skoolia Users">
+            <b-form-radio-group buttons button-variant="primary" id="radios1" v-model="selected_radio" :options="options" name="radio_users">
+            </b-form-radio-group>
+          </b-form-group>
+        </div>
       </b-nav-item-dropdown>
 
       <nav class="nav navbar" id="skoolia-nav-form">
         <form class="form-inline" autocomplete="off">
           <input type="password" hidden>
-          <input class="form-control mr-sm-2" id="users" type="text" placeholder="Search" v-bind:value="search_word" />
+          <input class="form-control mr-sm-2" id="users" ref="user_search" type="text" :placeholder="'Search ' + selected_radio" v-bind:value="search_word" />
           <button size="sm" class="btn my-2 my-sm-0" v-on:click="search()">Go</button>
         </form>
       </nav>
@@ -73,8 +70,9 @@ export default {
       users: {},
       search_val: 'Search',
       search_word: '',
-      profileTypes: ["Teacher"],
-      type: "Teacher"
+      selected_type: [],
+      selected_radio: '',
+      options: [{text: "Teacher", value: "Teachers"},{text: "Student", value: "Students" }]
     }
   },
   mounted () {
@@ -97,50 +95,32 @@ export default {
 
           var users = vm.users;
 
-          //console.log(vm.users.length);
-          console.log(vm.profileTypes.length);
-
-          //being run twice
-
           var type = '2';
           var type_derp = 0;
 
-          if (vm.profileTypes.length == 1) {
-            type = vm.profileTypes[0] == 'Teacher' ? '0' : '1';
+          /*if (vm.selected_type.length == 1) {
+            type = vm.selected_type[0] == 'Teachers' ? '0' : '1';
           }
+          else {
+            type_derp = 3;
+          }*/
 
+          // and user privacy set to = 1
+
+          //bug, keeps returning duplicates
+
+          if (vm.selected_radio != '') {
+          type = vm.selected_radio == 'Teachers' ? '0' : '1';
+          }
           else {
             type_derp = 3;
           }
-          // and user privacy set to = 1
-
-          console.log('type = ' + type);
-          console.log('types: ');
-          console.log(vm.profileTypes);
 
           var suggestions = users.filter(function(n) {
               return n.label.toLowerCase().startsWith(text);
               }).filter(function(n) {
                   return n.profession == 2 || n.profession == type || n.profession < type_derp; 
             });
-
-              console.log(suggestions);
-
-            /*
-          if (type != -1 && vm.profileTypes.length != 2) {
-              var suggestions = users.filter(function(n) {
-              return n.label.toLowerCase().startsWith(text);
-              }).filter(function(n) {
-              return n.profession == type || n.profession == 2; 
-            })
-          }
-
-          else {
-            var suggestions = users.filter(function(n) {
-              return n.label.toLowerCase().startsWith(text);
-              });
-          }
-          */
           update(suggestions);
         },
         onSelect: function(item) {
@@ -174,6 +154,9 @@ export default {
     search() {
       this.$router.replace({ name: "user_profile" , params: { id: this.search_val } });
       //console.log(this.profileTypes);
+    },
+    go_search() {
+      this.$refs.user_search.focus();
     },
     logout() {
       const vm = this;
