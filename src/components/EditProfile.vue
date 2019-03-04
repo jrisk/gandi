@@ -93,7 +93,7 @@
 
       <div class="form-group row">
         <div class="col-sm-12">
-          <button type="submit" class="btn btn-primary" v-on:click="save_changes()">Edit Profile</button>
+          <button type="submit" class="btn btn-primary" v-on:click="save_changes()">Save Changes</button>
         </div>
       </div>
 

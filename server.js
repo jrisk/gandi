@@ -613,7 +613,8 @@ app.post('/profile-create', function(req,res) {
   var profession = req.body.teach_learn;
   var lang = req.body.lang_teach;
   var send = req.body.send_emails;
-  var teach = 0;//req.body.teach;
+  var privacy = 0;//req.body.teach;
+  //teach now privacy
   var learn = 0;//req.body.learn;
   //var both = req.body.teach_learn;
   var about_me = '';//req.body.about_me;
@@ -635,7 +636,7 @@ app.post('/profile-create', function(req,res) {
 
       var hash = bcrypt.hashSync(pass);
 
-      var query = 'INSERT INTO usr_test (email, password, username, first_name, last_name, img_url, phone, profession, lang_teach, send_email, teach, learn, about_me) VALUES ( "' + email + '", "' + hash + '", "' + username + '", "' + first_name + '", "' + last_name + '", "' + img_url  + '", "' + phone + '", "' + profession + '", ' + lang + ', ' + send + ', ' + teach + ', ' + learn + ', "' + about_me + '" )';
+      var query = 'INSERT INTO usr_test (email, password, username, first_name, last_name, img_url, phone, profession, lang_teach, send_email, teach, learn, about_me) VALUES ( "' + email + '", "' + hash + '", "' + username + '", "' + first_name + '", "' + last_name + '", "' + img_url  + '", "' + phone + '", "' + profession + '", ' + lang + ', ' + send + ', ' + privacy + ', ' + learn + ', "' + about_me + '" )';
       //(type, first_nm,last_nm,eml_addr,pwrd,img_url,img_top,img_left,gender,date_of_birth,location_region,location_city,location_county,location_state,location_country,location_latitude,location_longitude,location_display,native_language,native_country,skype_username,gmail_username,created_on_dt,modified_on_dt, desc, learn, teach, currency, charge, lang_exch, profile_img, sparrow_customer_token, braintree_customer_id, tz_set, tz_last_used, currency_last_used)'
       connection.query(query, function(error, results, fields) {
       if (error) {
