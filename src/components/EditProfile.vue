@@ -10,17 +10,20 @@
           <div class="col-md-12">
             <div class="profile-img" href="#">
               <img v-bind:src="input.img_url" alt=""/>
-              <div class="file btn btn-lg btn-primary">
-                Change Photo
-                <input v-on:change="preview()" ref="myFiles" type="file" name="myfile" accept=".jpg, .jpeg, .png" />
-              </div>
             </div>
         </div>
       </div>
 
       <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+        <label for="photo-label" class="col-sm-2 col-form-label">Photo</label>
         <div class="col-sm-10">
+        <input v-on:change="preview()" ref="myFiles" type="file" name="myfile" accept=".jpg, .jpeg, .png" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+      <div class="col-sm-10">
 
           <input type="email" class="form-control" id="inputEmail3" v-model="input.email" placeholder="Email">
 
@@ -189,3 +192,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.file-div {
+  border: 1px solid grey;
+}
+</style>

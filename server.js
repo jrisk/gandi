@@ -234,7 +234,8 @@ app.post('/save-edit', upload.single('myfile'), function(req,res) {
   var usr_email = user.orig_email;
   var file_path = img;
   var new_email = user.email;
-  var about_me = user.about_me;
+  var about_me_pre = user.about_me;
+  var about_me = about_me_pre.replace("'", "\\'")
   var first_name = user.first_name;
   var last_name = user.last_name;
   var phone = '';
@@ -368,6 +369,10 @@ function get_langs(callback) {
 
 function session_raw(data) {
 
+  var about_me = data.about_me;
+
+  var about_me_fix = about_me.replace("\\\'", "'");
+
   var user_global = {
     id: data.id,
     email: data.email,
@@ -375,7 +380,7 @@ function session_raw(data) {
     first_name: data.first_name, 
     last_name: data.last_name,
     img_url: data.img_url,
-    about_me: data.about_me,
+    about_me: about_me_fix,
     phone: data.phone,
     profession: data.profession,
     lang: data.lang_teach
@@ -398,6 +403,10 @@ function session_global(data) {
     pro_str = '';
   }
 
+  var about_me = data.about_me;
+
+  var about_me_fix = about_me.replace(/\\'/g, "'");
+
   var lang = data.lang_teach;
 
   var lang_file = JSON.parse(fs.readFileSync(__dirname + '/public/tmp/langs.json', 'utf-8'));
@@ -417,7 +426,7 @@ function session_global(data) {
     first_name: data.first_name, 
     last_name: data.last_name,
     img_url: data.img_url,
-    about_me: data.about_me,
+    about_me: about_me_fix,
     phone: data.phone,
     profession: pro_str,
     profession_raw: prof,
