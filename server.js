@@ -234,8 +234,7 @@ app.post('/save-edit', upload.single('myfile'), function(req,res) {
   var usr_email = user.orig_email;
   var file_path = img;
   var new_email = user.email;
-  var about_me_pre = user.about_me;
-  var about_me = about_me_pre.replace("'", "\\'")
+  var about_me = user.about_me;
   var first_name = user.first_name;
   var last_name = user.last_name;
   var phone = '';
@@ -246,11 +245,13 @@ app.post('/save-edit', upload.single('myfile'), function(req,res) {
     lang = 0;
   }
   console.log(lang);
-  //var params = [];
+  
+  var safe_params = [];
+  safe_params.push(new_email,new_email,file_path,first_name,last_name,profession,about_me,lang,usr_email);
 
-  var sql = `UPDATE usr_test SET email='`+ new_email + `', username='` + new_email + `', img_url='` + file_path + `', first_name='` + first_name + `', last_name='` + last_name + `', profession='` + profession + `', about_me='` + about_me + `', lang_teach='` + lang  + `' WHERE email='` + usr_email + `'`;
+  var sql = `UPDATE usr_test SET email=?, username=?, img_url=?, first_name=?, last_name=?, profession=?, about_me=?, lang_teach=? WHERE email=?`;
 
-  connection.query(sql, function(error, results, fields) { 
+  connection.query(sql, safe_params, function(error, results, fields) { 
     if (error) {
       console.log('mysql error in server.js');
       throw error;
