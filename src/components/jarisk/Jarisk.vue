@@ -1,6 +1,7 @@
 <template>
 	<div>
-		<jarisk-card-menu></jarisk-card-menu>
+		<jarisk-main></jarisk-main>
+		<!--<jarisk-card-menu></jarisk-card-menu>-->
 	</div>
 </template>
 
