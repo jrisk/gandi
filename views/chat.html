@@ -33,10 +33,7 @@
       return false;
     });
 
-    socket.on('join', function(info) {
-      socket.emit('join', info);
-      return false;
-    });
+    socket.emit('old example', 'derp');
 
     //responde to chat message emit by server
     socket.on('chat message', function(data) {
@@ -54,7 +51,8 @@
     });
 
     socket.on('join message', function(user) {
-      $('#messages').append($('<li>').addClass('joinClass').text(user + ' has joined'));
+
+      $('#messages').append('<li>' + user + ' has joined' + '</li>');
     });
 
     var msg = document.getElementById('messages');

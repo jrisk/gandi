@@ -14,6 +14,8 @@ import ErrorPage from '../components/ErrorPage.vue';
 import UserProfile from '../components/UserProfile.vue';
 import ChatBox from '../components/skoolia/ChatButton2.vue';
 
+import ProjectList from '../components/ProjectList.vue';
+
 import CryptoHead from '../components/crypto/CryptoHead.vue';
 import DataDriven from '../components/crypto/DataDriven.vue';
 
@@ -41,7 +43,9 @@ export function createRouter() {
 			{ path: '/chat', component: ChatBox, name: 'chat_box' },
 			//{},
 			{ path: '/crypto', component: CryptoHead, name: 'crypto' },
-			{ path: '/d3', component: DataDriven, name: 'd3' }
+			{ path: '/d3', component: DataDriven, name: 'd3' },
+			{ path: '/project-list', component: ProjectList, name: 'project-list' }
+
 		]
 	});
 }

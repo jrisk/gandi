@@ -16,7 +16,7 @@
     <a href="/skoolia"><b-carousel-slide caption="Skoolia" img-src="/public/img/woman_computer.jpg" />
     </a>
 
-    <a href="/weather"><b-carousel-slide caption="Other" img-src="/public/img/people-using-computer.png" style="background-color: white" />
+    <a href="/project-list"><b-carousel-slide caption="More" img-src="/public/img/people-using-computer.png" style="background-color: white" />
     </a>
   </b-carousel>
 </header>

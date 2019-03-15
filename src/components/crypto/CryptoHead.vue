@@ -1,5 +1,6 @@
 <template>
 	<div class="container emp-profile">
+		<h2> Bitcoin Prices </h2>
 		<div> Last Year </div>
 		<table class="table">
 			<thead>
@@ -16,20 +17,25 @@
 			</tbody>
 		</table>
 
-		{{years}} years ago
-
 		<select v-model="years">
 			<option v-for="option in options" v-bind:value="option">
 				{{option}}
 			</option>
 		</select>
+		<b v-if="years > 1">years</b>
+		<b v-else>year</b> ago
 
-		<div>
-			<input v-model="span">
+		<br>
+
+		<div class="input-days">
+			over <input v-model="span" size="4"> <b v-if="span != 1">days</b>
+		<b v-else>day</b>
 		</div>
 
-		over {{span}} days
-		<button v-on:click="get_year(years, span)" type="button" class="btn btn-lg">Get from {{years}} years ago</button>
+		<br>
+
+		<button v-on:click="get_year(years, span)" type="button" class="btn btn-lg btn-primary">Get from {{years}} <b v-if="years > 1">years</b>
+		<b v-else>year</b> ago</button>
 
 		<table v-if="infos != ''" class="table">
 			<thead>
@@ -61,7 +67,8 @@ export default {
 			infos: '',
 			years: 2,
 			options: [1,2,3,4,5,6,7,8],
-			span: 7
+			span: 7,
+			year_s: 'year'
 		} 
 	},
 	mounted() {
@@ -244,3 +251,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+b {
+	font-weight: none;
+}
+input {
+	outline: 1px solid orange;
+}
+</style>

@@ -213,9 +213,9 @@ app.use('/favicon.ico', function(req,res) {
   res.sendFile(__dirname + '/public/img/favicon.ico');
 });
 
-/*app.use('/chat', function(req,res) {
+app.use('/chat-old', function(req,res) {
   res.sendFile(__dirname + '/views/chat.html');
-});*/
+});
 
 app.use('/secure', function(req,res) {
   res.sendStatus(200);
