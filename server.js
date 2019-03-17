@@ -545,7 +545,7 @@ app.get('/api/user-sess', function(req,res) {
     res.send(req.session.user);
   }
   else {
-    res.send({});
+    res.send({id: null});
   }
 
 });

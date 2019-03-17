@@ -67,7 +67,7 @@ export default {
   data () {
     return {
       user: {
-        id: 777,
+        id: 0,
         about_me: "skoolia profile about me stuff",
         img_url: "/public/img/profile_default.png",
         offering: "Offers lessons in"
@@ -85,7 +85,14 @@ export default {
           'Content-Type': 'application/json'
         }
       }).then( function(resp) {
-       vm.user = resp.data;
+
+        if (resp.data.id == null) {
+          vm.$router.replace({name: 'home'})   
+        }
+        else {
+          vm.user = resp.data;
+        }
+       
        }).catch( (err) => console.log(err) );
   },
   methods: {
