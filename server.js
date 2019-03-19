@@ -35,7 +35,7 @@ var httpServer = http.Server(app);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.set('trust proxy', 1) // trust first proxy
+//app.set('trust proxy', 1) // trust first proxy
 
 var enviro = require('dotenv').config();
 
