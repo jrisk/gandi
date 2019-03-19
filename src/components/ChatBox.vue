@@ -189,7 +189,14 @@ export default {
 
 			if (!container.firstChild) {
 				console.log('appending first chat to main container' + home_room);
-				container.appendChild(home);
+
+				try {
+					container.appendChild(home);
+				}
+				catch (err) {
+					console.log(error);
+					this.$router.replace({name: 'profile'})
+				}
 			}
 
 		},
