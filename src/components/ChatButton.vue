@@ -42,8 +42,12 @@ export default {
 
       this.contactList = data.contacts;
 
+      //roomlist and contactlist not defined on instance but referenced during render FIX
       console.log('loading contacts from chatBUTTON');
       console.log(this.contactList);
+
+      //cannot read property length of undefined
+      
     }
   },
   components: {

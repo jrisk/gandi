@@ -716,9 +716,9 @@ app.get('*', (req, res) => {
   bundle.default({ url: req.url }).then((app) => {
 
     const context = {
-      title: 'Vue JS Project',
+      title: 'Jarisk Web Services',
       meta: `
-      <meta description="vue javascript bootstrap skoolia">
+      <meta description="jarisk javascript bootstrap skoolia">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"/>
       <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-vue@2.0.0-rc.11/dist/bootstrap-vue.min.css"/>

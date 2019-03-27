@@ -7,7 +7,7 @@
           style="max-width: 20rem;"
           class="mx-auto">
     <p class="card-text">
-      Skoolia is a place where teachers and students can find eachother and plan online lessons together
+      Jarisk Web Services presents Skoolia, a place for teachers and students to plan online lessons together.
     </p>
     <b-button href="/skoolia" variant="primary">Go to Skoolia</b-button>
   </b-card>
