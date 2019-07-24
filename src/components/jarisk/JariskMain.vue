@@ -13,7 +13,7 @@
     <a href="/home"><b-carousel-slide caption="Welcome" img-src="/public/img/comp_outdoors.jpg" />
     </a>
     
-    <a href="/skoolia"><b-carousel-slide caption="Skoolia" img-src="/public/img/woman_computer.jpg" />
+    <a href="/skoolia"><b-carousel-slide caption="Skoolia" img-src="/public/img/CQUniversity.jpg" />
     </a>
 
     <a href="/project-list"><b-carousel-slide caption="More" img-src="/public/img/people-using-computer.png" style="background-color: white" />
@@ -58,19 +58,19 @@
           <div class="col-sm-6 col-lg-4 mb-3">
             <h6>Writing</h6>
             <i class="fas fa-lightbulb"></i>
-            <p class="text-muted">Thoughts on electronic parchment</p>
+            <p class="text-muted">Articles and Blogs</p>
           </div>
 
           <div class="col-sm-6 col-lg-4 mb-3">
             <h6>Translations</h6>
             <i class="fas fa-comment"></i>
-            <p class="text-muted">Español, 日本語, or anything using translation APIs</p>
+            <p class="text-muted">Language translation API service</p>
           </div>
 
           <div class="col-sm-6 col-lg-4 mb-3">
             <h6>Dev Ops</h6>
             <i class="fas fa-cloud"></i>
-            <p class="text-muted">Stack-tracing, Log-reading, Server-starting</p>
+            <p class="text-muted">Stack-tracing, Log-reading, Server maintenance</p>
           </div>
 
         </div>
@@ -118,10 +118,10 @@
 
           <div class="card shadow border-0 p-3 bg-primary text-white text-right">
             <blockquote class="blockquote mb-0">
-              <p>“Everything that belongs to the body is a stream, and what belongs to the soul is a dream and vapor, and life is a warfare and a stranger's sojourn, and after fame is oblivion.”</p>
+              <p>“Technology is nothing. What's important is that you have a faith in people, that they're basically good and smart, and if you give them tools, they'll do wonderful things with them.”</p>
               <footer class="blockquote-footer">
                 <small style="color: orange;">
-                  Marcus Aurelius
+                  Steve Jobs
                 </small>
               </footer>
             </blockquote>

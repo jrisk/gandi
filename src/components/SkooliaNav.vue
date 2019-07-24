@@ -3,7 +3,7 @@
 
   <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-  <b-navbar-brand id="navbar-brand" href="#">Logo</b-navbar-brand>
+  <b-navbar-brand id="navbar-brand" href="#">Jarisk</b-navbar-brand>
 
   <b-collapse is-nav id="nav_collapse">
 
