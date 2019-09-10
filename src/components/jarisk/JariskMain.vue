@@ -13,7 +13,7 @@
     <a href="/home"><b-carousel-slide caption="Welcome" img-src="/public/img/comp_outdoors.jpg" />
     </a>
     
-    <a href="/skoolia"><b-carousel-slide caption="Skoolia" img-src="/public/img/CQUniversity.jpg" />
+    <a href="/skoolia"><b-carousel-slide caption="Skoolia" img-src="/public/img/cbe-finance-lab.jpg" />
     </a>
 
     <a href="/project-list"><b-carousel-slide caption="More" img-src="/public/img/people-using-computer.png" style="background-color: white" />
