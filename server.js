@@ -41,7 +41,9 @@ var enviro = require('dotenv').config();
 
 var pdub,socketPath,db_port,mailgun_key = '';
 
-if (process.env.TERM_PROGRAM != 'iTerm.app') {
+var term = process.env.TERM_PROGRAM;
+
+if (term != 'iTerm.app' && term != 'Hyper') {
   socketPath = '/srv/run/mysqld/mysqld.sock';
   mailgun_key = enviro.parsed.MAILGUN_KEY;
 }
@@ -57,7 +59,7 @@ var mysql_store = require('express-mysql-session')(session);
 
 var port = process.env.PORT || 8080;
 
-var connection = mysql.createConnection({
+var connection = mysql.createPool({
 
   host     : 'localhost',
   port     : db_port,
@@ -80,7 +82,7 @@ var sessionMiddleware = session({
 })
 
 //USE CONNECTION POOLING INSTEAD
-connection.connect();
+//connection.connect();
 
 app.use(sessionMiddleware);
 
