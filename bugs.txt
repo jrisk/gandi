@@ -1,5 +1,11 @@
 fixed dual git repo pushing
 
+fixed home directory not showing but every other route rendering on vps/passenger/centos
+
+index.html overrides app in the home directory, had to rename to vueindex.html in order for app to use instead of apache
+
+deperecate the emoji package
+
 vue syntax package control needs fixing
 https://packagecontrol.io/docs/troubleshooting
 https://github.com/20Tauri/DoxyDoxygen/issues/103#issuecomment-375951725

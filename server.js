@@ -43,7 +43,9 @@ var pdub,socketPath,db_port,mailgun_key = '';
 
 var term = process.env.TERM_PROGRAM;
 
-if (term != 'iTerm.app' && term != 'Hyper') {
+console.log(term);
+
+if (term != 'iTerm.app' && term != 'Hyper' && typeof term !== 'undefined') {
   socketPath = '/srv/run/mysqld/mysqld.sock';
   mailgun_key = enviro.parsed.MAILGUN_KEY;
 }
@@ -53,6 +55,8 @@ else {
   socketPath = '';
   db_port = process.env.DB_PORT;
   mailgun_key = process.env.MAILGUN_KEY;
+  db_user = process.env.DB_USER;
+  db_name = process.env.DB_NAME;
 }
 
 var mysql_store = require('express-mysql-session')(session);
@@ -63,9 +67,9 @@ var connection = mysql.createPool({
 
   host     : 'localhost',
   port     : db_port,
-  user     : 'root',
+  user     : db_user,
   password : pdub,
-  database : 'test_db',
+  database : db_name,
   socketPath: socketPath
 
 });
@@ -710,7 +714,7 @@ app.use('/weather', function(req,res) {
 const bundle = require('./dist/server.bundle.js');
 
 const renderer = require('vue-server-renderer').createRenderer({
-  template: fs.readFileSync('./index.html', 'utf-8')
+  template: fs.readFileSync('./vue-index.html', 'utf-8')
 });
 
 app.get('*', (req, res) => {
@@ -749,5 +753,5 @@ httpServer.listen(port, function () {
   console.log("listening on port: " + port);
 }).on('error', function (err) {
   console.log(err.code);
-  process.exit();
+  //process.exit();
 })

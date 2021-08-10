@@ -25,7 +25,7 @@ export function createRouter() {
 	return new Router({
 		mode: 'history',
 		routes: [
-			/*{ path: '/', redirect: { name: 'home' } },*/
+			{ path: '/', component: Home },
 			{ path: '*', component: Home },
 			{ path: '/404', component: ErrorPage, name: 'error' },
 			{ path: '/login', component: Login, name: 'login' },
