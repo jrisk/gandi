@@ -23,7 +23,7 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "connect-redis": "^3.4.0",
-    "d3": "^5.7.0",
+    "d3": "^7.6.1",
     "dotenv": "^6.2.0",
     "emoji": "^0.3.2",
     "express": "^4.16.3",
